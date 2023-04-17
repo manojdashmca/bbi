@@ -1,0 +1,268 @@
+<?php
+
+namespace Modules\Admin\Controllers;
+
+use Modules\Admin\Controllers\AdminController;
+use Modules\Admin\Models\UsersModel;
+
+class UsersController extends AdminController {
+
+    public function __construct() {
+        parent::__construct();
+        $this->usersModel = new UsersModel();
+    }
+
+    public function index() {
+        $this->data['js'] = 'choices,flatpickr,datatable,sweetalert,alertify';
+        $this->data['css'] = 'choices,flatpickr,datatable,sweetalert,alertify';
+        $this->data['includefile'] = 'users/userlist.php,common/common.php';
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\users\userlist', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function add() {
+        $this->data['js'] = 'flatpickr,validation';
+        $this->data['css'] = 'flatpickr,validation';
+        $this->data['includefile'] = '/users/useradd.php,common/common.php';
+
+        if ($this->request->getMethod() == 'post') {
+
+            if (!$this->validate([
+                        'name' => 'required',
+                        'title' => 'required',
+                        'fatherhusband' => 'required',
+                        'dob' => 'required',
+                        'gender' => 'required',
+                        'maritalstatus' => 'required'
+                    ])) {
+
+                $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
+            } else {
+                $utr = $this->request->getPost('utr');
+                $utrstatus = $this->usersModel->checkUTR($utr, 'user_detail');
+                if ($utrstatus) {
+                    $name = $this->request->getPost('name');
+                    $title = $this->request->getPost('title');
+                    $fatherhusband = $this->request->getPost('fatherhusband');
+                    $dob = $this->request->getPost('dob');
+                    $gender = $this->request->getPost('gender');
+                    $maritalstatus = $this->request->getPost('maritalstatus');
+                    $address = $this->request->getPost('address');
+                    $pincode = $this->request->getPost('pincode');
+                    $postoffice = $this->request->getPost('postoffice');
+                    $city = $this->request->getPost('city');
+                    $district = $this->request->getPost('district');
+                    $state = $this->request->getPost('state');
+                    $country = $this->request->getPost('country');
+                    $mobile = $this->request->getPost('mobile');
+                    $whatsappno = $this->request->getPost('whatsappno');
+                    $emailid = $this->request->getPost('emailid');
+                    $nomineename = $this->request->getPost('nomineename');
+                    $nomineerelation = $this->request->getPost('nomineerelation');
+                    $bankacno = $this->request->getPost('bankacno');
+                    $bankifsc = $this->request->getPost('bankifsc');
+                    $bankname = $this->request->getPost('bankname');
+                    $bankbranch = $this->request->getPost('bankbranch');
+                    $panno = $this->request->getPost('panno');
+
+                    $passphrase = createEpin(6);
+                    $passwordnew = $this->encryptString($passphrase);
+                    $this->usersModel->transStart();
+
+                    $userdetaildata = array(
+                        "utr_no" => $utr,
+                        "user_login_key" => $passwordnew,
+                        "user_create_date" => date("Y-m-d H:i:s"),
+                        'user_title' => $title,
+                        'user_name' => $name,
+                        'user_father_husband' => $fatherhusband,
+                        'user_gender' => $gender,
+                        'user_marital_status' => $maritalstatus,
+                        'user_mobile' => $mobile,
+                        'user_whatsappno' => $whatsappno,
+                        'is_mobile_verified' => 1,
+                        "user_email" => $emailid,
+                        "user_dob" => makeDate($dob, 'Y-m-d'),
+                        "user_address" => $address,
+                        "user_pincode" => $pincode,
+                        "user_post_office" => $postoffice,
+                        "user_district" => $district,
+                        "user_city" => $city,
+                        "user_state" => $state,
+                        "user_country" => $country,
+                        "user_pan" => $panno,
+                        "user_type" => 4,
+                        "user_nominee_name" => $nomineename,
+                        "user_nominee_relation" => $nomineerelation,
+                        "user_bank_ac_no" => $bankacno,
+                        "user_bank_ifsc" => $bankifsc,
+                        "user_bank_name" => $bankname,
+                        "user_bank_branch" => $bankbranch
+                    );
+                    $iduser = $this->usersModel->createRecordInTable($userdetaildata, 'user_detail');
+                    $this->usersModel->createRecordInTable(array('user_id_user' => $iduser), 'admin_user');
+                    $usercode = createUserCode($iduser);
+                    $updarray = array('user_code' => $usercode);
+                    if ($_FILES['addressproof']['error'] != 4) {
+                        $validationRule = [
+                            'pimage' => [
+                                'rules' => 'mime_in[addressproof,image/jpg,image/jpeg,image/png,image/webp]'
+                                . '|max_size[addressproof,10000000]',
+                            ],
+                        ];
+                        if ($this->validate($validationRule)) {
+                            $img = $this->request->getFile('addressproof');
+                            if (!$img->hasMoved()) {
+                                $filename = $usercode . '_address.' . pathinfo($_FILES["addressproof"]["name"], PATHINFO_EXTENSION);
+                                $img->move('uploads/images/kyc/', $filename);
+                                $updarray['kyc_address'] = $filename;
+                            }
+                        }
+                    }
+                    if ($_FILES['pancopy']['error'] != 4) {
+                        $validationRule = [
+                            'pimage' => [
+                                'rules' => 'mime_in[pancopy,image/jpg,image/jpeg,image/png,image/webp]'
+                                . '|max_size[pancopy,10000000]',
+                            ],
+                        ];
+                        if ($this->validate($validationRule)) {
+                            $img = $this->request->getFile('pancopy');
+                            if (!$img->hasMoved()) {
+                                $filename = $usercode . '_pan.' . pathinfo($_FILES["pancopy"]["name"], PATHINFO_EXTENSION);
+                                $img->move('uploads/images/kyc/', $filename);
+                                $updarray['kyc_pan'] = $filename;
+                            }
+                        }
+                    }
+                    if ($_FILES['image']['error'] != 4) {
+                        $validationRule = [
+                            'pimage' => [
+                                'rules' => 'mime_in[image,image/jpg,image/jpeg,image/png,image/webp]'
+                                . '|max_size[image,10000000]',
+                            ],
+                        ];
+                        if ($this->validate($validationRule)) {
+                            $img = $this->request->getFile('image');
+                            if (!$img->hasMoved()) {
+                                $filename = $usercode . '_image.' . pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+                                $img->move('uploads/images/kyc/', $filename);
+                                $updarray['kyc_image'] = $filename;
+                            }
+                        }
+                    }
+
+                    $this->usersModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $iduser);
+                    $this->blankModel->transComplete();
+
+                    if ($this->blankModel->transStatus() === false) {
+                        $this->session->setFlashdata('message', setMessage("Something went wrong, Please try after some time", 'f'));
+                        $this->blankModel->transRollback();
+                    } else {
+                        $this->blankModel->transCommit();
+                        $this->session->setFlashdata('message', setMessage("User added Successfully.", 's'));
+                        //------------do  other functionality-----
+                        //----------------------------------------
+                    }
+                } else {
+                    $this->session->setFlashdata('message', setMessage("multy time formsubmission not allowed", 'e'));
+                }
+            }
+        }
+
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\users\useradd', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function edit($userid) {
+        $this->data['js'] = 'alertify,lightbox,flatpickr,validation';
+        $this->data['css'] = 'alertify,lightbox,flatpickr,validation';
+        $this->data['includefile'] = 'users/useredit.php,common/common.php';
+        $iduser = base64_decode($userid);
+        $userdetaildata = $this->usersModel->getUserdetailById($iduser);
+        $this->data['userdetail'] = $userdetaildata;
+        $this->data['encuserid'] = $userid;
+        $this->data['password'] = $this->decryptToken($userdetaildata->user_login_key);
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\users\useredit', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function controlls($userid) {
+
+        if ($this->request->getMethod() == 'post') {
+            $encuser = $this->request->getPost('encuser');
+            $module = implode(",", $this->request->getPost('module'));
+            $module_control = implode(",", $this->request->getPost('module_control'));
+            $updatekeydata = array("user_modules" => $module, "user_module_controls" => $module_control);
+            $status = $this->usersModel->updateRecordInTable($updatekeydata, 'admin_user', 'user_id_user', base64_decode($encuser));
+            if ($status) {
+                $this->session->setFlashdata('message', setMessage("Controll Updated Successfully", 's'));
+            } else {
+                $this->session->setFlashdata('message', setMessage("Technical error, Please try after some time", 'e'));
+            }
+        }
+        $id = \base64_decode(\trim($userid));
+        $data = $this->usersModel->getModuleControll();
+        $this->data['controldata'] = $data['data'];
+        $this->data['encuserid'] = $userid;
+        $usermodulesdata = $this->usersModel->getUserModuleAndSubmodules($id);
+        $usermodules = explode(",", $usermodulesdata['data']->user_modules);
+        $usermodulecontrol = explode(",", $usermodulesdata['data']->user_module_controls);
+        $this->data['usermodule'] = $usermodules;
+        $this->data['usermodulecontrol'] = $usermodulecontrol;
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\users\usercontrol', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function userdata() {
+        $returndata = array();
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $limit = trim($this->request->getPost('length'));
+            $offset = trim($this->request->getPost('start'));
+            $draw = trim($this->request->getPost('draw'));
+            $name = trim($this->request->getPost('name'));
+            $email = trim($this->request->getPost('email'));
+            $mobile = trim($this->request->getPost('mobile'));
+            $order = $this->request->getPost('order');
+            $ordercolumn = $order[0]['column'];
+            $orderdirecttion = $order[0]['dir'];
+            $this->request->getPost('status') != '' ? $status = implode(',', $this->request->getPost('status')) : $status = '';
+            $daterange = generateDateFromDateRange($this->request->getPost('daterange'));
+            $data = array('name' => $name, 'email' => $email, 'mobile' => $mobile, 'status' => $status, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
+            $userlist = $this->usersModel->selectUsers($data, $ordercolumn, $orderdirecttion, $offset, $limit);
+            $returndata['data'] = $this->fn_formatedUserdata($userlist['data'], $offset);
+            $returndata['draw'] = $draw;
+            $returndata['recordsTotal'] = $userlist['record_count'];
+            $returndata['recordsFiltered'] = $userlist['record_count'];
+        }
+        echo json_encode($returndata);
+        die();
+    }
+
+    public function fn_formatedUserdata($data, $offset) {
+        $return = array();
+        $arraydata = (array) $data;
+        for ($x = 0; $x < count($arraydata); $x++) {
+            $action = '';
+            $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'user-edit/' . base64_encode($data[$x]->id_user) . '"><i class="fas fa-user-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            $action .= "<a title='Manage User Controls' href='" . ADMINPATH . "user-controlls/" . base64_encode($arraydata[$x]->id_user) . "'><i class='fas fa-user-cog'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+            if ($data[$x]->user_status == 'Active') {
+                $action .= '<a class="blue" title="Block Account" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->id_user) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            }if ($data[$x]->user_status == 'Blocked') {
+                $action .= '<a class="blue"  title="Unblock Account" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->id_user) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            }
+
+            $arraydata[$x]->action = $action;
+            $values = array_values((array) $arraydata[$x]);
+            $values[0] = $offset + $x + 1;
+            $return[] = $values;
+        }
+
+        return $return;
+    }
+
+}
