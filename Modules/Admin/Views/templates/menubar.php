@@ -4,12 +4,12 @@
     <ul class="metismenu list-unstyled" id="side-menu">
         <li class="menu-title" data-key="t-menu">Menu</li>
 
-        <li>
+<!--        <li>
             <a href="<?=ADMINPATH?>dashboard">
                 <i data-feather="home"></i>
                 <span data-key="t-dashboard">Dashboard</span>
             </a>
-        </li>
+        </li>-->
         <li>
             <a href="<?=ADMINPATH?>users-list">
                 <i data-feather="users"></i>
@@ -27,7 +27,7 @@
             </ul>
         </li>       
 
-        <li>
+<!--        <li>
             <a href="javascript: void(0);" class="has-arrow">
                 <i class="dripicons-network-3"></i>
                 <span data-key="t-treeview">Genealogy</span>
@@ -36,7 +36,7 @@
                 <li><a href="<?=ADMINPATH?>sponsor-view" data-key="t-sponsorview">Sponsor View</a></li>
                 <li><a href="<?=ADMINPATH?>downline-view" data-key="t-downlineview">Down-line view</a></li>                               
             </ul>
-        </li>        
+        </li>        -->
 <!--        <li>
             <a href="javascript: void(0);" class="has-arrow">
                 <i class="dripicons-shopping-bag"></i>

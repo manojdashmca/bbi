@@ -173,22 +173,10 @@
             icon: {
             },
             fields: {
-                title: {
-                    validators: {
-                        notEmpty: {
-                            message: "Choose User Salutation"
-                        }
-                    }
-                }, name: {
+                 name: {
                     validators: {
                         notEmpty: {
                             message: "User Name Required"
-                        }
-                    }
-                }, fatherhusband: {
-                    validators: {
-                        notEmpty: {
-                            message: "User Father/Husband Name Required"
                         }
                     }
                 },
@@ -243,5 +231,5 @@
             e.preventDefault();
             updateKycDetail();
         });
-    });    
+    });
 </script>

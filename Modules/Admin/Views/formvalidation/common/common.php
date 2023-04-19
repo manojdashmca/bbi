@@ -120,12 +120,18 @@
         var fatherhusband = $("#fatherhusband").val();
         var dob = $("#dob").val();
         var gender = $('input[name=gender]:checked').val();
-        var maritalstatus = $('input[name=maritalstatus]:checked').val();
+        var glink = $('input[name=glink]:checked').val();
         var encuser = $("#pinfoencuserid").val();
+        var maritalstatus = $('input[name=maritalstatus]:checked').val();
+        var eduqual = $("#eduqual").val();
+        var profcert = $("#profcert").val();
+        var bloodgroup = $("#bloodgroup").val();
+        var nameofgroup = $("#nameofgroup").val();
+        
         $.ajax({
             type: "POST",
             url: '<?= ADMINPATH ?>update-personal-detail',
-            data: {title: title, name: name, fatherhusband: fatherhusband, dob: dob, gender: gender, maritalstatus: maritalstatus, encuser: encuser},
+            data: {glink:glink,eduqual:eduqual,profcert:profcert,bloodgroup:bloodgroup,nameofgroup:nameofgroup,title: title, name: name, fatherhusband: fatherhusband, dob: dob, gender: gender, maritalstatus: maritalstatus, encuser: encuser},
             success: function (data) {
                 var jsonData = JSON.parse(data);
                 if (jsonData.status == 'success') {

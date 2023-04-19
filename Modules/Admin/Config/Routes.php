@@ -16,7 +16,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("ibo-list", "IBOController::index");
     $routes->match(['get', 'post'], "ibo-add", "IBOController::add");
     $routes->post("ibo-data", "IBOController::ibodata");
-    $routes->get("ibo-edit/(:any)", "IBOController::edit/$1");
+    $routes->get("ibo-edit/(:any)", "IBOController::edit/$1"); 
     $routes->get("get-sponsordetail-by-id/(:any)", "IBOController::getSponsorDetailById/$1");
     $routes->post("ibo-virtual-bp-data", "IBOController::iboVirtcualBpData");
     $routes->get("ibo-virtual-bp", "IBOController::iboVirtcualBp");
@@ -26,12 +26,12 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->post("update-sponsor", "IBOController::updateSponsor");   
 
     //------Tree Controller   
-    $routes->get("binary-tree", "TreeController::index");
-    $routes->get("sponsor-view", "TreeController::sponsorview");
-    $routes->post("tree-sponsorship-data", "TreeController::sponshorshipdata");
-    $routes->get("downline-view", "TreeController::downlianeview");
-    $routes->post("tree-downline-data", "TreeController::downlianedata");
-    $routes->post("tree-treeview-data", "TreeController::treeview");
+//    $routes->get("binary-tree", "TreeController::index");
+//    $routes->get("sponsor-view", "TreeController::sponsorview");
+//    $routes->post("tree-sponsorship-data", "TreeController::sponshorshipdata");
+//    $routes->get("downline-view", "TreeController::downlianeview");
+//    $routes->post("tree-downline-data", "TreeController::downlianedata");
+//    $routes->post("tree-treeview-data", "TreeController::treeview");
 
     //------Order Controller   
     $routes->get("order-list", "OrderController::index");
@@ -46,12 +46,13 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->post("order-Shipping-data", "OrderController::shippingdata");
     $routes->post("update-shipping", "OrderController::updateShipping");
     $routes->post("update-shipping-status", "OrderController::updateShippingStatus");
-    //------Product Controller   
+    //------Module Controller   
     $routes->get("module-list", "ModuleController::index");
     $routes->match(['get', 'post'], "module-add", "ModuleController::add");
     $routes->post("module-data", "ModuleController::moduledata");
     $routes->match(['get', 'post'], "module-edit/(:any)", "ModuleController::edit/$1");
-    $routes->get("module-detailview/(:any)", "ModuleController::detailview/$1");    
+    $routes->get("module-detailview/(:any)", "ModuleController::detailview/$1"); 
+    $routes->get("get-moduledetail-by-id/(:any)", "ModuleController::getModuleDetailById/$1");
     $routes->post("update-module-status", "ModuleController::updateModuleStatus");
     $routes->post("update-module-director","ModuleController::updateModuleDirectors");
     //------Coupons Controller   

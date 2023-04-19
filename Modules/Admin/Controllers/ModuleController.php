@@ -250,4 +250,18 @@ class ModuleController extends AdminController {
         exit;
     }
 
+    public function getModuleDetailById($id) {
+
+        if ($this->request->isAJAX()) {
+            $moduledetail = $this->moduleModel->getmoduleDetailById($id);
+            if (!empty($moduledetail)) {
+                $data = array('status' => 'success', 'message' => 'Module Detail Found', 'data' => $moduledetail);
+            } else {
+                $data = array('status' => 'error', 'message' => 'Module Not Found');
+            }
+        }
+        echo json_encode($data);
+        exit;
+    }
+
 }

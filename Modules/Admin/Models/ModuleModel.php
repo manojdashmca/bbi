@@ -64,10 +64,20 @@ class ModuleModel extends Model {
         }
         if ($type == 'ast') {
             $sql = "update module_position_audit set date_of_exit='" . date('Y-m-d H:i:s') . "',status=2 where status=1 and user_id_user='$userid' and position_id='3' and module_id_module='$lmid'";
-        }      
-        
+        }
+
         $this->db->query($sql);
-        return  $this->db->affectedRows();
+        return $this->db->affectedRows();
+    }
+
+    public function getmoduleDetailById($id) {
+        $sql = "select lm_id,lm_name,c.*,lz_name,b.user_name as director                 
+                FROM location_module as a
+                left join user_detail b on a.director_id=b.id_user                
+                left join location_zone c on zone_id_zone=lz_id 
+                where lm_status=1 and lm_code='$id'";
+        $result = $this->db->query($sql);
+        return $result->getRow();
     }
 
 }

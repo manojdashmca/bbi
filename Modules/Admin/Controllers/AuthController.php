@@ -57,10 +57,8 @@ class AuthController extends AdminController {
                                 $this->session->set('useremail', $result->user_email);
                                 $this->session->set('userid', $result->id_user);
                                 if ($result->user_type == 4) {
-                                    header("location:" . ADMINPATH);
-                                } elseif ($result->user_type == 2) {
-                                    header("location:franchise");
-                                }
+                                    header("location:" . ADMINPATH."ibo-list");
+                                } 
                                 exit;
                             }
                         } else {
@@ -233,11 +231,18 @@ class AuthController extends AdminController {
             $gender = $this->request->getPost('gender');
             $maritalstatus = $this->request->getPost('maritalstatus');
             $dob = $this->request->getPost('dob');
+            $glink = $this->request->getPost('glink');
+            $eduqual = $this->request->getPost('eduqual');
+            $profcert = $this->request->getPost('profcert');
+            $bloodgroup = $this->request->getPost('bloodgroup');
+            $nameofgroup = $this->request->getPost('nameofgroup');
+            
             $userid = base64_decode($this->request->getPost('encuser'));
 
             $updarray = array('user_title' => $title, 'user_name' => $name,
                 'user_father_husband' => $fatherhusband, 'user_gender' => $gender,
-                'user_marital_status' => $maritalstatus, 'user_dob' => makeDate($dob, 'Y-m-d'));
+                'user_marital_status' => $maritalstatus, 'user_dob' => makeDate($dob, 'Y-m-d'),
+                'user_group_link'=>$glink,'user_education'=>$eduqual,'user_profession_certification'=>$profcert,'user_blood_group'=>$bloodgroup,'user_group_link_org'=>$nameofgroup);
 
             $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
 

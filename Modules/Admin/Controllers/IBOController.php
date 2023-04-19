@@ -28,13 +28,12 @@ class IBOController extends AdminController {
         if ($this->request->getMethod() == 'post') {
 
             if (!$this->validate([
-                        'name' => 'required',
-                        'title' => 'required',
-                        'fatherhusband' => 'required',
+                        'name' => 'required',                        
                         'dob' => 'required',
                         'gender' => 'required',
                         'maritalstatus' => 'required',
-                        'hidval' => 'required'
+                        'hidval' => 'required',
+                        'hidmodule' => 'required'
                     ])) {
 
                 $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
@@ -44,8 +43,10 @@ class IBOController extends AdminController {
                 if ($utrstatus) {
                     $sponsorid = $this->request->getPost('hidval');
                     $name = $this->request->getPost('name');
-                    $title = $this->request->getPost('title');
-                    $fatherhusband = $this->request->getPost('fatherhusband');
+                    $bloodgroup = $this->request->getPost('bloodgroup');
+                    $eduqual = $this->request->getPost('eduqual');
+                    $profcert= $this->request->getPost('profcert');
+                    $hidmodule = $this->request->getPost('hidmodule');
                     $dob = $this->request->getPost('dob');
                     $gender = $this->request->getPost('gender');
                     $maritalstatus = $this->request->getPost('maritalstatus');
@@ -58,14 +59,14 @@ class IBOController extends AdminController {
                     $country = $this->request->getPost('country');
                     $mobile = $this->request->getPost('mobile');
                     $whatsappno = $this->request->getPost('whatsappno');
-                    $emailid = $this->request->getPost('emailid');
-                    $nomineename = $this->request->getPost('nomineename');
-                    $nomineerelation = $this->request->getPost('nomineerelation');
+                    $emailid = $this->request->getPost('emailid');                    
                     $bankacno = $this->request->getPost('bankacno');
                     $bankifsc = $this->request->getPost('bankifsc');
                     $bankname = $this->request->getPost('bankname');
                     $bankbranch = $this->request->getPost('bankbranch');
                     $panno = $this->request->getPost('panno');
+                    $glink = $this->request->getPost('glink');
+                    $nameofgroup = $this->request->getPost('nameofgroup');
                     $passphrase = createEpin(6);
                     $passwordnew = $this->encryptString($passphrase);
                     $userdetaildata = array(
@@ -73,9 +74,11 @@ class IBOController extends AdminController {
                         "user_login_key" => $passwordnew,
                         "user_create_date" => date("Y-m-d H:i:s"),
                         "sponsor_user_id" => $sponsorid,
-                        'user_title' => $title,
+                        'module_id_module' => $hidmodule,
                         'user_name' => $name,
-                        'user_father_husband' => $fatherhusband,
+                        'user_education' => $eduqual,
+                        'user_profession_certification' => $profcert,
+                        'user_blood_group' => $bloodgroup,
                         'user_gender' => $gender,
                         'user_marital_status' => $maritalstatus,
                         'user_mobile' => $mobile,
@@ -92,8 +95,8 @@ class IBOController extends AdminController {
                         "user_country" => $country,
                         "user_pan" => $panno,
                         "user_type" => 1,
-                        "user_nominee_name" => $nomineename,
-                        "user_nominee_relation" => $nomineerelation,
+                        "user_group_link" => $glink,
+                        "user_group_link_org" => $nameofgroup,
                         "user_bank_ac_no" => $bankacno,
                         "user_bank_ifsc" => $bankifsc,
                         "user_bank_name" => $bankname,
@@ -186,7 +189,7 @@ class IBOController extends AdminController {
                         $this->blankModel->transRollback();
                     } else {
                         $this->blankModel->transCommit();
-                        $this->session->setFlashdata('message', setMessage("IBO added Successfully.", 's'));
+                        $this->session->setFlashdata('message', setMessage("Member added Successfully.", 's'));
                     }
                 } else {
                     $this->session->setFlashdata('message', setMessage("multy time formsubmission not allowed", 'e'));

@@ -64,9 +64,7 @@
                             <li class="nav-item">
                                 <a class="nav-link px-3" data-bs-toggle="tab" href="#banking" role="tab">Banking Info</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3" data-bs-toggle="tab" href="#nominee" role="tab">Nominee Info</a>
-                            </li>
+                            
                             <li class="nav-item">
                                 <a class="nav-link px-3" data-bs-toggle="tab" href="#kyc" role="tab">KYC Info</a>
                             </li>
@@ -149,6 +147,50 @@
                                                     </div>
                                                 </div>                                    
                                             </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label">Education Qualification</label>
+                                                    <input type="text" class="form-control" id="eduqual" name="eduqual" value="<?= $userdetail->user_education ?>">
+                                                </div>                                    
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label">Professional Certification</label>
+                                                    <input type="text" class="form-control" id="profcert" name="profcert" value="<?= $userdetail->user_profession_certification ?>">
+                                                </div>                                    
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label">Blood Group</label>
+                                                    <select name="bloodgroup" id="bloodgroup" class="form-select">
+                                                        <option value="">Select Blood Group</option>
+                                                        <option value="O -Ve" <?= ($userdetail->user_blood_group == 'O -Ve') ? 'selected="selected"' : '' ?>>O -Ve</option>
+                                                        <option value="O +Ve" <?= ($userdetail->user_blood_group == 'O +Ve') ? 'selected="selected"' : '' ?>>O +Ve</option>
+                                                        <option value="A -Ve" <?= ($userdetail->user_blood_group == 'A -Ve') ? 'selected="selected"' : '' ?>>A -Ve</option>
+                                                        <option value="A +Ve" <?= ($userdetail->user_blood_group == 'A +Ve') ? 'selected="selected"' : '' ?>>A +Ve</option>
+                                                        <option value="B -Ve" <?= ($userdetail->user_blood_group == 'B -Ve') ? 'selected="selected"' : '' ?>>B -Ve</option>
+                                                        <option value="B +Ve" <?= ($userdetail->user_blood_group == 'B +Ve') ? 'selected="selected"' : '' ?>>B +Ve</option>
+                                                        <option value="AB -Ve" <?= ($userdetail->user_blood_group == 'AB -Ve') ? 'selected="selected"' : '' ?>>AB -Ve</option>
+                                                        <option value="AB +Ve" <?= ($userdetail->user_blood_group == 'AB +Ve') ? 'selected="selected"' : '' ?>>AB +Ve</option>
+                                                    </select>
+                                                </div>                                    
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label">If you are connected with NGOs, Political parties, Ex-Army Man ? please specify the</label>
+                                                    <div>
+                                                        <input type="radio" name="glink" value="Yes" class="form-check-input" <?= ($userdetail->user_group_link == 'Yes') ? 'checked="checked"' : '' ?>> Yes  
+                                                        <input type="radio" name="glink" value="No" class="form-check-input" <?= ($userdetail->user_group_link == 'No') ? 'checked="checked"' : '' ?>> No  
+
+                                                    </div>
+                                                    <div class="mt-2">
+                                                        <input type="text" class="form-control" id="nameofgroup" name="nameofgroup" placeholder="Name Of organization" value="<?= $userdetail->user_group_link_org ?>"> 
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
                                         </div>
 
                                         <!-- end row -->
@@ -309,41 +351,7 @@
                     </div>
                     <!-- end tab pane -->
 
-                    <div class="tab-pane" id="nominee" role="tabpanel">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">Nominee Detail</h5>
-                            </div>
-                            <div class="card-body">
-                                <div>
-                                    <form name="nomineedetail" id="nomineedetail" method="post">
-                                        <div class="row">                                    
-                                            <div class="col-lg-6">
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label">Nominee Name</label>
-                                                    <input type="text" class="form-control" id="nomineename" name="nomineename" value="<?= $userdetail->user_nominee_name ?>">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label">Nominee Relation</label>
-                                                    <input type="text" class="form-control" id="nomineerelation" name="nomineerelation" value="<?= $userdetail->user_nominee_relation ?>">
-                                                </div>                                    
-                                            </div>                                                                 
-                                        </div>
-                                        <div class="text-center mt-4">
-                                            <input type="hidden" name="ninfoencuserid" id="ninfoencuserid" value="<?= $encuserid ?>"/>                                        
-                                            <input type="submit" class="btn btn-success waves-effect waves-light" value="Update"/>
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </div>
-                            <!-- end card body -->
-                        </div>
-                        <!-- end card -->
-                    </div>
-                    <!-- end tab pane -->
+                    
 
                     <div class="tab-pane" id="kyc" role="tabpanel">
                         <div class="card">
@@ -498,9 +506,7 @@
                         <div class="d-flex flex-wrap gap-2 font-size-16">
                             <a href="#" class="badge badge-soft-primary">Joining Date- <?= $userdetail->user_create_date ?></a>
                             <a href="#" class="badge badge-soft-primary">Activation Date- <?= $userdetail->user_activation_date ?></a>
-                            <a href="#" class="badge badge-soft-primary">Sponsor- <?= $userdetail->sponsor ?></a>                            
-                            <a href="#" class="badge badge-soft-primary">Activation Type- <?= $userdetail->activation_type ?></a>
-                            <a href="#" class="badge badge-soft-primary">Capping- Rs-<?= incomeCapping($userdetail->joining_type) ?></a>
+                            <a href="#" class="badge badge-soft-primary">Sponsor- <?= $userdetail->sponsor ?></a>
                             <a href="#" class="badge badge-soft-primary">KYC Compliance - <?= $userdetail->kyc ?></a>
                             <a href="#" class="badge badge-soft-primary">KYC Date- <?= $userdetail->kyc_date ?></a>
                         </div>

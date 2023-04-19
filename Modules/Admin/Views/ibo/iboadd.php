@@ -5,12 +5,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Add New IBO</h4>
+                    <h4 class="mb-sm-0 font-size-18">Add New Member</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">IBO</a></li>
-                            <li class="breadcrumb-item active">Add IBO</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Member</a></li>
+                            <li class="breadcrumb-item active">Add Member</li>
                         </ol>
                     </div>
 
@@ -25,7 +25,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">IBO Registration Form</h4>
+                        <h4 class="card-title">Member Registration Form</h4>
                         <?= session()->getFlashdata('message'); ?>
                     </div>
                     <!-- end card header -->
@@ -33,60 +33,98 @@
                     <div class="card-body">
                         <form name="useradd" id="useradd" method="post" enctype="multipart/form-data">
                             <div>
+                                <h5 class="font-size-14 mb-3">Module Information</h5>
+                                <div class="row">                                
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="row">  
+                                            <div class="col-lg-8 col-md-8 col-sm-6">
+                                                <div class=" form-group mb-3">
+                                                    <label class="form-label">Module Id</label>
+                                                    <input type="text" class="form-control" id="moduleid" name="moduleid">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+                                                <button type="button" class="btn btn-primary" id="getModuleDetail" onclick="return CheckModuleDetail();">Get Detail</button>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">                                    
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Module Name</label>
+                                            <input type="hidden" name="hidmodule" id="hidmodule" value=""/>
+                                            <input readonly="" type="text" class="form-control" id="modulename" id="modulename">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">                                    
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Zone Name</label>                                            
+                                            <input readonly="" type="text" class="form-control" id="zonename" id="zonename">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">                                    
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Country Name</label>                                            
+                                            <input readonly="" type="text" class="form-control" id="countryname" id="countryname">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">                                    
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">State Name</label>                                            
+                                            <input readonly="" type="text" class="form-control" id="statename" id="statename">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">                                    
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">City Name</label>                                            
+                                            <input readonly="" type="text" class="form-control" id="cityname" id="cityname">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">                                    
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Module Director</label>                                            
+                                            <input readonly="" type="text" class="form-control" id="moduledirector" id="moduledirector">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
                                 <h5 class="font-size-14 mb-3">Sponsorship Information</h5>
                                 <div class="row">                                
-                                    <div class="col-lg-4 col-md-6">
+                                    <div class="col-lg-3 col-md-6">
                                         <div class="row">  
-                                            <div class="col-lg-9 col-md-8 col-sm-7">
+                                            <div class="col-lg-8 col-md-8 col-sm-7">
                                                 <div class=" form-group mb-3">
                                                     <label class="form-label">Sponsor Id</label>
                                                     <input type="text" class="form-control" id="sponsorid" name="sponsorid">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-4 col-sm-5 mt-4">
+                                            <div class="col-lg-4 col-md-4 col-sm-5 mt-4">
                                                 <button type="button" class="btn btn-primary" id="getDetail" onclick="return CheckSponsor();">Get Detail</button>
 
                                             </div>
                                         </div>
 
                                     </div>
-                                    <div class="col-lg-4 col-md-6">                                    
+                                    <div class="col-lg-3 col-md-6">                                    
                                         <div class="form-group mb-3">
                                             <label class="form-label">Sponsor Name</label>
                                             <input type="hidden" name="hidval" id="hidval" value=""/>
-                                            <input readonly="" type="text" class="form-control" id="sponsorname" id="sponsorname" id="sponsorname">
+                                            <input readonly="" type="text" class="form-control" id="sponsorname" id="sponsorname">
                                         </div>
                                     </div>                                    
                                 </div>
                             </div>
                             <div>
-                                <h5 class="font-size-14 mb-3">Basic Detail</h5>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Title</label>
-                                            <div>
-                                                <input type="radio" name="title" value="Sri" class="form-check-input"> Sri  
-                                                <input type="radio" name="title" value="Mr" class="form-check-input"> Mr  
-                                                <input type="radio" name="title" value="Mrs" class="form-check-input"> Mrs  
-                                                <input type="radio" name="title" value="Miss" class="form-check-input"> Miss  
-                                                <input type="radio" name="title" value="Dr" class="form-check-input"> Dr  
-                                            </div>
-
-                                        </div>
-                                    </div>
+                                <h5 class="font-size-14 mb-3">Personal Information</h5>
+                                <div class="row">                                    
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Name</label>
+                                            <label class="form-label">Member Full Name</label>
                                             <input type="text" class="form-control" id="name" name="name">
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Father/Husband Name</label>
-                                            <input type="text" class="form-control" id="fatherhusband" name="fatherhusband">
-                                        </div>                                    
-                                    </div> 
+                                    </div>                                     
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Date Of Birth</label>
@@ -114,6 +152,49 @@
                                                 <input type="radio" name="maritalstatus" value="Divorcee" class="form-check-input"> Divorcee  
                                             </div>
                                         </div>                                    
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Educational Qualification</label>
+                                            <input type="text" class="form-control" id="eduqual" name="eduqual">
+                                        </div>
+                                    </div> 
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Professional Certification</label>
+                                            <input type="text" class="form-control" id="profcert" name="profcert">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Blood group</label>
+                                            <select name="bloodgroup" id="bloodgroup" class="form-select">
+                                                <option value="">Select Blood Group</option>
+                                                <option value="O -Ve">O -Ve</option>
+                                                <option value="O +Ve">O +Ve</option>
+                                                <option value="A -Ve">A -Ve</option>
+                                                <option value="A +Ve">A +Ve</option>
+                                                <option value="B -Ve">B -Ve</option>
+                                                <option value="B +Ve">B +Ve</option>
+                                                <option value="AB -Ve">AB -Ve</option>
+                                                <option value="AB +Ve">AB +Ve</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">If you are connected with NGOs, Political parties, Ex-Army Man ? please specify the</label>
+                                            <div>
+                                                <input type="radio" name="glink" value="Yes" class="form-check-input"> Yes  
+                                                <input type="radio" name="glink" value="No" class="form-check-input"> No  
+
+                                            </div>
+                                            <div class="mt-2">
+                                                <input type="text" class="form-control" id="nameofgroup" name="nameofgroup" placeholder="Name Of organization"> 
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -188,25 +269,9 @@
 
                                 <!-- end row -->
                             </div>
+                            
                             <div>
-                                <h5 class="font-size-14 mb-3">Nomination Detail</h5>
-                                <div class="row">                                    
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Nominee Name</label>
-                                            <input type="text" class="form-control" id="nomineename" name="nomineename">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Nominee Relation</label>
-                                            <input type="text" class="form-control" id="nomineerelation" name="nomineerelation">
-                                        </div>                                    
-                                    </div>                                                                 
-                                </div>
-                            </div>
-                            <div>
-                                <h5 class="font-size-14 mb-3">Banking Detail</h5>
+                                <h5 class="font-size-14 mb-3">Personal Banking Detail</h5>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
@@ -276,7 +341,7 @@
                             <div class="text-center mt-4">
                                 <input type="hidden" name="utr" id="utr" value="<?= time() . rand(1000, 9999) ?>"/>    
                                 <input type="reset" class="btn btn-primary waves-effect waves-light" value="Cancel"/>
-                                <input type="submit" class="btn btn-success waves-effect waves-light" value="Cretae IBO"/>
+                                <input type="submit" class="btn btn-success waves-effect waves-light" value="Cretae Member"/>
                             </div>
                         </form>
                     </div>

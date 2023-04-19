@@ -53,7 +53,7 @@ class IboModel extends Model {
                 . "CASE user_activation_type WHEN NULL THEN 'Activation Not done' "
                 . "WHEN '1' THEN 'Autometic' "
                 . "WHEN '2' THEN 'Manual' "
-                . "END as activation_type,"
+                . "END as activation_type,a.user_education,a.user_profession_certification,a.user_group_link,a.user_group_link_org,a.user_blood_group,"
                 . "user_activation_date,a.user_create_date,joining_type,if(a.user_kyc_status='1','Yes','No') kyc,a.kyc_date,"
                 . "CONCAT_WS(' / ',b.user_code,b.user_login_name,b.user_name) as sponsor "                
                 . "from user_detail a join ibo_user on a.id_user=user_id_user "

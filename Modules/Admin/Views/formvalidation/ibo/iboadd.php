@@ -6,6 +6,20 @@
             icon: {
             },
             fields: {
+                moduleid: {
+                    validators: {
+                        notEmpty: {
+                            message: "Module Id is required"
+                        }
+                    }
+                },hidmodule: {
+                    excluded: false,
+                    validators: {
+                        notEmpty: {
+                            message: "Click on the getdetail"
+                        }
+                    }
+                },
                 sponsorid: {
                     validators: {
                         notEmpty: {
@@ -19,22 +33,10 @@
                             message: "Click on the getdetail"
                         }
                     }
-                }, title: {
-                    validators: {
-                        notEmpty: {
-                            message: "Choose User Salutation"
-                        }
-                    }
                 }, name: {
                     validators: {
                         notEmpty: {
                             message: "User Name Required"
-                        }
-                    }
-                }, fatherhusband: {
-                    validators: {
-                        notEmpty: {
-                            message: "User Father/Husband Name Required"
                         }
                     }
                 },
@@ -104,17 +106,17 @@
                         notEmpty: {
                             message: "User Mobile No Is Required"
                         },
-                        regexp: {
-                            regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
-                            message: 'Enter a valid email address'
+                       regexp: {
+                            regexp: '[0-9]{10}$',
+                            message: 'Invalid mobile no'
                         }
 
                     }
                 }, whatsappno: {
                     validators: {
                         regexp: {
-                            regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
-                            message: 'Enter a valid email address'
+                            regexp: '[0-9]{10}$',
+                            message: 'Invalid mobile no'
                         }
                     }
                 }, emailid: {
@@ -123,20 +125,8 @@
                             message: "Email Id Is Required"
                         },
                         regexp: {
-                            regexp: '[0-9]{10}$',
-                            message: 'Invalid mobile no'
-                        }
-                    }
-                }, nomineename: {
-                    validators: {
-                        notEmpty: {
-                            message: "Nominee Name Is Required"
-                        }
-                    }
-                }, nomineerelation: {
-                    validators: {
-                        notEmpty: {
-                            message: "Nominee Relation Is Required"
+                            regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                            message: 'Enter a valid email address'
                         }
                     }
                 }, bankacno: {
@@ -207,6 +197,40 @@
             });
         } else {
             Swal.fire('', 'Enter a IBO id and click on get detail to get the detail!', 'error');
+        }
+    }
+    
+    function CheckModuleDetail() {
+        $('#hidmodule').val('');
+        var moduleid = $('#moduleid').val();
+        if (moduleid != '') {
+            $.ajax({
+                type: "get",
+                url: '<?= ADMINPATH ?>get-moduledetail-by-id/' + moduleid,
+                success: function (data)
+                {
+                    $('#preloader').hide();
+                    var obj = JSON.parse(data);
+                    if (obj.status == 'success') {
+                        $('#hidmodule').val(obj.data.lm_id);
+                        $('#modulename').val(obj.data.lm_name);
+                        $('#zonename').val(obj.data.lz_name);
+                        $('#countryname').val(obj.data.country_name);
+                        $('#statename').val(obj.data.state_name);
+                        $('#cityname').val(obj.data.city_name);
+                        $('#moduledirector').val(obj.data.director);
+                        $('#useradd').formValidation("revalidateField", "hidmodule");
+                        Swal.fire('', obj.message, obj.status);
+                    } else {
+                        $('#hidval').val('');
+                        $('#sponsorname').val('');
+                        Swal.fire('', obj.message, obj.status);
+                    }
+
+                }
+            });
+        } else {
+            Swal.fire('', 'Enter a Module id and click on get detail to get the detail!', 'error');
         }
     }
 </script>
