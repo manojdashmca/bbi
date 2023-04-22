@@ -54,7 +54,7 @@ class ModuleController extends AdminController {
                 }
             }
         }
-        
+
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\module\moduleadd', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
@@ -282,6 +282,117 @@ class ModuleController extends AdminController {
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
     }
 
+    public function segmentdata() {
+        $returndata = array();
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $limit = trim($this->request->getPost('length'));
+            $offset = trim($this->request->getPost('start'));
+            $draw = trim($this->request->getPost('draw'));
+            $name = trim($this->request->getPost('name'));
+            $order = $this->request->getPost('order');
+            $ordercolumn = $order[0]['column'];
+            $orderdirecttion = $order[0]['dir'];
+            $data = array('name' => $name);
+            $userlist = $this->moduleModel->selectSegment($data, $ordercolumn, $orderdirecttion, $offset, $limit);
+            $returndata['data'] = $this->fn_formatedSegmentdata($userlist['data'], $offset);
+            $returndata['draw'] = $draw;
+            $returndata['recordsTotal'] = $userlist['record_count'];
+            $returndata['recordsFiltered'] = $userlist['record_count'];
+        }
+        echo json_encode($returndata);
+        die();
+    }
+    
+    
+
+    public function fn_formatedSegmentdata($data, $offset) {
+        $return = array();
+        $arraydata = (array) $data;
+        for ($x = 0; $x < count($arraydata); $x++) {
+            $values = array();
+            $action = '';
+            $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'segment-edit/' . base64_encode($data[$x]->segment_id) . '"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            if ($data[$x]->status == 'Active') {
+                $action .= '<a class="blue" title="Block Segment" href="#" onclick="return updateSegmentStatus(&#39;' . base64_encode($data[$x]->segment_id) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            }if ($data[$x]->status == 'Blocked') {
+                $action .= '<a class="blue"  title="Unblock Segment" href="#" onclick="return updateSegmentStatus(&#39;' . base64_encode($data[$x]->segment_id) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            }
+            $arraydata[$x]->action = $action;
+            $values = array_values((array) $arraydata[$x]);
+            $values[0] = $offset + $x + 1;
+            $return[] = $values;
+        }
+
+        return $return;
+    }
+    
+    public function editSegment($segmentid) {
+        $this->data['js'] = 'validation';
+        $this->data['css'] = 'validation';
+        $this->data['includefile'] = 'module/segmentedit.php';
+        if ($this->request->getMethod() == 'post') {
+
+            if (!$this->validate([
+                        'name' => 'required'                        
+                    ])) {
+
+                $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
+            } else {
+                $sid = base64_decode($this->request->getPost('encsegmentid'));
+                $name = $this->request->getPost('name');                
+
+                $updarray = array('segment_name' => $name);
+
+                $checkname = $this->blankModel->getTableData('segment_id', 'master_segment', 'lower(segment_name)="' . strtolower($name) . '" and segment_id !="' . $sid . '"');
+                if (empty($checkname)) {
+                    $this->blankModel->updateRecordInTable($updarray, 'master_segment', 'segment_id', $sid);
+                    $this->session->setFlashdata('message', setMessage("Segment updated Successfully.", 's'));
+                } else {
+                    $this->session->setFlashdata('message', setMessage("Segment Name already exists,Please use a different name.", 'i'));
+                }
+            }
+        }
+        $id = base64_decode($segmentid);
+        $segmentdetail = $this->moduleModel->getSegmentDetail($id);
+        $this->data['encsegmentid'] = $segmentid;
+        $this->data['segmentdetail'] = $segmentdetail;
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\module\segmentedit', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    
+    public function addSegment() {
+        $this->data['js'] = 'validation';
+        $this->data['css'] = 'validation';
+        $this->data['includefile'] = 'module/segmentadd.php';
+
+        if ($this->request->getMethod() == 'post') {
+
+            if (!$this->validate([
+                        'name' => 'required'
+                        
+                    ])) {
+
+                $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
+            } else {
+
+                $name = $this->request->getPost('name');                
+                $checkname = $this->blankModel->getTableData('segment_id', 'master_segment', 'LOWER(segment_name)="' . strtolower($name) . '"');
+                if (empty($checkname)) {
+                    $createarray = array('segment_name' => $name);
+                    $lmid = $this->blankModel->createRecordInTable($createarray, 'master_segment');                    
+                    $this->session->setFlashdata('message', setMessage("Segment added Successfully.", 's'));
+                } else {
+                    $this->session->setFlashdata('message', setMessage("Segment Already exists, Please use a different name.", 'e'));
+                }
+            }
+        }
+
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\module\segmentadd', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
     public function categorylist() {
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
@@ -298,6 +409,34 @@ class ModuleController extends AdminController {
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\module\modulelist', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function updateSegmentCategorySubcategoryStatus() {
+        $status = array('status' => 'error', 'message' => 'Unauthorised access');
+        if ($this->request->isAJAX()) {
+
+            $tableid = base64_decode($this->request->getPost('enctableid'));
+            $status = $this->request->getPost('status');
+            $type = $this->request->getPost('type');
+            switch ($type) {
+                case 1 :
+                    $updarray=array('segment_status'=>$status);
+                    $this->blankModel->updateRecordInTable($updarray,'master_segment','segment_id',$tableid);
+                    if ($status == 1) {
+                        $message = "Segment Unblocked Successfully";
+                    }if ($status == 2) {
+                        $message = "Segment Blocked Successfully";
+                    }
+                    break;
+                case 2 :
+                    break;
+                case 3 :
+                    break;
+            }
+            $data = array('status' => 'success', 'message' => $message);
+        }
+        echo json_encode($data);
+        exit;
     }
 
 }

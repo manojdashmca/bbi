@@ -152,39 +152,7 @@
         );
 
     }
-    function bindDatatable(page = 0) {
-        if (page != 0) {
-            var page = parseInt(page) * 10;
-        }
-        var name = $("#name").val();
-        var mobile = $("#mobile").val();
-        var daterange = $("#daterange").val();
-        var username = $("#username").val();
-        var pan = $("#pan").val();
-        $('#userlist').DataTable().destroy();
-        $('#userlist').DataTable({
-            responsive: true,
-            searching: false,
-            processing: true,
-            ordering: true,
-            bLengthChange: false,
-            serverSide: true,
-            displayStart: page,
-            pageLength: 10,
-            order: [[0, 'desc']],
-            ajax: {
-                method: "POST",
-                url: '<?= ADMINPATH ?>ibo-data',
-                data: function (d) {
-                    d.name = name;
-                    d.mobile = mobile;
-                    d.daterange = daterange;
-                    d.username = username;
-                    d.pan = pan;
-                }
-            }
-        });
-    }
+    
     function CheckMember(type) {
         $('#hiddenmemberid').val('');
         $('#ashiddenmemberid').val('');

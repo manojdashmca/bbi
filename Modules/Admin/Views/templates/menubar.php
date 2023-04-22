@@ -56,7 +56,9 @@
             </a>
             <ul class="sub-menu" aria-expanded="false">
                 <li><a href="<?=ADMINPATH?>module-list" data-key="t-businessreport">Module List</a></li>                  
-                <li><a href="<?=ADMINPATH?>module-add" data-key="t-companyperformance">Add New Module</a></li>                  
+                <li><a href="<?=ADMINPATH?>segment-list" data-key="t-companyperformance">Segment List</a></li>
+                <li><a href="<?=ADMINPATH?>category-list" data-key="t-companyperformance">Category List</a></li>
+                <li><a href="<?=ADMINPATH?>subcategory-list" data-key="t-companyperformance">Sub-Category List</a></li>
             </ul>
         </li>
 <!--        <li>

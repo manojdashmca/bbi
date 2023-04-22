@@ -55,6 +55,19 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("get-moduledetail-by-id/(:any)", "ModuleController::getModuleDetailById/$1");
     $routes->post("update-module-status", "ModuleController::updateModuleStatus");
     $routes->post("update-module-director","ModuleController::updateModuleDirectors");
+    $routes->get("segment-list", "ModuleController::segmentlist");
+    $routes->post("segment-data", "ModuleController::segmentdata");
+    $routes->post("update-segcatsubcat-status", "ModuleController::updateSegmentCategorySubcategoryStatus");
+    $routes->match(['get', 'post'], "segment-edit/(:any)", "ModuleController::editSegment/$1");
+    $routes->match(['get', 'post'], "segment-add", "ModuleController::addSegment");
+    $routes->get("category-list", "ModuleController::categorylist");
+    $routes->get("subcategory-list", "ModuleController::subcategorylist");
+    $routes->get("segment-add", "ModuleController::segmentadd");
+    $routes->get("category-add", "ModuleController::categoryadd");
+    $routes->get("subcategory-add", "ModuleController::subcategoryadd");
+    $routes->get("module-list", "ModuleController::index");
+    $routes->get("module-list", "ModuleController::index");
+    $routes->get("module-list", "ModuleController::index");
     //------Coupons Controller   
     $routes->get("coupon-list", "CouponsController::index");
 
@@ -79,11 +92,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("grievances-list", "UtilityController::grievances");
     $routes->get("news-list", "UtilityController::news");
 
-    //------Verification Controller   
-    $routes->get("kyc-verification", "VerificationController::kycverification");
-    $routes->get("kyc-user", "VerificationController::kycuser");
-    $routes->get("proficpic-verification", "VerificationController::profilepic");
-    $routes->get("kyc-franchise", "VerificationController::kycfranchise");
+    
     //------Configuration Controller   
     $routes->match(['get', 'post'], "configuration", "ConfigurationController::index");
 

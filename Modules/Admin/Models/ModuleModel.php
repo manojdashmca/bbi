@@ -77,5 +77,35 @@ class ModuleModel extends Model {
         $result = $this->db->query($sql);
         return $result->getRow();
     }
+    
+    public function selectSegment($data, $ordercolumn = 1, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
+        try {
+            $return = array();
+            $columnarray = array('segment_id', 'segment_name', 'segment_status');
+            $sql = "select SQL_CALC_FOUND_ROWS segment_id,segment_name,
+                if(segment_status='1','Active','Blocked') status 
+                FROM master_segment                 
+                where 1=1 ";
+            !empty($data['name']) ? $sql .= " AND segment_name like '%" . $data['name'] . "%'" : $sql .= '';
+            
+            $sql .= " ORDER BY $columnarray[$ordercolumn] $orderdirecttion limit $offset,$limit";
+
+            $sql1 = "SELECT FOUND_ROWS() as count";
+            $result = $this->db->query($sql);
+            $result1 = $this->db->query($sql1);
+            $return['data'] = $result->getResult();
+            $return['record_count'] = $result1->getRow()->count;
+            $return['message'] = "DB Operation Completed Succesfully";
+        } catch (Exception $e) {
+            $this->createModelError($e, 'IBO', 'selectDistributor');
+        }
+        return $return;
+    }
+    
+    public function getSegmentDetail($id){
+        $sql = "select * from master_segment where segment_id=$id ";
+        $result = $this->db->query($sql);
+        return $result->getRow();
+    }
 
 }
