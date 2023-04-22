@@ -11,10 +11,22 @@
                             message: "Module Name is required"
                         }
                     }
-                },zone: {
+                },city: {
                     validators: {
                         notEmpty: {
-                            message: "Zone is required"
+                            message: "city is required"
+                        }
+                    }
+                },state: {
+                    validators: {
+                        notEmpty: {
+                            message: "State is required"
+                        }
+                    }
+                },country: {
+                    validators: {
+                        notEmpty: {
+                            message: "Country is required"
                         }
                     }
                 }

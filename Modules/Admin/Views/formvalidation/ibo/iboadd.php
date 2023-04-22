@@ -159,6 +159,42 @@
                             message: "PAN Is Required"
                         }
                     }
+                }, membershipfee: {
+                    validators: {
+                        notEmpty: {
+                            message: "Enter Membership fee paid"
+                        }
+                    }
+                }, paymentmode: {
+                    validators: {
+                        notEmpty: {
+                            message: "Select Payment Mode"
+                        }
+                    }
+                }, paymentdetail: {
+                    validators: {
+                        notEmpty: {
+                            message: "Enter payment detail"
+                        }
+                    }
+                }, businesssegment: {
+                    validators: {
+                        notEmpty: {
+                            message: "Select Business Segment"
+                        }
+                    }
+                }, businesscategory: {
+                    validators: {
+                        notEmpty: {
+                            message: "Select Business Category"
+                        }
+                    }
+                }, businesssubcategory: {
+                    validators: {
+                        notEmpty: {
+                            message: "Select Business Sub Category"
+                        }
+                    }
                 }
             }
 
@@ -213,11 +249,10 @@
                     var obj = JSON.parse(data);
                     if (obj.status == 'success') {
                         $('#hidmodule').val(obj.data.lm_id);
-                        $('#modulename').val(obj.data.lm_name);
-                        $('#zonename').val(obj.data.lz_name);
-                        $('#countryname').val(obj.data.country_name);
-                        $('#statename').val(obj.data.state_name);
-                        $('#cityname').val(obj.data.city_name);
+                        $('#modulename').val(obj.data.lm_name);                        
+                        $('#countryname').val(obj.data.lm_country);
+                        $('#statename').val(obj.data.lm_state);
+                        $('#cityname').val(obj.data.lm_city);
                         $('#moduledirector').val(obj.data.director);
                         $('#useradd').formValidation("revalidateField", "hidmodule");
                         Swal.fire('', obj.message, obj.status);
@@ -232,5 +267,26 @@
         } else {
             Swal.fire('', 'Enter a Module id and click on get detail to get the detail!', 'error');
         }
+    }
+    
+    
+    function getBusinessBankDetail() {
+        var ifsc = $("#businessbankifsc").val();
+        $.ajax({
+            type: "GET",
+            url: '<?= ADMINPATH ?>getBankDetailByIfsc/' + ifsc,
+            success: function (data) {
+                var jsonData = JSON.parse(data);
+                if (jsonData.length > 0) {
+                    $("#businessbankname").val(jsonData[0].bank_name);
+                    $("#businessbankbranch").val(jsonData[0].bank_branch_name);
+                    $('#useradd').formValidation("revalidateField", "businessbankname");
+                    $('#useradd').formValidation("revalidateField", "businessbankbranch");
+                } else {
+                    $("#businessbankname").val('');
+                    $("#businessbankbranch").val('');
+                }
+            }
+        });
     }
 </script>

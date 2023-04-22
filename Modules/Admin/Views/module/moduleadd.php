@@ -44,17 +44,31 @@
                                     <div class="row">
                                         <div class="col-lg-4 col-md-6">                                    
                                             <div class="form-group  mb-3">
-                                                <label class="form-label">Mapped Zone</label>
-                                                <select class="form-select" id="zone" name="zone">
-                                                    <option value="">Select</option>
-                                                    <?php for ($x = 0; $x < count($zone); $x++) { ?>
-                                                        <option value="<?= $zone[$x]->lz_id ?>"><?= $zone[$x]->lz_name ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                            </div>                            
+                                                <label class="form-label">City Name</label>
+                                                <input type="text" class="form-control" id="city" name="city">
+                                            </div>                                  
 
-                                        </div>                                    
+                                        </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6">                                    
+                                            <div class="form-group  mb-3">
+                                                <label class="form-label">State Name</label>
+                                                <input type="text" class="form-control" id="state" name="state">
+                                            </div>                                  
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6">                                    
+                                            <div class="form-group  mb-3">
+                                                <label class="form-label">Country Name</label>
+                                                <input type="text" class="form-control" id="country" name="country">
+                                            </div>                                  
+
+                                        </div>
+                                    </div>
+                                    
                                     <div class="row">
 
                                         <div class="text-center mt-4 col-lg-4 col-md-6">

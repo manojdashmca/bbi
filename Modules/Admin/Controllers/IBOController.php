@@ -28,10 +28,8 @@ class IBOController extends AdminController {
         if ($this->request->getMethod() == 'post') {
 
             if (!$this->validate([
-                        'name' => 'required',                        
+                        'name' => 'required',
                         'dob' => 'required',
-                        'gender' => 'required',
-                        'maritalstatus' => 'required',
                         'hidval' => 'required',
                         'hidmodule' => 'required'
                     ])) {
@@ -45,11 +43,9 @@ class IBOController extends AdminController {
                     $name = $this->request->getPost('name');
                     $bloodgroup = $this->request->getPost('bloodgroup');
                     $eduqual = $this->request->getPost('eduqual');
-                    $profcert= $this->request->getPost('profcert');
+                    $profcert = $this->request->getPost('profcert');
                     $hidmodule = $this->request->getPost('hidmodule');
                     $dob = $this->request->getPost('dob');
-                    $gender = $this->request->getPost('gender');
-                    $maritalstatus = $this->request->getPost('maritalstatus');
                     $address = $this->request->getPost('address');
                     $pincode = $this->request->getPost('pincode');
                     $postoffice = $this->request->getPost('postoffice');
@@ -58,8 +54,7 @@ class IBOController extends AdminController {
                     $state = $this->request->getPost('state');
                     $country = $this->request->getPost('country');
                     $mobile = $this->request->getPost('mobile');
-                    $whatsappno = $this->request->getPost('whatsappno');
-                    $emailid = $this->request->getPost('emailid');                    
+                    $emailid = $this->request->getPost('emailid');
                     $bankacno = $this->request->getPost('bankacno');
                     $bankifsc = $this->request->getPost('bankifsc');
                     $bankname = $this->request->getPost('bankname');
@@ -67,6 +62,42 @@ class IBOController extends AdminController {
                     $panno = $this->request->getPost('panno');
                     $glink = $this->request->getPost('glink');
                     $nameofgroup = $this->request->getPost('nameofgroup');
+
+                    $businessbankacno = $this->request->getPost('businessbankacno');
+                    $businessbankifsc = $this->request->getPost('businessbankifsc');
+                    $businessbankname = $this->request->getPost('businessbankname');
+                    $businessbankbranch = $this->request->getPost('businessbankbranch');
+
+                    $shopact = $this->request->getPost('shopact');
+                    $shoplicenseno = $this->request->getPost('shoplicenseno');
+                    $isgst = $this->request->getPost('isgst');
+                    $gstno = $this->request->getPost('gstno');
+
+                    //----------------businessdetail--------
+                    $businessname = $this->request->getPost('businessname');
+                    $businessdesignation = $this->request->getPost('businessdesignation');
+                    $businesssegment = $this->request->getPost('businesssegment');
+                    $businesscategory = $this->request->getPost('businesscategory');
+                    $businesssubcategory = $this->request->getPost('businesssubcategory');
+                    $businessaddress = $this->request->getPost('businessaddress');
+                    $businesscity = $this->request->getPost('businesscity');
+                    $gstaddress = $this->request->getPost('gstaddress');
+                    $businesspan = $this->request->getPost('businesspan');
+                    $currentbusiness = $this->request->getPost('currentbusiness');
+                    $businessemail = $this->request->getPost('businessemail');
+                    $businesswebsite = $this->request->getPost('businesswebsite');
+                    $businessexp = $this->request->getPost('businessexp');
+                    if ($this->request->getPost('social') != false) {
+                        $social = implode(',', $this->request->getPost('social'));
+                    } else {
+                        $social = '';
+                    }
+                    $paymentamount = $this->request->getPost('membershipfee');
+                    $paymentmode = $this->request->getPost('paymentmode');
+                    $paymentdetail = $this->request->getPost('paymentdetail');
+
+                    //-------------------------------------
+
                     $passphrase = createEpin(6);
                     $passwordnew = $this->encryptString($passphrase);
                     $userdetaildata = array(
@@ -79,11 +110,7 @@ class IBOController extends AdminController {
                         'user_education' => $eduqual,
                         'user_profession_certification' => $profcert,
                         'user_blood_group' => $bloodgroup,
-                        'user_gender' => $gender,
-                        'user_marital_status' => $maritalstatus,
                         'user_mobile' => $mobile,
-                        'user_whatsappno' => $whatsappno,
-                        'is_mobile_verified' => 1,
                         "user_email" => $emailid,
                         "user_dob" => makeDate($dob, 'Y-m-d'),
                         "user_address" => $address,
@@ -97,88 +124,114 @@ class IBOController extends AdminController {
                         "user_type" => 1,
                         "user_group_link" => $glink,
                         "user_group_link_org" => $nameofgroup,
-                        "user_bank_ac_no" => $bankacno,
-                        "user_bank_ifsc" => $bankifsc,
-                        "user_bank_name" => $bankname,
-                        "user_bank_branch" => $bankbranch
+                        "user_business_bank_account" => $businessbankacno,
+                        "user_business_bank_ifsc" => $businessbankifsc,
+                        "user_business_bank_name" => $businessbankname,
+                        "user_business_bank_branch" => $businessbankbranch,
+                        "shop_act" => $shopact,
+                        "shop_license_no" => $shoplicenseno,
+                        "gst_registered" => $isgst,
+                        "gst_no" => $gstno
                     );
                     $this->blankModel->transStart();
                     $iduser = $this->blankModel->createRecordInTable($userdetaildata, 'user_detail');
                     $this->blankModel->createRecordInTable(array('user_id_user' => $iduser), 'ibo_user');
+                    $businessdetailarray = array(
+                        'user_id_user' => $iduser,
+                        'business_name' => $businessname,
+                        'business_designation' => $businessdesignation,
+                        'business_segment' => $businesssegment,
+                        'business_category' => $businesscategory,
+                        'business_subcategory' => $businesssubcategory,
+                        'business_address' => $businessaddress,
+                        'business_city' => $businesscity,
+                        'gst_address' => $gstaddress,
+                        'business_pan' => $businesspan,
+                        'current_business' => $currentbusiness,
+                        'business_email' => $businessemail,
+                        'business_website' => $businesswebsite,
+                        'overall_experience' => $businessexp,
+                        'social_presence' => $social,
+                        'payment_amount' => $paymentamount,
+                        'payment_method' => $paymentmode,
+                        'payment_remark' => $paymentdetail,
+                        'payment_status' => 1
+                    );
+                    $this->blankModel->createRecordInTable($businessdetailarray, 'ibo_business_detail');
                     $usercode = $this->checkAndcreateUserCode($iduser);
                     $updarr = array('user_code' => $usercode);
                     $this->blankModel->updateRecordInTable($updarr, 'user_detail', 'id_user', $iduser);
-                    $updarray = array();
-                    if (isset($_FILES['cancelcheque'])) {
-                        if ($_FILES['cancelcheque']['error'] != 4) {
-                            $validationRule = [
-                                'pimage' => [
-                                    'rules' => 'mime_in[cancelcheque,image/jpg,image/jpeg,image/png,image/webp]'
-                                    . '|max_size[cancelcheque,10000000]',
-                                ],
-                            ];
-                            if ($this->validate($validationRule)) {
-                                $img = $this->request->getFile('cancelcheque');
-                                if (!$img->hasMoved()) {
-                                    $filename = $usercode . '_cancelcheque.' . pathinfo($_FILES["cancelcheque"]["name"], PATHINFO_EXTENSION);
-                                    $img->move('uploads/images/kyc/', $filename, true);
-                                    $updarray['kyc_cancel_cheque'] = $filename;
-                                }
-                            }
-                        }
-                    }
-                    if ($_FILES['addressproof']['error'] != 4) {
-                        $validationRule = [
-                            'pimage' => [
-                                'rules' => 'mime_in[addressproof,image/jpg,image/jpeg,image/png,image/webp]'
-                                . '|max_size[addressproof,10000000]',
-                            ],
-                        ];
-                        if ($this->validate($validationRule)) {
-                            $img = $this->request->getFile('addressproof');
-                            if (!$img->hasMoved()) {
-                                $filename = $usercode . '_address.' . pathinfo($_FILES["addressproof"]["name"], PATHINFO_EXTENSION);
-                                $img->move('uploads/images/kyc/', $filename);
-                                $updarray['kyc_address'] = $filename;
-                            }
-                        }
-                    }
-                    if ($_FILES['pancopy']['error'] != 4) {
-                        $validationRule = [
-                            'pimage' => [
-                                'rules' => 'mime_in[pancopy,image/jpg,image/jpeg,image/png,image/webp]'
-                                . '|max_size[pancopy,10000000]',
-                            ],
-                        ];
-                        if ($this->validate($validationRule)) {
-                            $img = $this->request->getFile('pancopy');
-                            if (!$img->hasMoved()) {
-                                $filename = $usercode . '_pan.' . pathinfo($_FILES["pancopy"]["name"], PATHINFO_EXTENSION);
-                                $img->move('uploads/images/kyc/', $filename);
-                                $updarray['kyc_pan'] = $filename;
-                            }
-                        }
-                    }
-                    if ($_FILES['image']['error'] != 4) {
-                        $validationRule = [
-                            'pimage' => [
-                                'rules' => 'mime_in[image,image/jpg,image/jpeg,image/png,image/webp]'
-                                . '|max_size[image,10000000]',
-                            ],
-                        ];
-                        if ($this->validate($validationRule)) {
-                            $img = $this->request->getFile('image');
-                            if (!$img->hasMoved()) {
-                                $filename = $usercode . '_image.' . pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-                                $img->move('uploads/images/kyc/', $filename);
-                                $updarray['kyc_image'] = $filename;
-                            }
-                        }
-                    }
-
-                    if (!empty($updarray)) {
-                        $this->blankModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $iduser);
-                    }
+                    //$updarray = array();
+//                    if (isset($_FILES['cancelcheque'])) {
+//                        if ($_FILES['cancelcheque']['error'] != 4) {
+//                            $validationRule = [
+//                                'pimage' => [
+//                                    'rules' => 'mime_in[cancelcheque,image/jpg,image/jpeg,image/png,image/webp]'
+//                                    . '|max_size[cancelcheque,10000000]',
+//                                ],
+//                            ];
+//                            if ($this->validate($validationRule)) {
+//                                $img = $this->request->getFile('cancelcheque');
+//                                if (!$img->hasMoved()) {
+//                                    $filename = $usercode . '_cancelcheque.' . pathinfo($_FILES["cancelcheque"]["name"], PATHINFO_EXTENSION);
+//                                    $img->move('uploads/images/kyc/', $filename, true);
+//                                    $updarray['kyc_cancel_cheque'] = $filename;
+//                                }
+//                            }
+//                        }
+//                    }
+//                    if ($_FILES['addressproof']['error'] != 4) {
+//                        $validationRule = [
+//                            'pimage' => [
+//                                'rules' => 'mime_in[addressproof,image/jpg,image/jpeg,image/png,image/webp]'
+//                                . '|max_size[addressproof,10000000]',
+//                            ],
+//                        ];
+//                        if ($this->validate($validationRule)) {
+//                            $img = $this->request->getFile('addressproof');
+//                            if (!$img->hasMoved()) {
+//                                $filename = $usercode . '_address.' . pathinfo($_FILES["addressproof"]["name"], PATHINFO_EXTENSION);
+//                                $img->move('uploads/images/kyc/', $filename);
+//                                $updarray['kyc_address'] = $filename;
+//                            }
+//                        }
+//                    }
+//                    if ($_FILES['pancopy']['error'] != 4) {
+//                        $validationRule = [
+//                            'pimage' => [
+//                                'rules' => 'mime_in[pancopy,image/jpg,image/jpeg,image/png,image/webp]'
+//                                . '|max_size[pancopy,10000000]',
+//                            ],
+//                        ];
+//                        if ($this->validate($validationRule)) {
+//                            $img = $this->request->getFile('pancopy');
+//                            if (!$img->hasMoved()) {
+//                                $filename = $usercode . '_pan.' . pathinfo($_FILES["pancopy"]["name"], PATHINFO_EXTENSION);
+//                                $img->move('uploads/images/kyc/', $filename);
+//                                $updarray['kyc_pan'] = $filename;
+//                            }
+//                        }
+//                    }
+//                    if ($_FILES['image']['error'] != 4) {
+//                        $validationRule = [
+//                            'pimage' => [
+//                                'rules' => 'mime_in[image,image/jpg,image/jpeg,image/png,image/webp]'
+//                                . '|max_size[image,10000000]',
+//                            ],
+//                        ];
+//                        if ($this->validate($validationRule)) {
+//                            $img = $this->request->getFile('image');
+//                            if (!$img->hasMoved()) {
+//                                $filename = $usercode . '_image.' . pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+//                                $img->move('uploads/images/kyc/', $filename);
+//                                $updarray['kyc_image'] = $filename;
+//                            }
+//                        }
+//                    }
+//
+//                    if (!empty($updarray)) {
+//                        $this->blankModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $iduser);
+//                    }
                     //------------do  other functionality LINK SMS EMAIL-----
                     $this->createGenerationTree($sponsorid, $iduser, 1);
                     //----------------------------------------
@@ -189,14 +242,16 @@ class IBOController extends AdminController {
                         $this->blankModel->transRollback();
                     } else {
                         $this->blankModel->transCommit();
-                        $this->session->setFlashdata('message', setMessage("Member added Successfully.", 's'));
+                        $this->session->setFlashdata('message', setMessage("Member added Successfully. Member code-" . $usercode, 's'));
                     }
                 } else {
                     $this->session->setFlashdata('message', setMessage("multy time formsubmission not allowed", 'e'));
                 }
             }
         }
-
+        $this->data['segment'] = $this->iboModel->getBusinesssegment();
+        $this->data['category'] = $this->iboModel->getBusinessCategory();
+        $this->data['subcategory'] = $this->iboModel->getBusinessSubCategory();
         $this->data['js'] = 'flatpickr,validation,sweetalert';
         $this->data['css'] = 'flatpickr,validation,sweetalert';
         $this->data['includefile'] = 'ibo/iboadd.php,common/common.php';

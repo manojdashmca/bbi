@@ -45,17 +45,31 @@
                                     <div class="row">
                                         <div class="col-lg-4 col-md-6">                                    
                                             <div class="form-group  mb-3">
-                                                <label class="form-label">Mapped Zone</label>
-                                                <select class="form-select" id="zone" name="zone">
-                                                    <option value="">Select</option>
-                                                    <?php for ($x = 0; $x < count($zone); $x++) { ?>
-                                                        <option value="<?= $zone[$x]->lz_id ?>" <?php if($moduledetail->zone_id_zone==$zone[$x]->lz_id){ echo "selected='selected'";}?>><?= $zone[$x]->lz_name ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                            </div>                            
+                                                <label class="form-label">Module City</label>
+                                                <input type="text" class="form-control" id="city" name="city" value="<?=$moduledetail->lm_city?>">
+                                            </div>                                  
 
-                                        </div>                                    
+                                        </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6">                                    
+                                            <div class="form-group  mb-3">
+                                                <label class="form-label">Module State</label>
+                                                <input type="text" class="form-control" id="state" name="state" value="<?=$moduledetail->lm_state?>">
+                                            </div>                                  
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6">                                    
+                                            <div class="form-group  mb-3">
+                                                <label class="form-label">Module Country</label>
+                                                <input type="text" class="form-control" id="country" name="country" value="<?=$moduledetail->lm_country?>">
+                                            </div>                                  
+
+                                        </div>
+                                    </div>
+                                    
                                     <div class="row">
 
                                         <div class="text-center mt-4 col-lg-4 col-md-6">

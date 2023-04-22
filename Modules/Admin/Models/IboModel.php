@@ -47,14 +47,14 @@ class IboModel extends Model {
     }
 
     public function getIboDetailById($id) {
-        $sql = "SELECT a.id_user,a.user_login_name,a.user_login_key,a.user_code,a.user_title,a.user_name,a.user_father_husband,a.user_gender,a.user_marital_status,a.user_mobile,a.user_whatsappno,"
-                . "a.user_email,a.user_dob,a.user_address,a.user_city,a.user_pincode,a.user_post_office,a.user_district,a.user_state,a.user_country,a.user_pan,a.user_nominee_name,a.kyc_cancel_cheque,"
-                . "a.user_nominee_relation,a.user_nominee_address,a.user_bank_ac_no,a.user_bank_ifsc,a.user_bank_name,a.user_bank_branch,a.kyc_address,a.kyc_pan,a.kyc_image,"
+        $sql = "SELECT a.id_user,a.user_login_name,a.user_login_key,a.user_code,a.user_name,a.user_mobile,"
+                . "a.user_email,a.user_dob,a.user_address,a.user_city,a.user_pincode,a.user_post_office,a.user_district,a.user_state,a.user_country,a.user_pan,"
+                . "a.user_bank_ac_no,a.user_bank_ifsc,a.user_bank_name,a.user_bank_branch,"
                 . "CASE user_activation_type WHEN NULL THEN 'Activation Not done' "
                 . "WHEN '1' THEN 'Autometic' "
                 . "WHEN '2' THEN 'Manual' "
                 . "END as activation_type,a.user_education,a.user_profession_certification,a.user_group_link,a.user_group_link_org,a.user_blood_group,"
-                . "user_activation_date,a.user_create_date,joining_type,if(a.user_kyc_status='1','Yes','No') kyc,a.kyc_date,"
+                . "user_activation_date,a.user_create_date,joining_type,"
                 . "CONCAT_WS(' / ',b.user_code,b.user_login_name,b.user_name) as sponsor "                
                 . "from user_detail a join ibo_user on a.id_user=user_id_user "
                 . "LEFT JOIN user_detail as b on a.sponsor_user_id=b.id_user "
@@ -293,6 +293,28 @@ class IboModel extends Model {
         $sql = "select count(*) as count from ibo_binary_position where parent_id='$parent' and position='$position' and ibo_id='$newsponsor'";
         $result = $this->db->query($sql);
         return $result->getRow()->count;
+    }
+    
+    public function getBusinesssegment(){
+        $sql="Select * from master_segment where segment_status=1";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }public function getBusinessCategory($segmentid=0){
+        $sql="Select * from master_category where category_status=1";
+        if(!empty($segmentid)){
+            $sql.=" AND segment_id_segment='$segmentid'";
+        }
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }public function getBusinessSubCategory($segmentid=0,$categoryid=0){
+        $sql="Select * from master_sub_category where sub_category_status=1";
+        if(!empty($segmentid)){
+            $sql.=" AND segment_id_segment='$segmentid'";
+        }if(!empty($segmentid)){
+            $sql.=" AND category_id_category='$categoryid'";
+        }
+        $result = $this->db->query($sql);
+        return $result->getResult();
     }
 
 }

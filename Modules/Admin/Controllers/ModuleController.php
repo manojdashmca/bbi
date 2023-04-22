@@ -30,23 +30,27 @@ class ModuleController extends AdminController {
 
             if (!$this->validate([
                         'name' => 'required',
-                        'zone' => 'required'
+                        'city' => 'required',
+                        'state' => 'required',
+                        'country' => 'required'
                     ])) {
 
                 $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
             } else {
 
                 $name = $this->request->getPost('name');
-                $zone = $this->request->getPost('zone');
-                $checkname = $this->blankModel->getTableData('lm_id', 'location_module', 'lm_name="' . $name . '"');
+                $city = $this->request->getPost('city');
+                $state = $this->request->getPost('state');
+                $country = $this->request->getPost('country');
+                $checkname = $this->blankModel->getTableData('lm_id', 'location_module', 'LOWER(lm_name)="' . strtolower($name) . '"');
                 if (empty($checkname)) {
-                    $createarray = array('lm_name' => $name, 'zone_id_zone' => $zone);
+                    $createarray = array('lm_name' => $name, 'lm_city' => $city, 'lm_state' => $state, 'lm_country' => $country);
                     $lmid = $this->blankModel->createRecordInTable($createarray, 'location_module');
                     $modulecode = $this->createModuleCode($lmid);
                     $this->blankModel->updateRecordInTable(array('lm_code' => $modulecode), 'location_module', 'lm_id', $lmid);
                     $this->session->setFlashdata('message', setMessage("Module added Successfully.", 's'));
                 } else {
-                    $this->session->setFlashdata('message', setMessage("Module Already exists, Please different name.", 's'));
+                    $this->session->setFlashdata('message', setMessage("Module Already exists, Please use a different name.", 'e'));
                 }
             }
         }
@@ -126,20 +130,26 @@ class ModuleController extends AdminController {
 
             if (!$this->validate([
                         'name' => 'required',
-                        'zone' => 'required'
+                        'city' => 'required',
+                        'state' => 'required',
+                        'country' => 'required'
                     ])) {
 
                 $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
             } else {
                 $mid = base64_decode($this->request->getPost('encmoduleid'));
                 $name = $this->request->getPost('name');
-                $zone = $this->request->getPost('zone');
+                $city = $this->request->getPost('city');
+                $state = $this->request->getPost('state');
+                $country = $this->request->getPost('country');
 
                 $updarray = array(
                     'lm_name' => $name,
-                    'zone_id_zone' => $zone);
+                    'lm_city' => $city,
+                    'lm_state' => $state,
+                    'lm_country' => $country);
 
-                $checkname = $this->blankModel->getTableData('lm_id', 'location_module', 'lm_name="' . $name . '" and lm_id !="' . $mid . '"');
+                $checkname = $this->blankModel->getTableData('lm_id', 'location_module', 'lower(lm_name)="' . strtolower($name) . '" and lm_id !="' . $mid . '"');
                 if (empty($checkname)) {
 
                     $this->blankModel->updateRecordInTable($updarray, 'location_module', 'lm_id', $mid);

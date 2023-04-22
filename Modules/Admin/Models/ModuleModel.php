@@ -15,14 +15,13 @@ class ModuleModel extends Model {
     public function selectModule($data, $ordercolumn = 7, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
         try {
             $return = array();
-            $columnarray = array('lm_id', 'lm_code', 'lm_name', 'lz_name', 'b.user_name', 'c.user_name', 'd.user_name', 'lm_status');
-            $sql = "select SQL_CALC_FOUND_ROWS lm_id,lm_code,lm_name,lz_name,b.user_name as director,c.user_name associate,d.user_name assistant,
+            $columnarray = array('lm_id', 'lm_code', 'lm_name', 'lm_city','lm_state','lm_country', 'b.user_name', 'c.user_name', 'd.user_name', 'lm_status');
+            $sql = "select SQL_CALC_FOUND_ROWS lm_id,lm_code,lm_name,lm_city,lm_state,lm_country,b.user_name as director,c.user_name associate,d.user_name assistant,
                 if(lm_status='1','Active','Blocked') status 
                 FROM location_module as a
                 left join user_detail b on a.director_id=b.id_user
                 left join user_detail c on a.associate_director_id=c.id_user 
-                left join user_detail d on a.assistant_director_id=d.id_user 
-                left join location_zone on zone_id_zone=lz_id 
+                left join user_detail d on a.assistant_director_id=d.id_user                 
                 where 1=1 ";
             !empty($data['name']) ? $sql .= " AND lm_name like '%" . $data['name'] . "%'" : $sql .= '';
             !empty($data['sku']) ? $sql .= " AND product_sku = '" . $data['sku'] . "'" : $sql .= '';
@@ -71,11 +70,10 @@ class ModuleModel extends Model {
     }
 
     public function getmoduleDetailById($id) {
-        $sql = "select lm_id,lm_name,c.*,lz_name,b.user_name as director                 
+        $sql = "select a.*,b.user_name as director                 
                 FROM location_module as a
-                left join user_detail b on a.director_id=b.id_user                
-                left join location_zone c on zone_id_zone=lz_id 
-                where lm_status=1 and lm_code='$id'";
+                left join user_detail b on a.director_id=b.id_user        
+                where lm_status=1 and (lm_code='$id' OR LOWER(lm_name)= '". strtolower($id)."')";
         $result = $this->db->query($sql);
         return $result->getRow();
     }
