@@ -54,7 +54,7 @@ class ModuleController extends AdminController {
                 }
             }
         }
-        $this->data['zone'] = $this->moduleModel->getAllZones();
+        
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\module\moduleadd', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
@@ -162,7 +162,7 @@ class ModuleController extends AdminController {
         $id = base64_decode($moduleid);
         $moduledetail = $this->moduleModel->getModuleDetail($id);
         $this->data['encmoduleid'] = $moduleid;
-        $this->data['moduledetail'] = $moduledetail;        
+        $this->data['moduledetail'] = $moduledetail;
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\module\moduleedit', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
@@ -271,6 +271,33 @@ class ModuleController extends AdminController {
         }
         echo json_encode($data);
         exit;
+    }
+
+    public function segmentlist() {
+        $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
+        $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
+        $this->data['includefile'] = 'module/segmentlist.php';
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\module\segmentlist', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function categorylist() {
+        $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
+        $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
+        $this->data['includefile'] = 'module/modulelist.php';
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\module\modulelist', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function subcategorylist() {
+        $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
+        $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
+        $this->data['includefile'] = 'module/modulelist.php';
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\module\modulelist', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
     }
 
 }
