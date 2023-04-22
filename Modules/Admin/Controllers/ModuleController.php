@@ -162,8 +162,7 @@ class ModuleController extends AdminController {
         $id = base64_decode($moduleid);
         $moduledetail = $this->moduleModel->getModuleDetail($id);
         $this->data['encmoduleid'] = $moduleid;
-        $this->data['moduledetail'] = $moduledetail;
-        $this->data['zone'] = $this->moduleModel->getAllZones();
+        $this->data['moduledetail'] = $moduledetail;        
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\module\moduleedit', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
