@@ -28,7 +28,7 @@
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="validationCustom01">User name</label>
-                                        <input type="text" class="form-control" id="username" id="name" placeholder="name"/>
+                                        <input type="text" class="form-control" id="name" placeholder="name"/>
 
                                     </div>
                                 </div>

@@ -225,7 +225,6 @@ class UsersController extends AdminController {
             $offset = trim($this->request->getPost('start'));
             $draw = trim($this->request->getPost('draw'));
             $name = trim($this->request->getPost('name'));
-            $email = trim($this->request->getPost('email'));
             $mobile = trim($this->request->getPost('mobile'));
             $order = $this->request->getPost('order');
             $ordercolumn = $order[0]['column'];
