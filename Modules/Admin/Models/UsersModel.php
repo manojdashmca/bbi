@@ -17,12 +17,12 @@ class UsersModel extends Model {
             $sql = "select SQL_CALC_FOUND_ROWS id_user,user_name,CONCAT_WS(' / ',user_code,user_login_name) user_coden,user_mobile,user_email,"
                     . "if(user_status='1','Active','Blocked') user_status,"
                     . "date_format(user_create_date,'%d-%m-%Y %H:%i:%s') createedon "
-                    . "FROM user_detail "
+                    . "FROM user_detail  "
                     . "WHERE user_status !=3 and user_type >=4 ";
-            !empty($data['email']) ? $sql .= " AND  a.user_email = '" . $data['email'] . "'" : $sql .= '';
-            !empty($data['mobile']) ? $sql .= " AND  a.user_mobile = '" . $data['mobile'] . "'" : $sql .= '';
-            !empty($data['status']) ? $sql .= " AND  a.user_status in( '" . $data['status'] . "')" : $sql .= '';
-            !empty($data['name']) ? $sql .= " AND  a.user_name like '%" . $data['name'] . "%'" : $sql .= '';
+            !empty($data['email']) ? $sql .= " AND  user_email = '" . $data['email'] . "'" : $sql .= '';
+            !empty($data['mobile']) ? $sql .= " AND  user_mobile = '" . $data['mobile'] . "'" : $sql .= '';
+            !empty($data['status']) ? $sql .= " AND  user_status in( '" . $data['status'] . "')" : $sql .= '';
+            !empty($data['name']) ? $sql .= " AND  user_name like '%" . $data['name'] . "%'" : $sql .= '';
             !empty($data['fromdate']) ? $sql .= " AND  date_format(user_create_date,'%Y-%m-%d') >= '" . date('Y-m-d', strtotime($data['fromdate'])) . "'" : $sql .= '';
             !empty($data['todate']) ? $sql .= " AND  date_format(user_create_date,'%Y-%m-%d') <= '" . date('Y-m-d', strtotime($data['todate'])) . "'" : $sql .= '';
             $sql .= " ORDER BY $columnarray[$ordercolumn] $orderdirecttion limit $offset,$limit";
