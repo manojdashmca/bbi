@@ -35,7 +35,7 @@
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="validationCustom02">User Mobile</label>
-                                        <input type="text" class="form-control" id="usermobile" id="mobile" placeholder="mobile" />
+                                        <input type="text" class="form-control" id="mobile" placeholder="mobile" />
 
                                     </div>
                                 </div>                                
