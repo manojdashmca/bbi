@@ -1,5 +1,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
+        var e = document.querySelectorAll("[data-trigger]");
+        for (i = 0; i < e.length; ++i) {
+            var a = e[i];
+            new Choices(a, {placeholderValue: "This is a placeholder set in the config", searchPlaceholderValue: "This is a search placeholder"});
+        }
         flatpickr("#dob", {dateFormat: "d-m-Y"});
         $('#useradd').formValidation({
             message: 'This value is not valid',
@@ -12,7 +17,7 @@
                             message: "Module Id is required"
                         }
                     }
-                },hidmodule: {
+                }, hidmodule: {
                     excluded: false,
                     validators: {
                         notEmpty: {
@@ -102,24 +107,30 @@
                         }
                     }
                 }, mobile: {
+                    verbose: false,
                     validators: {
                         notEmpty: {
                             message: "User Mobile No Is Required"
                         },
-                       regexp: {
-                            regexp: '[0-9]{10}$',
+                        regexp: {
+                            regexp: '[5-9]{1}[0-9]{9}$',
                             message: 'Invalid mobile no'
+                        }, stringLength: {
+                            max: 10
+                        }, remote: {
+                            url: '<?= ADMINPATH ?>check-mobile',
+                            data: function (validator) {
+                                return {
+                                    mobile: validator.getFieldElements('mobile').val()
+                                }
+                            },
+                            message: 'Mobile already exists',
+                            type: 'POST'
                         }
 
                     }
-                }, whatsappno: {
-                    validators: {
-                        regexp: {
-                            regexp: '[0-9]{10}$',
-                            message: 'Invalid mobile no'
-                        }
-                    }
                 }, emailid: {
+                    verbose: false,
                     validators: {
                         notEmpty: {
                             message: "Email Id Is Required"
@@ -127,6 +138,15 @@
                         regexp: {
                             regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
                             message: 'Enter a valid email address'
+                        }, remote: {
+                            url: '<?= ADMINPATH ?>check-email',
+                            data: function (validator) {
+                                return {
+                                    email: validator.getFieldElements('emailid').val()
+                                };
+                            },
+                            message: 'Email already exists',
+                            type: 'POST'
                         }
                     }
                 }, bankacno: {
@@ -154,9 +174,22 @@
                         }
                     }
                 }, panno: {
+                    verbose: false,
                     validators: {
                         notEmpty: {
                             message: "PAN Is Required"
+                        }, regexp: {
+                            regexp: '^[A-Z]{5}[0-9]{4}[A-Z]{1}$',
+                            message: 'Enter a valid PAN No'
+                        }, remote: {
+                            url: '<?= ADMINPATH ?>check-pan',
+                            data: function (validator) {
+                                return {
+                                    pan: validator.getFieldElements('panno').val()
+                                };
+                            },
+                            message: 'PAN already exists',
+                            type: 'POST'
                         }
                     }
                 }, membershipfee: {
@@ -189,10 +222,30 @@
                             message: "Select Business Category"
                         }
                     }
-                }, businesssubcategory: {
+                }, subcatvalue: {
+                    excluded: false,
                     validators: {
                         notEmpty: {
-                            message: "Select Business Sub Category"
+                            message: 'Please choose at least one subcategory'
+                        }
+                    }
+                }, shopact: {
+                    validators: {
+                        notEmpty: {
+                            message: "Select Your shop license status"
+                        }
+                    }
+                }, isgst: {
+                    validators: {
+                        notEmpty: {
+                            message: "Select Your GST regisytration status"
+                        }
+                    }
+                }, gstno: {
+                    validators: {
+                        regexp: {
+                            regexp: '^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$',
+                            message: 'Enter a valid GSTIN'
                         }
                     }
                 }
@@ -203,9 +256,7 @@
             //e.preventDefault();
 
         });
-
-
-    })
+    });
 
     function CheckSponsor() {
         $('#hidval').val('');
@@ -235,7 +286,7 @@
             Swal.fire('', 'Enter a IBO id and click on get detail to get the detail!', 'error');
         }
     }
-    
+
     function CheckModuleDetail() {
         $('#hidmodule').val('');
         var moduleid = $('#moduleid').val();
@@ -249,7 +300,7 @@
                     var obj = JSON.parse(data);
                     if (obj.status == 'success') {
                         $('#hidmodule').val(obj.data.lm_id);
-                        $('#modulename').val(obj.data.lm_name);                        
+                        $('#modulename').val(obj.data.lm_name);
                         $('#countryname').val(obj.data.lm_country);
                         $('#statename').val(obj.data.lm_state);
                         $('#cityname').val(obj.data.lm_city);
@@ -268,8 +319,8 @@
             Swal.fire('', 'Enter a Module id and click on get detail to get the detail!', 'error');
         }
     }
-    
-    
+
+
     function getBusinessBankDetail() {
         var ifsc = $("#businessbankifsc").val();
         $.ajax({
@@ -288,5 +339,98 @@
                 }
             }
         });
+    }
+
+    function getCategoryBySegment() {
+        var segment = $('#businesssegment').val();
+        if (segment != '') {
+            $.ajax({
+                type: "POST",
+                url: '<?= ADMINPATH ?>get-category-by-segment',
+                data: {segment: segment},
+                success: function (data) {
+                    var jsonData = JSON.parse(data);
+                    var dropdown = '<option value="">Select Category</option>';
+                    if (jsonData.status == 'success') {
+                        var list = jsonData.data;
+                        for (var x = 0; x < list.length; x++) {
+                            dropdown += '<option value="' + list[x].category_id + '">' + list[x].category_name + '</option>'
+                        }
+                    }
+                    $('#businesscategory').html(dropdown);
+                    $('#subcat').html('');
+                }
+            });
+        }
+
+    }
+    function getSubCategoryByCategory() {
+        var category = $('#businesscategory').val();
+        var moduleid = $('#hidmodule').val();
+        $('#subcat').html('');
+        if (moduleid != '') {
+            $.ajax({
+                type: "POST",
+                url: '<?= ADMINPATH ?>get-subcategory-by-category-module',
+                data: {category: category, module: moduleid},
+                success: function (data) {
+                    var jsonData = JSON.parse(data);
+                    var checkbox = '';
+                    if (jsonData.status == 'success') {
+                        var list = jsonData.data;
+                        for (var x = 0; x < list.length; x++) {
+                            var disable = '';
+                            if (list[x].disabled == 1) {
+                                disable += 'disabled="true"';
+                            }
+                            checkbox += '<div class="col-lg-4"><div class="form-check mb-3">';
+                            checkbox += '<input onclick="setchoosensubcategory();" ' + disable + ' class="form-check-input" type="checkbox" name="businesssubcategory[]" value="' + list[x].sub_category_id + '"/>';
+                            checkbox += '<label class="form-check-label" for="formCheck1">' + list[x].sub_category_name + '</label>'
+                            checkbox += '</div></div>';
+                        }
+                    }
+                    $('#subcat').html(checkbox);
+
+                }
+            });
+        } else {
+            Swal.fire('Error', 'Enter the module id/Name and get detail, then select category to check the available subcategory', 'error');
+        }
+
+    }
+
+    function setchoosensubcategory() {
+        var checked = []
+        $("input[name='businesssubcategory[]']:checked").each(function ()
+        {
+            checked.push(parseInt($(this).val()));
+        });
+        var implodedvalue = checked.join(",");
+        $('#subcatvalue').val(implodedvalue);
+        $('#useradd').formValidation('revalidateField', "subcatvalue");
+        var paymentamount = calculatePaymentAmount();
+        var subcategorylength = checked.length;
+        var gst = 0;
+        if (checked.length == 1) {
+            var amounttobepayed = paymentamount + paymentamount * 18 / 100;
+            gst += Numbe(paymentamount * 18 / 100);
+        } else {
+            var additionalamount = (checked.length - 1) * 5000;
+            var amounttobepayed = paymentamount + additionalamount + additionalamount * 18 / 100 + paymentamount * 18 / 100;
+            gst += Number(paymentamount * 18 / 100) + Number(additionalamount * 18 / 100);
+        }
+        $('#membershipfee').val(amounttobepayed);
+        $('#hiddengst').val(gst);
+        $('#joiningfee').val(paymentamount);
+    }
+
+    function calculatePaymentAmount() {
+        var segment = $('#businesssegment').val();
+
+        if (segment == 26 || segment == 27) {
+            return 15000;
+        } else {
+            return 25000;
+        }
     }
 </script>

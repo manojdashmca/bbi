@@ -5,12 +5,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Add New Segment</h4>
+                    <h4 class="mb-sm-0 font-size-18">Edit Category</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Module</a></li>
-                            <li class="breadcrumb-item active">Add Segment</li>
+                            <li class="breadcrumb-item active">Edit Category</li>
                         </ol>
                     </div>
 
@@ -22,27 +22,42 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Segment Add Form</h4>
+                        <h4 class="card-title">Category Edit Form</h4>
                         <?= session()->getFlashdata('message'); ?>
                     </div>
                     <!-- end card header -->
 
                     <div class="card-body">
                         <div>
-                            <h5 class="font-size-14 mb-3">Segment Information</h5>
+                            <h5 class="font-size-14 mb-3">Category Information</h5>
                             <form name="moduleadd" id="moduleadd" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="enccategoryid" value="<?=$enccategoryid?>"/>
                                 <div class="row">
                                     <div class="row">
                                         <div class="col-lg-4 col-md-6">                                    
                                             <div class="form-group  mb-3">
-                                                <label class="form-label">Segment Name</label>
-                                                <input type="text" class="form-control" id="name" name="name">
+                                                <label class="form-label">Segment</label>
+                                                <select class="form-control form-select" id="segment" name="segment">
+                                                    <option value="">Select Segment</option>
+                                                    <?php foreach ($segment as $segmentdata) { ?>
+                                                        <option value="<?= $segmentdata->segment_id ?>" <?=($categorydetail->segment_id_segment==$segmentdata->segment_id)?'selected="selected"':''?>><?= $segmentdata->segment_name ?></option>
+                                                    <?php } ?>
+                                                </select>
                                             </div>                                  
 
                                         </div>
                                     </div>
-                                    
-                                    
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6">                                    
+                                            <div class="form-group  mb-3">
+                                                <label class="form-label">Category Name</label>
+                                                <input type="text" class="form-control" id="name" name="name" value="<?=$categorydetail->category_name?>">
+                                            </div>                                  
+
+                                        </div>
+                                    </div>
+
+
                                     <div class="row">
 
                                         <div class="text-center mt-4 col-lg-4 col-md-6">

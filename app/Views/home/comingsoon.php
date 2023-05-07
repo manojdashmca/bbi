@@ -86,7 +86,7 @@
                             </div>
                             <h3 class="text-white mt-5">Let's get started with BBI</h3>
                             
-                            <div data-countdown="2023/05/01" class="counter-number mt-5"></div>
+                            <div data-countdown="2023/05/10" class="counter-number mt-5"></div>
 
                             <form class="app-search mt-5 mx-auto">
                                 <div class="position-relative">

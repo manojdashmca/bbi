@@ -102,8 +102,73 @@ class ModuleModel extends Model {
         return $return;
     }
     
+    public function selectCategory($data, $ordercolumn = 1, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
+        try {
+            $return = array();
+            $columnarray = array('category_id', 'category_name','segment_name', 'category_status');
+            $sql = "select SQL_CALC_FOUND_ROWS category_id,category_name,segment_name,
+                if(category_status='1','Active','Blocked') status 
+                FROM master_category join master_segment on segment_id_segment=segment_id                
+                where 1=1 ";
+            !empty($data['cname']) ? $sql .= " AND category_name like '%" . $data['cname'] . "%'" : $sql .= '';
+            !empty($data['sname']) ? $sql .= " AND segment_name like '%" . $data['sname'] . "%'" : $sql .= '';
+            
+            $sql .= " ORDER BY $columnarray[$ordercolumn] $orderdirecttion limit $offset,$limit";
+
+            $sql1 = "SELECT FOUND_ROWS() as count";
+            $result = $this->db->query($sql);
+            $result1 = $this->db->query($sql1);
+            $return['data'] = $result->getResult();
+            $return['record_count'] = $result1->getRow()->count;
+            $return['message'] = "DB Operation Completed Succesfully";
+        } catch (Exception $e) {
+            $this->createModelError($e, 'IBO', 'selectDistributor');
+        }
+        return $return;
+    }
+    
+    public function selectSubCategory($data, $ordercolumn = 1, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
+        try {
+            $return = array();
+            $columnarray = array('sub_category_id','sub_category_name','category_name', 'segment_name', 'sub_category_status');
+            $sql = "select SQL_CALC_FOUND_ROWS sub_category_id,sub_category_name,category_name,segment_name,
+                if(sub_category_status='1','Active','Blocked') status 
+                FROM master_sub_category msc 
+                join master_category mc on msc.category_id_category=category_id  
+                join master_segment ms on msc.segment_id_segment=segment_id 
+                where 1=1 ";
+            !empty($data['scname']) ? $sql .= " AND sub_category_name like '%" . $data['scname'] . "%'" : $sql .= '';
+            !empty($data['cname']) ? $sql .= " AND category_name like '%" . $data['cname'] . "%'" : $sql .= '';
+            !empty($data['sname']) ? $sql .= " AND segment_name like '%" . $data['sname'] . "%'" : $sql .= '';
+            
+            $sql .= " ORDER BY $columnarray[$ordercolumn] $orderdirecttion limit $offset,$limit";
+
+            $sql1 = "SELECT FOUND_ROWS() as count";
+            $result = $this->db->query($sql);
+            $result1 = $this->db->query($sql1);
+            $return['data'] = $result->getResult();
+            $return['record_count'] = $result1->getRow()->count;
+            $return['message'] = "DB Operation Completed Succesfully";
+        } catch (Exception $e) {
+            $this->createModelError($e, 'IBO', 'selectDistributor');
+        }
+        return $return;
+    }
+    
     public function getSegmentDetail($id){
         $sql = "select * from master_segment where segment_id=$id ";
+        $result = $this->db->query($sql);
+        return $result->getRow();
+    }
+    
+    public function getCategoryDetail($id){
+        $sql = "select * from master_category where category_id=$id ";
+        $result = $this->db->query($sql);
+        return $result->getRow();
+    }
+    
+    public function getSubcategoryDetail($id){
+        $sql = "select * from master_sub_category where sub_category_id=$id ";
         $result = $this->db->query($sql);
         return $result->getRow();
     }

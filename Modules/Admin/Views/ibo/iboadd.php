@@ -140,7 +140,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Mobile</label>
-                                            <input type="text" class="form-control" id="mobile" name="mobile">
+                                            <input type="text" class="form-control" id="mobile" name="mobile" maxlength="10">
                                         </div>                                    
                                     </div>
                                     <div class="col-lg-6">
@@ -281,37 +281,39 @@
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Business Segment</label>
-                                            <select name="businesssegment" id="businesssegment" class="form-select form-control">
+                                            <select onchange="getCategoryBySegment();" name="businesssegment" id="businesssegment" class="form-select form-control">
                                                 <option value=''>Select</option>
-                                                <?php for($x=0;$x<count($segment);$x++){?>
-                                                <option value='<?=$segment[$x]->segment_id?>'><?=$segment[$x]->segment_name?></option>
-                                                <?php }?>                                                
+                                                <?php for ($x = 0; $x < count($segment); $x++) { ?>
+                                                    <option value='<?= $segment[$x]->segment_id ?>'><?= $segment[$x]->segment_name ?></option>
+                                                <?php } ?>                                                
                                             </select>
-                                            
+
                                         </div>                                    
                                     </div> 
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Business Category</label>
-                                            <select name="businesscategory" id="businesscategory" class="form-select form-control">
+                                            <select onchange="getSubCategoryByCategory();" name="businesscategory" id="businesscategory" class="form-select form-control">
                                                 <option value=''>Select</option>
-                                                <?php for($x=0;$x<count($category);$x++){?>
-                                                <option value='<?=$category[$x]->category_id?>'><?=$category[$x]->category_name?></option>
-                                                <?php }?> 
+                                                <?php for ($x = 0; $x < count($category); $x++) { ?>
+                                                    <option value='<?= $category[$x]->category_id ?>'><?= $category[$x]->category_name ?></option>
+                                                <?php } ?> 
                                             </select>
-                                            
+
                                         </div>                                    
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
+                                            <input type='hidden' name='subcatvalue' id='subcatvalue' value=''/>
                                             <label class="form-label">Business Sub Category</label>
-                                            <select name="businesssubcategory" id="businesssubcategory" class="form-select form-control">
-                                                <option value=''>Select</option>
-                                                <?php for($x=0;$x<count($subcategory);$x++){?>
-                                                <option value='<?=$subcategory[$x]->sub_category_id?>'><?=$subcategory[$x]->sub_category_name?></option>
-                                                <?php }?> 
-                                            </select>
-                                            
+                                            <span>
+                                                <div class="row" id="subcat">
+
+                                                </div>
+                                                
+
+                                            </span>
+
                                         </div>                                    
                                     </div>
                                     <div class="col-lg-6">
@@ -453,7 +455,9 @@
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Membership Fee</label>
-                                            <input type="text" class="form-control" id="membershipfee" name="membershipfee">
+                                            <input type='hidden' name='hiddengst' id='hiddengst' value='0'/>
+                                            <input type='hidden' name='joiningfee' id='joiningfee' value='0'/>
+                                            <input readonly='true' type="text" class="form-control" id="membershipfee" name="membershipfee">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -473,7 +477,7 @@
                                             <input type="text" class="form-control" id="paymentdetail" name="paymentdetail" >
                                         </div>                                    
                                     </div> 
-                                    
+
 
                                 </div>
                             </div>

@@ -5,12 +5,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Member Payment List</h4>
+                    <h4 class="mb-sm-0 font-size-18">Member Payout List</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Oder</a></li>
-                            <li class="breadcrumb-item active">Member Payment List</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Payout</a></li>
+                            <li class="breadcrumb-item active">Member Payout List</li>
                         </ol>
                     </div>
 
@@ -42,8 +42,13 @@
 
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
-                                        <label class="form-label" for="validationCustom03">User Name</label>
-                                        <input type="text" class="form-control" id="username" placeholder=" User name"/>
+                                        <label class="form-label" for="validationCustom03">Payout</label>
+                                        <select name='payoutdate' id='payoutdate' class="form-control form-select" >
+                                            <option value=''>All Payout</option>
+                                            <?php for ($x = 0; $x < count($dropdown); $x++) { ?>
+                                                <option value='<?= $dropdown[$x]->payout_date_id ?>'><?= $dropdown[$x]->startdate . ' To ' . $dropdown[$x]->enddate ?></option>
+                                            <?php } ?>
+                                        </select>
 
                                     </div>
                                 </div>                                
@@ -57,7 +62,7 @@
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
-                                        <button class="btn btn-success margintop-29" id="addnew" type="button"><i class=" fas fa-plus-circle"></i> Add New Order</button>
+                                        <button class="btn btn-success margintop-29" id="download" type="button"><i class=" fas fa-plus-circle"></i> Download Payout</button>
                                     </div>                                        
                                 </div>
                             </div> 
@@ -73,17 +78,13 @@
                                         <tr>
                                             <th>Sl No</th>                                            
                                             <th>Member Name</th>
-                                            <th>Payment Date</th>
-                                            <th>Joining Fee</th>
-                                            <th>Topup Fee</th>
-                                            <th>GST</th>
-                                            <th>Payment Amount</th>
-                                            <th>Payment Type</th>
-                                            <th>Payment Detail</th> 
-                                            <th>Payment Status</th>
-                                            <th>Booked Services</th>
-                                            <th>Payout Status</th>
-                                            <th>Action</th>
+                                            <th>Payout Range</th>
+                                            <th>Gross Income</th>
+                                            <th>TDS Deducted</th>
+                                            <th>Net Income</th>
+                                            <th>Release Status</th>
+                                            <th>Release Date</th> 
+                                            <th>Release Detail</th>                                            
                                         </tr>
                                     </thead>
 

@@ -20,6 +20,67 @@ class AdminModel extends Model {
         return $result->getRow();
     }
 
-   
+    public function getSegment() {
+        $sql = "select segment_id,segment_name from master_segment where segment_status=1 ";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+
+    public function getCategoryBySegment($segment) {
+        $sql = "select category_id,category_name from master_category where segment_id_segment='$segment' and category_status=1 ";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+
+    public function getSubCategoryByCategorySegment($category = '', $segment = '') {
+        $sql = "select sub_category_id,sub_category_name from master_sub_category where sub_category_status=1 ";
+        if (!empty($category)) {
+            $sql .= " AND category_id_category='$category'";
+        }if (!empty($segment)) {
+            $sql .= " AND segment_id_segment='$segment'";
+        }
+
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+
+    public function getAllocatedSubcategoryByModule($module) {
+        $sql = "SELECT group_concat(business_subcategory) as subcategory from ibo_business_detail join user_detail on user_id_user=id_user where module_id_module='$module' and approval_status in(0,1) ";
+        $result = $this->db->query($sql);
+        return $result->getRow()->subcategory;
+    }
+
+    public function checkUserEmail($email, $userid = '') {
+
+        $sql = "SELECT count(id_user) count FROM   user_detail  WHERE user_status !=3 AND user_email = '$email' ";
+
+        if (!empty($userid)) {
+            $sql .= " AND id_user !=$userid";
+        }
+
+        $result = $this->db->query($sql);
+        return $result->getRow()->count;
+    }
+
+    public function checkUserMobile($mobile, $userid = '') {
+
+        $sql = "SELECT count(id_user) count FROM  user_detail  WHERE user_status !=3 AND user_mobile = '$mobile' ";
+        if (!empty($userid)) {
+            $sql .= " AND id_user !=$userid";
+        }
+        
+        $result = $this->db->query($sql);
+        return $result->getRow()->count;
+    }
+
+    public function checkUserPan($pan, $userid = '') {
+
+        $sql = "SELECT count(id_user) count FROM   user_detail WHERE user_status !=3 AND user_pan = '$pan' ";
+        if (!empty($userid)) {
+            $sql .= " AND id_user !=$userid";
+        }
+        $result = $this->db->query($sql);
+        return $result->getRow()->count;
+    }
 
 }

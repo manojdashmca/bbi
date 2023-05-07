@@ -38,10 +38,10 @@ class ModuleController extends AdminController {
                 $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
             } else {
 
-                $name = $this->request->getPost('name');
-                $city = $this->request->getPost('city');
-                $state = $this->request->getPost('state');
-                $country = $this->request->getPost('country');
+                $name = trim($this->request->getPost('name'));
+                $city = trim($this->request->getPost('city'));
+                $state = trim($this->request->getPost('state'));
+                $country = trim($this->request->getPost('country'));
                 $checkname = $this->blankModel->getTableData('lm_id', 'location_module', 'LOWER(lm_name)="' . strtolower($name) . '"');
                 if (empty($checkname)) {
                     $createarray = array('lm_name' => $name, 'lm_city' => $city, 'lm_state' => $state, 'lm_country' => $country);
@@ -138,10 +138,10 @@ class ModuleController extends AdminController {
                 $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
             } else {
                 $mid = base64_decode($this->request->getPost('encmoduleid'));
-                $name = $this->request->getPost('name');
-                $city = $this->request->getPost('city');
-                $state = $this->request->getPost('state');
-                $country = $this->request->getPost('country');
+                $name = trim($this->request->getPost('name'));
+                $city = trim($this->request->getPost('city'));
+                $state = trim($this->request->getPost('state'));
+                $country = trim($this->request->getPost('country'));
 
                 $updarray = array(
                     'lm_name' => $name,
@@ -302,8 +302,6 @@ class ModuleController extends AdminController {
         echo json_encode($returndata);
         die();
     }
-    
-    
 
     public function fn_formatedSegmentdata($data, $offset) {
         $return = array();
@@ -325,7 +323,7 @@ class ModuleController extends AdminController {
 
         return $return;
     }
-    
+
     public function editSegment($segmentid) {
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
@@ -333,13 +331,13 @@ class ModuleController extends AdminController {
         if ($this->request->getMethod() == 'post') {
 
             if (!$this->validate([
-                        'name' => 'required'                        
+                        'name' => 'required'
                     ])) {
 
                 $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
             } else {
                 $sid = base64_decode($this->request->getPost('encsegmentid'));
-                $name = $this->request->getPost('name');                
+                $name = trim($this->request->getPost('name'));
 
                 $updarray = array('segment_name' => $name);
 
@@ -361,7 +359,6 @@ class ModuleController extends AdminController {
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
     }
 
-    
     public function addSegment() {
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
@@ -371,17 +368,16 @@ class ModuleController extends AdminController {
 
             if (!$this->validate([
                         'name' => 'required'
-                        
                     ])) {
 
                 $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
             } else {
 
-                $name = $this->request->getPost('name');                
+                $name = trim($this->request->getPost('name'));
                 $checkname = $this->blankModel->getTableData('segment_id', 'master_segment', 'LOWER(segment_name)="' . strtolower($name) . '"');
                 if (empty($checkname)) {
                     $createarray = array('segment_name' => $name);
-                    $lmid = $this->blankModel->createRecordInTable($createarray, 'master_segment');                    
+                    $lmid = $this->blankModel->createRecordInTable($createarray, 'master_segment');
                     $this->session->setFlashdata('message', setMessage("Segment added Successfully.", 's'));
                 } else {
                     $this->session->setFlashdata('message', setMessage("Segment Already exists, Please use a different name.", 'e'));
@@ -393,22 +389,255 @@ class ModuleController extends AdminController {
                 . view('\Modules\Admin\Views\module\segmentadd', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
     }
+
     public function categorylist() {
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
-        $this->data['includefile'] = 'module/modulelist.php';
+        $this->data['includefile'] = 'module/categorylist.php';
         return view('\Modules\Admin\Views\templates\header', $this->data)
-                . view('\Modules\Admin\Views\module\modulelist', $this->data)
+                . view('\Modules\Admin\Views\module\categorylist', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function addCategory() {
+        $this->data['js'] = 'validation';
+        $this->data['css'] = 'validation';
+        $this->data['includefile'] = 'module/categoryadd.php';
+
+        if ($this->request->getMethod() == 'post') {
+
+            if (!$this->validate([
+                        'name' => 'required',
+                        'segment' => 'required'
+                    ])) {
+
+                $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
+            } else {
+
+                $name = trim($this->request->getPost('name'));
+                $segment = $this->request->getPost('segment');
+                $checkname = $this->blankModel->getTableData('category_id', 'master_category', 'LOWER(category_name)="' . strtolower($name) . '" and segment_id_segment="' . $segment . '"');
+                if (empty($checkname)) {
+                    $createarray = array('category_name' => $name, 'segment_id_segment' => $segment);
+                    $lmid = $this->blankModel->createRecordInTable($createarray, 'master_category');
+                    $this->session->setFlashdata('message', setMessage("Category added Successfully.", 's'));
+                } else {
+                    $this->session->setFlashdata('message', setMessage("Category Already exists, Please use a different name.", 'e'));
+                }
+            }
+        }
+        $this->data['segment'] = $this->adminModel->getSegment();
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\module\categoryadd', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function editCategory($categoryid) {
+        $this->data['js'] = 'validation';
+        $this->data['css'] = 'validation';
+        $this->data['includefile'] = 'module/categoryedit.php';
+        if ($this->request->getMethod() == 'post') {
+
+            if (!$this->validate([
+                        'name' => 'required'
+                    ])) {
+
+                $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
+            } else {
+                $cid = base64_decode($this->request->getPost('enccategoryid'));
+                $name = trim($this->request->getPost('name'));
+                $segment = trim($this->request->getPost('segment'));
+                $updarray = array('category_name' => $name, 'segment_id_segment' => $segment);
+
+                $checkname = $this->blankModel->getTableData('category_id', 'master_category', 'lower(category_name)="' . strtolower($name) . '" and segment_id_segment ="' . $segment . '" and category_id !="' . $cid . '"');
+                if (empty($checkname)) {
+                    $this->blankModel->updateRecordInTable($updarray, 'master_category', 'category_id', $cid);
+                    $this->session->setFlashdata('message', setMessage("Category updated Successfully.", 's'));
+                } else {
+                    $this->session->setFlashdata('message', setMessage("Category Name already exists,Please use a different name.", 'i'));
+                }
+            }
+        }
+        $id = base64_decode($categoryid);
+        $categorydetail = $this->moduleModel->getCategoryDetail($id);
+        $this->data['segment'] = $this->adminModel->getSegment();
+        $this->data['enccategoryid'] = $categoryid;
+        $this->data['categorydetail'] = $categorydetail;
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\module\categoryedit', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function categoryData() {
+        $returndata = array();
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $limit = trim($this->request->getPost('length'));
+            $offset = trim($this->request->getPost('start'));
+            $draw = trim($this->request->getPost('draw'));
+            $cname = trim($this->request->getPost('cname'));
+            $sname = trim($this->request->getPost('sname'));
+            $order = $this->request->getPost('order');
+            $ordercolumn = $order[0]['column'];
+            $orderdirecttion = $order[0]['dir'];
+            $data = array('cname' => $cname, 'sname' => $sname);
+            $userlist = $this->moduleModel->selectCategory($data, $ordercolumn, $orderdirecttion, $offset, $limit);
+            $returndata['data'] = $this->fn_formatedCategorydata($userlist['data'], $offset);
+            $returndata['draw'] = $draw;
+            $returndata['recordsTotal'] = $userlist['record_count'];
+            $returndata['recordsFiltered'] = $userlist['record_count'];
+        }
+        echo json_encode($returndata);
+        die();
+    }
+
+    private function fn_formatedCategorydata($data, $offset) {
+        $return = array();
+        $arraydata = (array) $data;
+        for ($x = 0; $x < count($arraydata); $x++) {
+            $values = array();
+            $action = '';
+            $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'category-edit/' . base64_encode($data[$x]->category_id) . '"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            if ($data[$x]->status == 'Active') {
+                $action .= '<a class="blue" title="Block Segment" href="#" onclick="return updateCategoryStatus(&#39;' . base64_encode($data[$x]->category_id) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            }if ($data[$x]->status == 'Blocked') {
+                $action .= '<a class="blue"  title="Unblock Segment" href="#" onclick="return updateCategoryStatus(&#39;' . base64_encode($data[$x]->category_id) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            }
+            $arraydata[$x]->action = $action;
+            $values = array_values((array) $arraydata[$x]);
+            $values[0] = $offset + $x + 1;
+            $return[] = $values;
+        }
+
+        return $return;
     }
 
     public function subcategorylist() {
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
-        $this->data['includefile'] = 'module/modulelist.php';
+        $this->data['includefile'] = 'module/subcategorylist.php';
         return view('\Modules\Admin\Views\templates\header', $this->data)
-                . view('\Modules\Admin\Views\module\modulelist', $this->data)
+                . view('\Modules\Admin\Views\module\subcategorylist', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function addSubcategory() {
+        $this->data['js'] = 'validation';
+        $this->data['css'] = 'validation';
+        $this->data['includefile'] = 'module/subcategoryadd.php';
+
+        if ($this->request->getMethod() == 'post') {
+
+            if (!$this->validate([
+                        'name' => 'required',
+                        'segment' => 'required',
+                        'category' => 'required'
+                    ])) {
+
+                $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
+            } else {
+
+                $name = trim($this->request->getPost('name'));
+                $segment = $this->request->getPost('segment');
+                $category = $this->request->getPost('category');
+                $checkname = $this->blankModel->getTableData('sub_category_id', 'master_sub_category', 'LOWER(sub_category_name)="' . strtolower($name) . '" and category_id_category="' . $category . '" and segment_id_segment="' . $segment . '"');
+                if (empty($checkname)) {
+                    $createarray = array('sub_category_name' => $name, 'category_id_category' => $category, 'segment_id_segment' => $segment);
+                    $lmid = $this->blankModel->createRecordInTable($createarray, 'master_sub_category');
+                    $this->session->setFlashdata('message', setMessage("Sub Category added Successfully.", 's'));
+                } else {
+                    $this->session->setFlashdata('message', setMessage("Subcategory Already exists, Please use a different name.", 'e'));
+                }
+            }
+        }
+        $this->data['segment'] = $this->adminModel->getSegment();
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\module\subcategoryadd', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function editsubcategory($subcategoryid) {
+        $this->data['js'] = 'validation';
+        $this->data['css'] = 'validation';
+        $this->data['includefile'] = 'module/subcategoryedit.php';
+        if ($this->request->getMethod() == 'post') {
+
+            if (!$this->validate([
+                        'name' => 'required',
+                        'category' => 'required',
+                        'segment' => 'required'
+                    ])) {
+
+                $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
+            } else {
+                $sid = base64_decode($this->request->getPost('encsubcategoryid'));
+                $name = $this->request->getPost('name');
+                $categoryid = $this->request->getPost('category');
+                $segmentid = $this->request->getPost('segment');
+
+                $updarray = array('sub_category_name' => $name, 'category_id_category' => $categoryid, 'segment_id_segment' => $segmentid);
+
+                $checkname = $this->blankModel->getTableData('sub_category_id', 'master_sub_category', 'lower(sub_category_name)="' . strtolower($name) . '" and sub_category_id !="' . $sid . '" and category_id_category="' . $categoryid . '" and segment_id_segment="' . $segmentid . '"');
+                if (empty($checkname)) {
+                    $this->blankModel->updateRecordInTable($updarray, 'master_sub_category', 'sub_category_id', $sid);
+                    $this->session->setFlashdata('message', setMessage("Subcategory updated Successfully.", 's'));
+                } else {
+                    $this->session->setFlashdata('message', setMessage("Subcategory Name already exists,Please use a different name.", 'i'));
+                }
+            }
+        }
+        $id = base64_decode($subcategoryid);
+        $subcategorydetail = $this->moduleModel->getSubcategoryDetail($id);
+        $this->data['segment'] = $this->adminModel->getSegment();
+        $this->data['encsubcategoryid'] = $subcategoryid;
+        $this->data['subcategorydetail'] = $subcategorydetail;
+        $this->data['category'] = $this->adminModel->getCategoryBySegment($subcategorydetail->segment_id_segment);
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\module\subcategoryedit', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function subcategoryData() {
+        $returndata = array();
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $limit = trim($this->request->getPost('length'));
+            $offset = trim($this->request->getPost('start'));
+            $draw = trim($this->request->getPost('draw'));
+            $cname = trim($this->request->getPost('cname'));
+            $sname = trim($this->request->getPost('sname'));
+            $scname = trim($this->request->getPost('scname'));
+            $order = $this->request->getPost('order');
+            $ordercolumn = $order[0]['column'];
+            $orderdirecttion = $order[0]['dir'];
+            $data = array('scname' => $scname, 'cname' => $cname, 'sname' => $sname);
+            $userlist = $this->moduleModel->selectSubCategory($data, $ordercolumn, $orderdirecttion, $offset, $limit);
+            $returndata['data'] = $this->fn_formatedSubcategorydata($userlist['data'], $offset);
+            $returndata['draw'] = $draw;
+            $returndata['recordsTotal'] = $userlist['record_count'];
+            $returndata['recordsFiltered'] = $userlist['record_count'];
+        }
+        echo json_encode($returndata);
+        die();
+    }
+
+    private function fn_formatedSubcategorydata($data, $offset) {
+        $return = array();
+        $arraydata = (array) $data;
+        for ($x = 0; $x < count($arraydata); $x++) {
+            $values = array();
+            $action = '';
+            $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'subcategory-edit/' . base64_encode($data[$x]->sub_category_id) . '"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            if ($data[$x]->status == 'Active') {
+                $action .= '<a class="blue" title="Block Segment" href="#" onclick="return updateSubcategoryStatus(&#39;' . base64_encode($data[$x]->sub_category_id) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            }if ($data[$x]->status == 'Blocked') {
+                $action .= '<a class="blue"  title="Unblock Segment" href="#" onclick="return updateSubcategoryStatus(&#39;' . base64_encode($data[$x]->sub_category_id) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            }
+            $arraydata[$x]->action = $action;
+            $values = array_values((array) $arraydata[$x]);
+            $values[0] = $offset + $x + 1;
+            $return[] = $values;
+        }
+
+        return $return;
     }
 
     public function updateSegmentCategorySubcategoryStatus() {
@@ -420,8 +649,8 @@ class ModuleController extends AdminController {
             $type = $this->request->getPost('type');
             switch ($type) {
                 case 1 :
-                    $updarray=array('segment_status'=>$status);
-                    $this->blankModel->updateRecordInTable($updarray,'master_segment','segment_id',$tableid);
+                    $updarray = array('segment_status' => $status);
+                    $this->blankModel->updateRecordInTable($updarray, 'master_segment', 'segment_id', $tableid);
                     if ($status == 1) {
                         $message = "Segment Unblocked Successfully";
                     }if ($status == 2) {
@@ -429,8 +658,22 @@ class ModuleController extends AdminController {
                     }
                     break;
                 case 2 :
+                    $updarray = array('category_status' => $status);
+                    $this->blankModel->updateRecordInTable($updarray, 'master_category', 'category_id', $tableid);
+                    if ($status == 1) {
+                        $message = "Category Unblocked Successfully";
+                    }if ($status == 2) {
+                        $message = "Category Blocked Successfully";
+                    }
                     break;
                 case 3 :
+                    $updarray = array('sub_category_status' => $status);
+                    $this->blankModel->updateRecordInTable($updarray, 'master_sub_category', 'sub_category_id', $tableid);
+                    if ($status == 1) {
+                        $message = "Sub Category Unblocked Successfully";
+                    }if ($status == 2) {
+                        $message = "Sub Category Blocked Successfully";
+                    }
                     break;
             }
             $data = array('status' => 'success', 'message' => $message);

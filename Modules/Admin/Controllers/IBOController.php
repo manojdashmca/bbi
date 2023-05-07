@@ -93,9 +93,12 @@ class IBOController extends AdminController {
                         $social = '';
                     }
                     $paymentamount = $this->request->getPost('membershipfee');
+                    $hiddengst = $this->request->getPost('hiddengst');
+                    $joiningfee = $this->request->getPost('joiningfee');
                     $paymentmode = $this->request->getPost('paymentmode');
                     $paymentdetail = $this->request->getPost('paymentdetail');
-
+                    $subcatvalue = $this->request->getPost('subcatvalue');
+                    $expsubcat = explode(',', $subcatvalue);
                     //-------------------------------------
 
                     $passphrase = createEpin(6);
@@ -136,102 +139,43 @@ class IBOController extends AdminController {
                     $this->blankModel->transStart();
                     $iduser = $this->blankModel->createRecordInTable($userdetaildata, 'user_detail');
                     $this->blankModel->createRecordInTable(array('user_id_user' => $iduser), 'ibo_user');
-                    $businessdetailarray = array(
+                    $paymentdetaila = array(
                         'user_id_user' => $iduser,
-                        'business_name' => $businessname,
-                        'business_designation' => $businessdesignation,
-                        'business_segment' => $businesssegment,
-                        'business_category' => $businesscategory,
-                        'business_subcategory' => $businesssubcategory,
-                        'business_address' => $businessaddress,
-                        'business_city' => $businesscity,
-                        'gst_address' => $gstaddress,
-                        'business_pan' => $businesspan,
-                        'current_business' => $currentbusiness,
-                        'business_email' => $businessemail,
-                        'business_website' => $businesswebsite,
-                        'overall_experience' => $businessexp,
-                        'social_presence' => $social,
+                        'payment_date' => date('Y-m-d H:i:s'),
+                        'joining_fee' => $joiningfee,
+                        'topup_fee' => $paymentamount - $hiddengst - $joiningfee,
+                        'gst' => $hiddengst,
                         'payment_amount' => $paymentamount,
                         'payment_method' => $paymentmode,
                         'payment_remark' => $paymentdetail,
-                        'payment_status' => 1
-                    );
-                    $this->blankModel->createRecordInTable($businessdetailarray, 'ibo_business_detail');
+                        'payment_status' => 1);
+                    $paymentid = $this->blankModel->createRecordInTable($paymentdetaila, 'ibo_joining_payment_detail');
+                    for ($sbc = 0; $sbc < count($expsubcat); $sbc++) {
+                        $businessdetailarray = array(
+                            'user_id_user' => $iduser,
+                            'business_name' => $businessname,
+                            'business_designation' => $businessdesignation,
+                            'business_segment' => $businesssegment,
+                            'business_category' => $businesscategory,
+                            'business_subcategory' => ($businesssegment != 26) ? $expsubcat[$sbc] : 0,
+                            'actual_subcategory' => $expsubcat[$sbc],
+                            'business_address' => $businessaddress,
+                            'business_city' => $businesscity,
+                            'gst_address' => $gstaddress,
+                            'business_pan' => $businesspan,
+                            'current_business' => $currentbusiness,
+                            'business_email' => $businessemail,
+                            'business_website' => $businesswebsite,
+                            'overall_experience' => $businessexp,
+                            'paymentdetail_id' => $paymentid,
+                            'social_presence' => $social
+                        );
+                        $this->blankModel->createRecordInTable($businessdetailarray, 'ibo_business_detail');
+                    }
                     $usercode = $this->checkAndcreateUserCode($iduser);
                     $updarr = array('user_code' => $usercode);
                     $this->blankModel->updateRecordInTable($updarr, 'user_detail', 'id_user', $iduser);
                     //$updarray = array();
-//                    if (isset($_FILES['cancelcheque'])) {
-//                        if ($_FILES['cancelcheque']['error'] != 4) {
-//                            $validationRule = [
-//                                'pimage' => [
-//                                    'rules' => 'mime_in[cancelcheque,image/jpg,image/jpeg,image/png,image/webp]'
-//                                    . '|max_size[cancelcheque,10000000]',
-//                                ],
-//                            ];
-//                            if ($this->validate($validationRule)) {
-//                                $img = $this->request->getFile('cancelcheque');
-//                                if (!$img->hasMoved()) {
-//                                    $filename = $usercode . '_cancelcheque.' . pathinfo($_FILES["cancelcheque"]["name"], PATHINFO_EXTENSION);
-//                                    $img->move('uploads/images/kyc/', $filename, true);
-//                                    $updarray['kyc_cancel_cheque'] = $filename;
-//                                }
-//                            }
-//                        }
-//                    }
-//                    if ($_FILES['addressproof']['error'] != 4) {
-//                        $validationRule = [
-//                            'pimage' => [
-//                                'rules' => 'mime_in[addressproof,image/jpg,image/jpeg,image/png,image/webp]'
-//                                . '|max_size[addressproof,10000000]',
-//                            ],
-//                        ];
-//                        if ($this->validate($validationRule)) {
-//                            $img = $this->request->getFile('addressproof');
-//                            if (!$img->hasMoved()) {
-//                                $filename = $usercode . '_address.' . pathinfo($_FILES["addressproof"]["name"], PATHINFO_EXTENSION);
-//                                $img->move('uploads/images/kyc/', $filename);
-//                                $updarray['kyc_address'] = $filename;
-//                            }
-//                        }
-//                    }
-//                    if ($_FILES['pancopy']['error'] != 4) {
-//                        $validationRule = [
-//                            'pimage' => [
-//                                'rules' => 'mime_in[pancopy,image/jpg,image/jpeg,image/png,image/webp]'
-//                                . '|max_size[pancopy,10000000]',
-//                            ],
-//                        ];
-//                        if ($this->validate($validationRule)) {
-//                            $img = $this->request->getFile('pancopy');
-//                            if (!$img->hasMoved()) {
-//                                $filename = $usercode . '_pan.' . pathinfo($_FILES["pancopy"]["name"], PATHINFO_EXTENSION);
-//                                $img->move('uploads/images/kyc/', $filename);
-//                                $updarray['kyc_pan'] = $filename;
-//                            }
-//                        }
-//                    }
-//                    if ($_FILES['image']['error'] != 4) {
-//                        $validationRule = [
-//                            'pimage' => [
-//                                'rules' => 'mime_in[image,image/jpg,image/jpeg,image/png,image/webp]'
-//                                . '|max_size[image,10000000]',
-//                            ],
-//                        ];
-//                        if ($this->validate($validationRule)) {
-//                            $img = $this->request->getFile('image');
-//                            if (!$img->hasMoved()) {
-//                                $filename = $usercode . '_image.' . pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-//                                $img->move('uploads/images/kyc/', $filename);
-//                                $updarray['kyc_image'] = $filename;
-//                            }
-//                        }
-//                    }
-//
-//                    if (!empty($updarray)) {
-//                        $this->blankModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $iduser);
-//                    }
                     //------------do  other functionality LINK SMS EMAIL-----
                     $this->createGenerationTree($sponsorid, $iduser, 1);
                     //----------------------------------------
@@ -251,9 +195,9 @@ class IBOController extends AdminController {
         }
         $this->data['segment'] = $this->iboModel->getBusinesssegment();
         $this->data['category'] = $this->iboModel->getBusinessCategory();
-        $this->data['subcategory'] = $this->iboModel->getBusinessSubCategory();
-        $this->data['js'] = 'flatpickr,validation,sweetalert';
-        $this->data['css'] = 'flatpickr,validation,sweetalert';
+        //$this->data['subcategory'] = $this->iboModel->getBusinessSubCategory();
+        $this->data['js'] = 'choices,flatpickr,validation,sweetalert';
+        $this->data['css'] = 'choices,flatpickr,validation,sweetalert';
         $this->data['includefile'] = 'ibo/iboadd.php,common/common.php';
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\ibo\iboadd', $this->data)

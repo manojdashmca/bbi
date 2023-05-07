@@ -6,33 +6,6 @@
         $('#searchsubmit').click(function () {
             bindDatatable();
         });
-       
-
-        $('#shipping').formValidation({
-            message: 'This value is not valid',
-            icon: {
-            },
-            fields: {
-                shippingcompany: {
-                    validators: {
-                        notEmpty: {
-                            message: "Select Shipping Company"
-                        }
-                    }
-                }, awbno: {
-                    validators: {
-                        notEmpty: {
-                            message: "Enter AWB No"
-                        }
-                    }
-                }
-            }
-
-        }).on('success.form.fv', function (e) {
-            // Prevent form submission
-            e.preventDefault();
-            updateShipping();
-        });
     });
 
 
@@ -43,8 +16,7 @@
         var name = $("#name").val();
         var mobile = $("#mobile").val();
         var daterange = $("#daterange").val();
-        var username = $("#username").val();
-        var rderno = $("#rderno").val();
+        var payout = $("#payoutdate").val();        
         $('#example').DataTable().destroy();
         $('#example').DataTable({
             responsive: true,
@@ -58,13 +30,12 @@
             order: [[0, 'desc']],
             ajax: {
                 method: "POST",
-                url: '<?= ADMINPATH ?>payment-data',
+                url: '<?= ADMINPATH ?>payout-member-data',
                 data: function (d) {
                     d.name = name;
                     d.mobile = mobile;
                     d.daterange = daterange;
-                    d.username = username;
-                    d.rderno = rderno;
+                    d.payout = payout;                    
                 }
             }
         });
@@ -111,5 +82,5 @@
         });
     }
 
-    
+
 </script>

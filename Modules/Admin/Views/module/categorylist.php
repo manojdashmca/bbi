@@ -5,12 +5,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Sponsorship View</h4>
+                    <h4 class="mb-sm-0 font-size-18">Category List</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Genealogy</a></li>
-                            <li class="breadcrumb-item active">Sponsorship View</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Module</a></li>
+                            <li class="breadcrumb-item active">Category List</li>
                         </ol>
                     </div>
 
@@ -27,28 +27,22 @@
                             <div class="row">
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
-                                        <label class="form-label" for="validationCustom01">Member Id</label>
-                                        <input type="text" class="form-control" id="username" name="username" placeholder="IBO code/username">
+                                        <label class="form-label" for="validationCustom01">Category Name</label>
+                                        <input type="text" class="form-control" id="categoryname" placeholder="Category Name"/>
 
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
-                                        <label class="form-label" for="validationCustom04">Level</label>
-                                        <select class="form-control" name="level" id="level">
-                                            <option value="">Select Position</option>
-                                            <option value="1">1st Level</option>
-                                            <option value="2">2nd Level</option>
-                                            <option value="3">3rd Level</option>
-                                            <option value="4">4th Level</option>
-                                            <option value="5">5th Level</option>                                            
-                                        </select>
+                                        <label class="form-label" for="validationCustom01">Segment Name</label>
+                                        <input type="text" class="form-control" id="segmentname" placeholder="Segment Name"/>
 
                                     </div>
-                                </div>                                 
+                                </div>                                
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
+                                        <button class="btn btn-success margintop-29" id="addnew" type="button"><i class=" fas fa-plus-circle"></i> Add New Category</button>
                                     </div>                                        
                                 </div>
                             </div> 
@@ -59,22 +53,17 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <div class="table-responsive">
-                                <table id="sponsorshipview" class="table table-bordered dt-responsive  nowrap w-100">
+                                <table id="example" class="table table-bordered dt-responsive w-100">
                                     <thead>
                                         <tr>
-                                            <th>Sl No</th>
-                                            <th>Member Id/Code/Username</th> 
-                                            <th>City</th>
-                                            <th>Mobile</th>
-                                            <th>Email</th>
-                                            <th>Joining Date</th>
-                                            <th>Level</th>
+                                            <th>Sl No</th>                                            
+                                            <th>Category Name</th> 
+                                            <th>Segment Name</th> 
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
-
-
                                     <tbody>
-
                                     </tbody>
                                 </table>
                             </div>

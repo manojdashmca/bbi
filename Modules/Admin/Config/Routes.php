@@ -12,89 +12,61 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     //-----Dashboard Controller-----
     $routes->get("dashboard", "DashboardController::index");
     $routes->get("/", "DashboardController::index");
+    $routes->get("get-dashboard-data", "DashboardController::getDashBoardData");
     //------IBO Controller   
     $routes->get("ibo-list", "IBOController::index");
     $routes->match(['get', 'post'], "ibo-add", "IBOController::add");
     $routes->post("ibo-data", "IBOController::ibodata");
-    $routes->get("ibo-edit/(:any)", "IBOController::edit/$1"); 
+    $routes->get("ibo-edit/(:any)", "IBOController::edit/$1");
     $routes->get("get-sponsordetail-by-id/(:any)", "IBOController::getSponsorDetailById/$1");
     $routes->post("ibo-virtual-bp-data", "IBOController::iboVirtcualBpData");
     $routes->get("ibo-virtual-bp", "IBOController::iboVirtcualBp");
     $routes->get("get-member-by-id/(:any)", "IBOController::getMemberDetailById/$1");
     $routes->post("add-virtualbp-transaction", "IBOController::addBpTransaction");
     $routes->post("cancel-vbp-transaction", "IBOController::cancelVBPTransaction");
-    $routes->post("update-sponsor", "IBOController::updateSponsor");   
-
-    //------Tree Controller   
-//    $routes->get("binary-tree", "TreeController::index");
-//    $routes->get("sponsor-view", "TreeController::sponsorview");
-//    $routes->post("tree-sponsorship-data", "TreeController::sponshorshipdata");
-//    $routes->get("downline-view", "TreeController::downlianeview");
-//    $routes->post("tree-downline-data", "TreeController::downlianedata");
-//    $routes->post("tree-treeview-data", "TreeController::treeview");
-
+    $routes->post("update-sponsor", "IBOController::updateSponsor");
+    //genealogy
+    $routes->get("sponsor-view", "TreeController::sponsorview");
+    $routes->post("tree-sponsorship-data", "TreeController::sponshorshipdata");
+    $routes->get("downline-view", "TreeController::downlianeview");
+    $routes->post("tree-downline-data", "TreeController::downlianedata");
     //------Order Controller   
-    $routes->get("order-list", "OrderController::index");
-    $routes->post("order-data", "OrderController::orderdata");
-    $routes->post("update-order-status", "OrderController::updateOrderStatus");    
+    $routes->get("payment-list", "OrderController::index");
+    $routes->post("payment-data", "OrderController::orderdata");
+    $routes->post("update-payment-status", "OrderController::updateOrderStatus");
     $routes->get("monthly-tax", "OrderController::monthlytaxstatement");
-    $routes->get("order-add", "OrderController::addNewOrder");
-    $routes->get("get-ibo-by-id-order/(:any)", "OrderController::getIBODetailByIdOrder/$1");
-    $routes->post("place-order", "OrderController::createOrder"); 
-    $routes->post("place-repurchase-order", "OrderController::createRepurchaseOrder"); 
-    $routes->get("order-manage-shipping", "OrderController::manageShipping");
-    $routes->post("order-Shipping-data", "OrderController::shippingdata");
-    $routes->post("update-shipping", "OrderController::updateShipping");
-    $routes->post("update-shipping-status", "OrderController::updateShippingStatus");
     //------Module Controller   
     $routes->get("module-list", "ModuleController::index");
     $routes->match(['get', 'post'], "module-add", "ModuleController::add");
     $routes->post("module-data", "ModuleController::moduledata");
     $routes->match(['get', 'post'], "module-edit/(:any)", "ModuleController::edit/$1");
-    $routes->get("module-detailview/(:any)", "ModuleController::detailview/$1"); 
+    $routes->get("module-detailview/(:any)", "ModuleController::detailview/$1");
     $routes->get("get-moduledetail-by-id/(:any)", "ModuleController::getModuleDetailById/$1");
     $routes->post("update-module-status", "ModuleController::updateModuleStatus");
-    $routes->post("update-module-director","ModuleController::updateModuleDirectors");
+    $routes->post("update-module-director", "ModuleController::updateModuleDirectors");
     $routes->get("segment-list", "ModuleController::segmentlist");
     $routes->post("segment-data", "ModuleController::segmentdata");
     $routes->post("update-segcatsubcat-status", "ModuleController::updateSegmentCategorySubcategoryStatus");
     $routes->match(['get', 'post'], "segment-edit/(:any)", "ModuleController::editSegment/$1");
     $routes->match(['get', 'post'], "segment-add", "ModuleController::addSegment");
     $routes->get("category-list", "ModuleController::categorylist");
+    $routes->post("category-data", "ModuleController::categoryData");
+    $routes->match(['get', 'post'], "category-edit/(:any)", "ModuleController::editCategory/$1");
+    $routes->match(['get', 'post'], "category-add", "ModuleController::addCategory");
     $routes->get("subcategory-list", "ModuleController::subcategorylist");
-    $routes->get("segment-add", "ModuleController::segmentadd");
-    $routes->get("category-add", "ModuleController::categoryadd");
-    $routes->get("subcategory-add", "ModuleController::subcategoryadd");
-    $routes->get("module-list", "ModuleController::index");
-    $routes->get("module-list", "ModuleController::index");
-    $routes->get("module-list", "ModuleController::index");
-    //------Coupons Controller   
-    $routes->get("coupon-list", "CouponsController::index");
-
-    //------Ewallet Controller   
-    $routes->get("e-wallet-balance", "EwalletController::balance");
-    $routes->get("e-wallet-request", "EwalletController::request");
-    $routes->get("e-wallet-transaction", "EwalletController::transaction");
+    $routes->post("subcategory-data", "ModuleController::subcategoryData");
+    $routes->match(['get', 'post'], "subcategory-edit/(:any)", "ModuleController::editSubcategory/$1");
+    $routes->match(['get', 'post'], "subcategory-add", "ModuleController::addSubcategory");
 
     //------Payout Controller   
-    $routes->get("daily-payout", "PayoutController::dailypayout");
-    $routes->get("weekly-payout", "PayoutController::weeklypayout");
-    $routes->get("rank-report", "PayoutController::rankreport");
-    $routes->get("reward-report", "PayoutController::rewardreport");
-    $routes->get("franchise-income", "PayoutController::franchiseincome");
-    $routes->get("monthly-franchise-payout", "PayoutController::monthlyfranchisepayout");
+    $routes->get("payout-dates", "PayoutController::payoutDates");
+    $routes->post("payout-dates-data", "PayoutController::payourDatesData");
+    $routes->get("payout-member", "PayoutController::memberPayout"); 
+    $routes->post("payout-member-data", "PayoutController::payourMemberData");
 
     //------Reports Controller   
     $routes->get("business-report", "ReportsController::business");
     $routes->get("company-performance", "ReportsController::performance");
-
-    //------Utility Controller   
-    $routes->get("grievances-list", "UtilityController::grievances");
-    $routes->get("news-list", "UtilityController::news");
-
-    
-    //------Configuration Controller   
-    $routes->match(['get', 'post'], "configuration", "ConfigurationController::index");
 
     //-----Personal Controller
     $routes->get("profile", "PersonalController::index");
@@ -110,7 +82,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
 
     $routes->match(['get', 'post'], "add-new-user", "UsersController::addNewUser");
     //-----Configuration Controller
-    $routes->match(['get', 'post'], "configuration", "AdminController::configuration");
+    $routes->match(['get', 'post'], "configuration", "ConfigurationController::index");
 
     $routes->get("addressByPincode/(:any)", "AuthController::addressByPincode/$1");
     $routes->get("getBankDetailByIfsc/(:any)", "AuthController::getBankDetailByIfsc/$1");
@@ -121,6 +93,22 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->post("update-login-detail", "AuthController::updateLoginDetail");
     $routes->post("update-kyc-detail", "AuthController::updateKycDetail");
     $routes->post("update-user-status", "AuthController::updateUserStatus");
+
+    $routes->post("get-category-by-segment", "AuthController::getCategoryBySegment");
+    $routes->post("get-subcategory-by-category-module", "AuthController::getSubCategoryByCategoryModule");
+    
+    $routes->post("check-pan", "AuthController::checkpan");
+    $routes->post("check-mobile", "AuthController::checkmobile");
+    $routes->post("check-email", "AuthController::checkemail");
+    
+    //----------------------------Cron------------------    
+    $routes->get("delete-system-log", "CronController::deleteSystemLogs");
+    $routes->get("create-payout-date", "CronController::createPayoutDate");
+    $routes->get("update-sync-status/(:any)", "CronController::updateSyncStatus/$1");
+    $routes->get("confirm-transaction", "CronController::confirmTransaction");
+    $routes->get("generate-payout", "CronController::generatePayout");
+    $routes->get("update-gross-income", "CronController::updateGrossIncome");
+    
 
 //    $routes->set404Override(function () {
 //        return view('\Modules\Admin\Views\auth\404');

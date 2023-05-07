@@ -57,8 +57,8 @@ class AuthController extends AdminController {
                                 $this->session->set('useremail', $result->user_email);
                                 $this->session->set('userid', $result->id_user);
                                 if ($result->user_type == 4) {
-                                    header("location:" . ADMINPATH."ibo-list");
-                                } 
+                                    header("location:" . ADMINPATH . "ibo-list");
+                                }
                                 exit;
                             }
                         } else {
@@ -98,7 +98,7 @@ class AuthController extends AdminController {
                     $emaildata = array('template' => $emailtemplate, 'to' => $result->user_email, 'subject' => "Password Recovery");
                     sendEmail($emaildata);
                     $this->session->setFlashdata('message', setMessage("Your password has been sent to your registered email address", 's'));
-                    header('location:'.ADMINPATH.'login');
+                    header('location:' . ADMINPATH . 'login');
                     exit;
                 } else {
                     $this->session->setFlashdata('message', setMessage('No user found', 'e'));
@@ -236,13 +236,13 @@ class AuthController extends AdminController {
             $profcert = $this->request->getPost('profcert');
             $bloodgroup = $this->request->getPost('bloodgroup');
             $nameofgroup = $this->request->getPost('nameofgroup');
-            
+
             $userid = base64_decode($this->request->getPost('encuser'));
 
             $updarray = array('user_title' => $title, 'user_name' => $name,
                 'user_father_husband' => $fatherhusband, 'user_gender' => $gender,
                 'user_marital_status' => $maritalstatus, 'user_dob' => makeDate($dob, 'Y-m-d'),
-                'user_group_link'=>$glink,'user_education'=>$eduqual,'user_profession_certification'=>$profcert,'user_blood_group'=>$bloodgroup,'user_group_link_org'=>$nameofgroup);
+                'user_group_link' => $glink, 'user_education' => $eduqual, 'user_profession_certification' => $profcert, 'user_blood_group' => $bloodgroup, 'user_group_link_org' => $nameofgroup);
 
             $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
 
@@ -462,6 +462,96 @@ class AuthController extends AdminController {
         }
         echo json_encode($data);
         exit;
+    }
+
+    public function getCategoryBySegment() {
+        $status = array('status' => 'error', 'message' => 'Unauthorised access');
+        if ($this->request->isAJAX()) {
+            $segment = $this->request->getPost('segment');
+            $allcategory = $this->adminModel->getCategoryBySegment($segment);
+
+            $status = array('status' => 'success', 'data' => $allcategory);
+        }
+        echo json_encode($status);
+        exit;
+    }
+
+    public function getSubCategoryByCategoryModule() {
+        $status = array('status' => 'error', 'message' => 'Unauthorised access');
+        if ($this->request->isAJAX()) {
+            $category = $this->request->getPost('category');
+            $module = $this->request->getPost('module');
+            $allsubcategory = $this->adminModel->getSubCategoryByCategorySegment($category);
+            $blockedsubcategory = $this->adminModel->getAllocatedSubcategoryByModule($module);
+            $subcat = explode(',', $blockedsubcategory);
+            for ($x = 0; $x < count($allsubcategory); $x++) {
+                if (in_array($allsubcategory[$x]->sub_category_id, $subcat)) {
+                    $allsubcategory[$x]->disabled = 1;
+                } else {
+                    $allsubcategory[$x]->disabled = 0;
+                }
+            }
+            $status = array('status' => 'success', 'data' => $allsubcategory);
+        }
+        echo json_encode($status);
+        exit;
+    }
+
+    public function checkemail() {
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $userid = trim($this->request->getPost('userid'));
+            $email = trim($this->request->getPost('email'));
+            $usercount = $this->adminModel->checkUserEmail($email, $userid);
+
+            if ($usercount > 0) {
+                $return = false;
+            } else {
+                $return = true;
+            }
+
+            echo json_encode(array(
+                'valid' => $return,
+            ));
+            exit;
+        }
+    }
+
+    public function checkmobile() {
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $userid = trim($this->request->getPost('userid'));
+            $mobile = trim($this->request->getPost('mobile'));
+            $usercount = $this->adminModel->checkUserMobile($mobile, $userid);
+
+            if ($usercount > 0) {
+                $return = false;
+            } else {
+                $return = true;
+            }
+
+            echo json_encode(array(
+                'valid' => $return,
+            ));
+            exit;
+        }
+    }
+
+    public function checkpan() {
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $userid = trim($this->request->getPost('userid'));
+            $pan = trim($this->request->getPost('pan'));
+            $usercount = $this->adminModel->checkUserPan($pan, $userid);
+
+            if ($usercount > 0) {
+                $return = false;
+            } else {
+                $return = true;
+            }
+
+            echo json_encode(array(
+                'valid' => $return,
+            ));
+            exit;
+        }
     }
 
 }
