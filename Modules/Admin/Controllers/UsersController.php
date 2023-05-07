@@ -231,7 +231,7 @@ class UsersController extends AdminController {
             $orderdirecttion = $order[0]['dir'];
             $this->request->getPost('status') != '' ? $status = implode(',', $this->request->getPost('status')) : $status = '';
             $daterange = generateDateFromDateRange($this->request->getPost('daterange'));
-            $data = array('name' => $name, 'email' => $email, 'mobile' => $mobile, 'status' => $status, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
+            $data = array('name' => $name, 'mobile' => $mobile, 'status' => $status, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
             $userlist = $this->usersModel->selectUsers($data, $ordercolumn, $orderdirecttion, $offset, $limit);
             $returndata['data'] = $this->fn_formatedUserdata($userlist['data'], $offset);
             $returndata['draw'] = $draw;
