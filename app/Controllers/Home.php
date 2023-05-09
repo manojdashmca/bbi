@@ -252,9 +252,9 @@ class Home extends WebController {
         $iduser = session()->get('muserid');
         $userdetaildata = $this->iboModel->getIbodetailById($iduser);
         $this->data['userdetail'] = $userdetaildata;
-        return view('templates\header', $this->data)
-                . view('users\myprofile', $this->data)
-                . view('templates\footer', $this->data);
+        return view('templates/header', $this->data)
+                . view('users/myprofile', $this->data)
+                . view('templates/footer', $this->data);
     }
 
     public function mypayout() {
