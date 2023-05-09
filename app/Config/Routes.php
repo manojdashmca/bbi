@@ -38,58 +38,26 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 //website related
 $routes->get('maintenance-active', 'Home::maintenanceMode');
-$routes->get('/', 'Home::comingsoon');
-/*$routes->get('/', 'Home::homepage');
- $routes->get('about-us', 'Home::aboutus');
-$routes->get('products', 'Home::productpage');
-$routes->get("product-detail/(:any)", "Home::productdetailpage/$1");
-$routes->get('why-wellness', 'Home::whywellness');
-$routes->get('resource-download', 'Home::resourcesDownload');
-$routes->get('resource-faq', 'Home::resourcesFaq');
-$routes->get('partner-with-us', 'Home::partnerwithus');
-$routes->get('company-certificate', 'Home::companycertificate');
-$routes->get('team-winwellness', 'Home::teamwinwellness');
-$routes->get('contact-us', 'Home::contactus');
-$routes->get('privacy-policy', 'Home::privacypolicy');
-$routes->get('contract-agreement', 'Home::contractAgreement');
-$routes->get('shipping-policy', 'Home::shippingpolicy');
-$routes->get('cancellation-refund-policy', 'Home::cancellationandrefundpolicy');
-$routes->get('term-condition', 'Home::termsandcondition');
-$routes->get('disclaimer', 'Home::disclaimer');
-$routes->get('grivances', 'Home::grivances');*/
-
-$routes->get('shopping-cart', 'Home::shoppingCart');
-$routes->get('checkout', 'Home::checkout');
-//---------login related routings-----
-$routes->match(['get', 'post'], 'login', 'Home::logMeIn');
+$routes->get('/', 'Home::dashboard');
+$routes->match(['get', 'post'], 'login', 'Home::login');
+$routes->match(['get', 'post'], 'forgot-password', 'Home::forgotpassword');
 $routes->match(['get', 'post'], 'register-me', 'Home::registerMe');
-$routes->match(['get', 'post'], 'password-recovery', 'Home::forgotpassword');
-//------------------------------
-/* User Dashboard Related routing */
-$routes->get('user-dashboard', 'UserController::dashboard');
-$routes->match(['get', 'post'], 'user-profile', 'UserController::profile');
-$routes->match(['get', 'post'], 'change-password', 'UserController::changepassword');
-$routes->get('logout', 'UserController::logout');
-$routes->get('reset-password', 'Home::resetpassord');
+$routes->get('user-dashboard', 'Home::dashboard');
+$routes->get('get-dashboard-data', 'Home::getDashBoardData');
 
-//-----------stop commandline---
-$routes->cli('login', 'Home::commandlineblocked');
-$routes->cli('forgot-password', 'Home::commandlineblocked');
-//$routes->cli('reset-password', 'Home::commandlineblocked');
-$routes->cli('register-me', 'Home::commandlineblocked');
+$routes->get('my-sponsor', 'Home::mysponsor');
+$routes->post('my-sponsorship-data', 'Home::mySponsorshipData');
+$routes->get('my-profile', 'Home::myprofile');
+$routes->get('my-payout', 'Home::mypayout');
+$routes->post('my-payout-data', 'Home::myPayoutData');
+$routes->get('logout', 'Home::logout');
+$routes->match(['get', 'post'], 'change-password', 'Home::changePassword');
 
-//----ajaxcall-------
-$routes->match(['get', 'post'], 'check-mobile', 'Home::checkMobileExist');
-$routes->match(['get', 'post'], 'check-email', 'Home::checkEmailExist');
-//-----------------------------
-//--------------------Autometic jobs--------
-$routes->get('/jobs/publish-email', 'WebController::sendPendingEmails');
-$routes->get('/jobs/delete-email-attachments', 'WebController::deleteEmailAttachment');
-$routes->get('/jobs/delete-system-log', 'WebController::deleteSystemLogs');
+
 //----------------------------------------
 $routes->set404Override(function () {
-        return view('\App\Views\home\404');
-    });
+    return view('\App\Views\home\404');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing

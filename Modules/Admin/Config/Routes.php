@@ -6,9 +6,6 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->match(['get', 'post'], "forgot-password", "AuthController::forgotpassword");
     $routes->get("reset-password", "AuthController::resetpassword");
     $routes->get("logout", "AuthController::logout");
-    $routes->get("test", "AdminController::test");
-    $routes->get("form", "AdminController::form");
-    $routes->get("table", "AdminController::table");
     //-----Dashboard Controller-----
     $routes->get("dashboard", "DashboardController::index");
     $routes->get("/", "DashboardController::index");
@@ -19,17 +16,11 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->post("ibo-data", "IBOController::ibodata");
     $routes->get("ibo-edit/(:any)", "IBOController::edit/$1");
     $routes->get("get-sponsordetail-by-id/(:any)", "IBOController::getSponsorDetailById/$1");
-    $routes->post("ibo-virtual-bp-data", "IBOController::iboVirtcualBpData");
-    $routes->get("ibo-virtual-bp", "IBOController::iboVirtcualBp");
     $routes->get("get-member-by-id/(:any)", "IBOController::getMemberDetailById/$1");
-    $routes->post("add-virtualbp-transaction", "IBOController::addBpTransaction");
-    $routes->post("cancel-vbp-transaction", "IBOController::cancelVBPTransaction");
-    $routes->post("update-sponsor", "IBOController::updateSponsor");
+    
     //genealogy
     $routes->get("sponsor-view", "TreeController::sponsorview");
     $routes->post("tree-sponsorship-data", "TreeController::sponshorshipdata");
-    $routes->get("downline-view", "TreeController::downlianeview");
-    $routes->post("tree-downline-data", "TreeController::downlianedata");
     //------Order Controller   
     $routes->get("payment-list", "OrderController::index");
     $routes->post("payment-data", "OrderController::orderdata");

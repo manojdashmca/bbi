@@ -20,7 +20,7 @@ class PayoutModel extends Model {
                     . "date_format(payout_release_date,'%d-%m-%Y') releasedate "
                     . "FROM payout_date "
                     . "WHERE 1=1 ";
-             !empty($data['mobile']) ? $sql .= " AND user_mobile = '" . $data['mobile'] . "'" : $sql .= '';
+            !empty($data['mobile']) ? $sql .= " AND user_mobile = '" . $data['mobile'] . "'" : $sql .= '';
             !empty($data['payout']) ? $sql .= " AND payout_id_payout = '" . $data['payout'] . "'" : $sql .= '';
             !empty($data['name']) ? $sql .= " AND  user_name like '%" . $data['name'] . "%'" : $sql .= '';
             !empty($data['fromdate']) ? $sql .= " AND  date_format(payout_start_date,'%Y-%m-%d') >= '" . date('Y-m-d', strtotime($data['fromdate'])) . "'" : $sql .= '';
@@ -38,7 +38,7 @@ class PayoutModel extends Model {
         }
         return $return;
     }
-    
+
     public function selectMemberPayout($data, $ordercolumn = 3, $orderdirecttion = 'desc', $offset = 0, $limit = 10) {
         try {
             $return = array();
@@ -50,6 +50,7 @@ class PayoutModel extends Model {
                     . "FROM monthly_payout join payout_date on payout_id_payout=payout_date_id "
                     . "join user_detail on user_id_user=id_user "
                     . "WHERE 1=1 ";
+            !empty($data['userid']) ? $sql .= " AND user_id_user = '" . $data['userid'] . "'" : $sql .= '';
             !empty($data['fromdate']) ? $sql .= " AND  date_format(payout_start_date,'%Y-%m-%d') >= '" . date('Y-m-d', strtotime($data['fromdate'])) . "'" : $sql .= '';
             !empty($data['todate']) ? $sql .= " AND  date_format(payout_start_date,'%Y-%m-%d') <= '" . date('Y-m-d', strtotime($data['todate'])) . "'" : $sql .= '';
             $sql .= " ORDER BY $columnarray[$ordercolumn] $orderdirecttion limit $offset,$limit";

@@ -47,7 +47,7 @@ class OrderController extends AdminController {
             $offset = trim($this->request->getPost('start'));
             $draw = trim($this->request->getPost('draw'));
             $name = trim($this->request->getPost('name'));
-            $rderno = trim($this->request->getPost('rderno'));
+            //$rderno = trim($this->request->getPost('rderno'));
             $mobile = trim($this->request->getPost('mobile'));
             $username = trim($this->request->getPost('username'));
             $order = $this->request->getPost('order');
@@ -55,7 +55,7 @@ class OrderController extends AdminController {
             $orderdirecttion = $order[0]['dir'];
             //$this->request->getPost('status') != '' ? $status = implode(',', $this->request->getPost('status')) : $status = '';
             $daterange = generateDateFromDateRange($this->request->getPost('daterange'));
-            $data = array('name' => $name, 'rderno' => $rderno, 'mobile' => $mobile, 'username' => $username, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
+            $data = array('name' => $name, 'mobile' => $mobile, 'username' => $username, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
             $userlist = $this->orderModel->selectIBOOrder($data, $ordercolumn, $orderdirecttion, $offset, $limit);
             $returndata['data'] = $this->fn_formatedorderdata($userlist['data'], $offset);
             $returndata['draw'] = $draw;

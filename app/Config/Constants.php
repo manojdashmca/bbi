@@ -95,5 +95,6 @@ define('EVENT_PRIORITY_HIGH', 10);
 
 define('CUSTOMPATH', '/');
 define('ADMINPATH', CUSTOMPATH.'backoffice/');
+define('MEMBERPATH', CUSTOMPATH.'member/');
 define('COMMUNICATION_EMAIL','support@medserve.co.in');
 define('COMPANYNAME','WINWELLNESS');

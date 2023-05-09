@@ -44,7 +44,7 @@
         var mobile = $("#mobile").val();
         var daterange = $("#daterange").val();
         var username = $("#username").val();
-        var rderno = $("#rderno").val();
+        //var rderno = $("#rderno").val();
         $('#example').DataTable().destroy();
         $('#example').DataTable({
             responsive: true,
@@ -64,7 +64,7 @@
                     d.mobile = mobile;
                     d.daterange = daterange;
                     d.username = username;
-                    d.rderno = rderno;
+                    //d.rderno = rderno;
                 }
             }
         });

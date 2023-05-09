@@ -16,12 +16,14 @@ class AdminController extends BaseController {
         $this->data['css'] = '';
         $this->data['includefile'] = '';
         parent::__construct();
-        $openmethods = array('login', 'logout', 'test', 'forgotpassword', 'resetpassword');
+        $openmethods = array('login', 'logout', 'test', 'forgotpassword', 'resetpassword','addressByPincode','getBankDetailByIfsc',
+            'getCategoryBySegment','getSubCategoryByCategoryModule','checkpan','checkmobile','checkmobile',
+            'getSponsorDetailById','getModuleDetailById');
         if (!in_array($this->method, $openmethods)) {
             if ($this->session->has('login')) {
                 if ($this->session->get('usertype') != 4) {
                     $this->session->setFlashdata('message', setMessage('You are not authorised to access this section', 'e'));
-                    header("location:" . ADMINPATH);
+                    header("location:login");
                     exit;
                 }
             } else {

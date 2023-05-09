@@ -164,6 +164,7 @@ class IboModel extends Model {
                 JOIN user_detail as c on a.sponsor=c.id_user 
                 where 1 =1 ";
             !empty($data['code']) ? $sql .= " AND c.user_code = '" . $data['code'] . "'" : $sql .= '';
+            !empty($data['parentid']) ? $sql .= " AND a.sponsor = '" . $data['parentid'] . "'" : $sql .= '';
             !empty($data['level']) ? $sql .= " AND level = '" . $data['level'] . "'" : $sql .= '';
             $sql .= " ORDER BY level,b.id_user asc  limit $offset,$limit";
 

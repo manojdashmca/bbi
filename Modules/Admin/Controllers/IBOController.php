@@ -4,14 +4,12 @@ namespace Modules\Admin\Controllers;
 
 use Modules\Admin\Controllers\AdminController;
 use Modules\Admin\Models\IboModel;
-use Modules\Admin\Models\FranchiseModel;
 
 class IBOController extends AdminController {
 
     public function __construct() {
         parent::__construct();
         $this->iboModel = new IboModel();
-        $this->franchiseModel = new FranchiseModel();
         $this->parentUser = 0;
     }
 

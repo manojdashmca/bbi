@@ -71,6 +71,25 @@ class CronController extends AdminController {
         }
     }
 
+    public function deleteEmailAttachment() {
+        try {
+            $counter = 0;
+            $logdir = APPPATH . "../public/uploads/emailattachments";
+            $files = array_values(array_diff(scandir($logdir), array('..', '.', 'CVS')));
+            foreach ($files as $fileInfo) {
+                if ($fileInfo != 'index.html') {
+                    $file = $logdir . '/' . $fileInfo;
+                    if (time() - filemtime($file) >= 60 * 60 * 24 * 3) {
+                        $counter++;
+                        unlink($file);
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            
+        }
+    }
+
     /*
       9- Update synchstatus Activate mentainance mode
      * Class- Cron
