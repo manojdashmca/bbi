@@ -17,7 +17,7 @@ class AdminController extends BaseController {
         $this->data['includefile'] = '';
         parent::__construct();
         $openmethods = array('login', 'logout', 'test', 'forgotpassword', 'resetpassword','addressByPincode','getBankDetailByIfsc',
-            'getCategoryBySegment','getSubCategoryByCategoryModule','checkpan','checkmobile','checkmobile',
+            'getCategoryBySegment','getSubCategoryByCategoryModule','checkpan','checkmobile','checkmobile','checkemail',
             'getSponsorDetailById','getModuleDetailById');
         if (!in_array($this->method, $openmethods)) {
             if ($this->session->has('login')) {

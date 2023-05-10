@@ -361,7 +361,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Overall Experience</label>
-                                            <input type="text" class="form-control" id="businessexp" name="businessexp" readonly="">
+                                            <input type="text" class="form-control" id="businessexp" name="businessexp" >
                                         </div>                                    
                                     </div>
                                     <div class="col-lg-6">

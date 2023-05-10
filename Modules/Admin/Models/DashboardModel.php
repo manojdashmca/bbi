@@ -16,44 +16,67 @@ class DashboardModel extends Model {
         return $result->getResult();
     }
 
-    public function getIboWalletBalance($userid = null) {
-        if (empty($userid)) {
-            $sql = "SELECT coalesce(sum(ibo_wallet_balance)) as sum from ibo_user ";
-        } else {
-            $sql = "SELECT coalesce(ibo_wallet_balance) as sum from ibo_user where user_id_user='$userid' ";
-        }
+    public function getSegmentCount() {
+        $sql = "select count(segment_id) qcount from master_segment where 1=1";
         $result = $this->db->query($sql);
-        return $result->getRow()->sum;
+        return $result->getRow()->qcount;
     }
 
-    public function franchiseWalletBalance($userid = null) {
-        if (empty($userid)) {
-            $sql = "SELECT coalesce(sum(franchise_balance)) as sum from franchise_user ";
-        } else {
-            $sql = "SELECT coalesce(franchise_balance) as sum from franchise_user where user_id_user='$userid' ";
-        }
+    public function getModuleCount() {
+        $sql = "select count(lm_id) qcount from location_module where 1=1";
         $result = $this->db->query($sql);
-        return $result->getRow()->sum;
+        return $result->getRow()->qcount;
     }
 
-    public function getTotalBusinessByDate($startdate, $enddate) {
-        $sql = "SELECT coalesce(sum(total_billing_amount))- coalesce(sum(total_tax))- coalesce(sum(courior_charge)) as totalbusiness from ibo_order where transaction_status=2 and date_format(transaction_date,'%Y-%m-%d') >='$startdate' and date_format(transaction_date,'%Y-%m-%d') <='$enddate' ";
-
+    public function getCategoryCount() {
+        $sql = "select count(category_id) qcount from master_category where 1=1";
         $result = $this->db->query($sql);
-        return $result->getRow()->totalbusiness;
+        return $result->getRow()->qcount;
+    }
+
+    public function getSubCategoryCount() {
+        $sql = "select count(sub_category_id) qcount from master_sub_category where 1=1";
+        $result = $this->db->query($sql);
+        return $result->getRow()->qcount;
+    }
+    
+    public function getTotaljoiningByDate($fromdate='',$todate=''){
+        $sql = "select count(id_user) usercount from user_detail where 1=1";
+        if (!empty($fromdate)) {
+            $sql .= " AND date_format(user_create_date,'%Y-%m-%d') >= '$fromdate'";
+        }
+        if (!empty($todate)) {
+            $sql .= " AND date_format(user_create_date,'%Y-%m-%d') <= '$todate'";
+        }
+        $result = $this->db->query($sql);
+        return $result->getRow()->usercount;
     }
 
     public function getPayoutAmountByDate($startdate, $enddate) {
         return 0;
     }
 
-    public function getProductWiseSales($startdate, $enddate) {
-        $sql = "select product_name,coalesce(sum(iohp_total_dp))+coalesce(sum(iohp_total_mrp)) as amount "
-                . "from ibo_order_has_product join product on product_id_product=product_id "
-                . "join ibo_order on trn_id_trn=transaction_id where transaction_status=2 and transaction_date >='" . $startdate . "' and transaction_date <='" . $enddate . "' ";
-
+    public function getTotalSponsor($userid) {
+        $sql = "select count(id_user) usercount from user_detail where sponsor_user_id='$userid'";
         $result = $this->db->query($sql);
-        return $result->getResult();
+        return $result->getRow()->usercount;
+    }
+
+    public function getTotalIncome($userid = '', $fromdate = '', $todate = '') {
+        $sql = "select coalesce(sum(income_amount)) income from member_income mi "
+                . "join ibo_joining_payment_detail on payment_id_payment = mpd_id "
+                . "where 1=1 ";
+        if (!empty($userid)) {
+            $sql .= " AND mi.user_id_user='$userid'";
+        }
+        if (!empty($fromdate)) {
+            $sql .= " AND date_format(payment_date,'%Y-%m-%d') >= '$fromdate'";
+        }
+        if (!empty($todate)) {
+            $sql .= " AND date_format(payment_date,'%Y-%m-%d') <= '$todate'";
+        }
+        $result = $this->db->query($sql);
+        return $result->getRow()->income;
     }
 
 }

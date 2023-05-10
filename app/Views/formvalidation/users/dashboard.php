@@ -12,8 +12,8 @@
             {
                 var obj = JSON.parse(data);                
                 var chart2data = obj.chart2data;
-                var chart3data = obj.chart3data;
-                renderMixChart(chart3data.payoutdata, chart3data.businessdata, chart3data.monthdata);
+                //var chart3data = obj.chart3data;
+                //renderMixChart(chart3data.payoutdata, chart3data.businessdata, chart3data.monthdata);
                 renderBarChart(chart2data.series, chart2data.lables);
             }
         });
@@ -32,7 +32,7 @@
         var barColors = getChartColorsArray("#bar_chart"),
                 options = {
                     chart: {height: 350, type: "bar", toolbar: {show: !1}},
-                    plotOptions: {bar: {horizontal: !0}},
+                    plotOptions: {bar: {horizontal: !1}},
                     dataLabels: {enabled: !1},
                     series: [{data: seriesdata}],
                     colors: barColors,

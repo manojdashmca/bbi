@@ -413,7 +413,7 @@
         var gst = 0;
         if (checked.length == 1) {
             var amounttobepayed = paymentamount + paymentamount * 18 / 100;
-            gst += Numbe(paymentamount * 18 / 100);
+            gst += Number(paymentamount * 18 / 100);
         } else {
             var additionalamount = (checked.length - 1) * 5000;
             var amounttobepayed = paymentamount + additionalamount + additionalamount * 18 / 100 + paymentamount * 18 / 100;

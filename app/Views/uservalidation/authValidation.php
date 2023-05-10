@@ -299,6 +299,13 @@
                             message: 'Enter a valid GSTIN'
                         }
                     }
+                }, businesspan: {
+                    validators: {
+                        regexp: {
+                            regexp: '^[A-Z]{5}[0-9]{4}[A-Z]{1}$',
+                            message: 'Enter a valid PAN No'
+                        }
+                    }
                 }
             }
         });
@@ -460,7 +467,7 @@
         var gst = 0;
         if (checked.length == 1) {
             var amounttobepayed = paymentamount + paymentamount * 18 / 100;
-            gst += Numbe(paymentamount * 18 / 100);
+            gst += Number(paymentamount * 18 / 100);
         } else {
             var additionalamount = (checked.length - 1) * 5000;
             var amounttobepayed = paymentamount + additionalamount + additionalamount * 18 / 100 + paymentamount * 18 / 100;
@@ -480,7 +487,7 @@
             return 25000;
         }
     }
-    
+
     function getAddress(office = '') {
         var pincode = $("#pincode").val();
         $.ajax({

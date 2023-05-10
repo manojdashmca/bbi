@@ -22,13 +22,13 @@ class DashboardController extends AdminController {
             ($usercounts[$x]->user_type == 1) ? $member = $usercounts[$x]->count : '';
         }
         $this->data['topdata'] = array(
-            "totalmodule" => 10,
-            "totalsegment" => 10,
-            "totalcategory" => 10,
-            "totalsubcategory" => 18,
+            "totalmodule" => $this->dashboardModel->getModuleCount(),
+            "totalsegment" => $this->dashboardModel->getSegmentCount(),
+            "totalcategory" => $this->dashboardModel->getCategoryCount(),
+            "totalsubcategory" => $this->dashboardModel->getSubCategoryCount(),
             "totalmember" => $member,
-            "totalJoiningOfTheMonth" => 700,
-            "payoutofthemonth" => 18000);
+            "totalJoiningOfTheMonth" => $this->dashboardModel->getTotaljoiningByDate(date('Y-m-01'), date('Y-m-t')),
+            "payoutofthemonth" => $this->dashboardModel->getTotalIncome(0, date('Y-m-01'), date('Y-m-t')));
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\dashboard\index', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);

@@ -6,6 +6,7 @@ use App\Libraries;
 use Modules\Admin\Models\IboModel;
 use Modules\Admin\Models\PayoutModel;
 use App\Models\WebModel;
+use Modules\Admin\Models\DashboardModel;
 
 class Home extends WebController {
 
@@ -118,47 +119,178 @@ class Home extends WebController {
         $this->data['js'] = 'login';
         $this->data['includefile'] = 'authValidation.php';
         if ($this->request->getMethod() == 'post') {
-            $this->validateCaptcha();
+
             if (!$this->validate([
                         'name' => 'required',
-                        'email' => 'required|valid_email|is_unique[users.user_email]',
-                        'mobile' => 'required|is_unique[users.user_mobile]'
+                        'hidval' => 'required',
+                        'hidmodule' => 'required'
                     ])) {
 
                 $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
             } else {
-                $this->objEmailTemplate = new Libraries\EmailTemplate();
-                $email = $this->request->getPost('email');
-                $mobile = $this->request->getPost('mobile');
-                $name = $this->request->getPost('name');
-                $password = createEpin(8);
-                $createarray = array('user_login_key' => $password, 'user_type' => 3, 'registered_ip' => '', 'registered_os' => '', 'registered_browser' => '', 'user_create_date' => date('Y-m-d H:i:s'), 'user_name' => $name, 'user_mobile' => $mobile, 'user_email' => $email);
-                $this->webModel->transStart();
-                $userid = $this->webModel->createRecordInTable($createarray, 'users');
-                $usercode = '3' . date('Ym') . $userid;
-                $updarray = array('user_code' => $usercode);
-                $this->webModel->updateRecordInTable($updarray, 'users', 'id_user', $userid);
-                $uhid = $userid . '01';
-                $patientarray = array('uhid' => $uhid, 'user_id_user' => $userid, 'patient_name' => $name, 'relation_to_master_user' => 'Self', 'patient_create_date' => date('Y-m-d H:i:s'));
-                $this->webModel->createRecordInTable($patientarray, 'patient_detail');
-                $this->webModel->transComplete();
-                if ($this->webModel->transStatus() === false) {
-                    $this->session->setFlashdata('message', setMessage("Something went wrong, Please try after some time", 'f'));
-                    $this->webModel->transRollback();
+                $utr = $this->request->getPost('utr');
+                $utrstatus = $this->webModel->checkUTR($utr, 'user_detail');
+                if ($utrstatus) {
+                    $sponsorid = $this->request->getPost('hidval');
+                    $name = $this->request->getPost('name');
+                    $bloodgroup = $this->request->getPost('bloodgroup');
+                    $eduqual = $this->request->getPost('eduqual');
+                    $profcert = $this->request->getPost('profcert');
+                    $hidmodule = $this->request->getPost('hidmodule');
+                    $dob = $this->request->getPost('dob');
+                    $address = $this->request->getPost('address');
+                    $pincode = $this->request->getPost('pincode');
+                    $postoffice = $this->request->getPost('postoffice');
+                    $city = $this->request->getPost('city');
+                    $district = $this->request->getPost('district');
+                    $state = $this->request->getPost('state');
+                    $country = $this->request->getPost('country');
+                    $mobile = $this->request->getPost('mobile');
+                    $emailid = $this->request->getPost('emailid');
+                    $panno = $this->request->getPost('panno');
+                    $glink = $this->request->getPost('glink');
+                    $nameofgroup = $this->request->getPost('nameofgroup');
+                    $bankacno = $this->request->getPost('bankacno');
+                    $bankifsc = $this->request->getPost('bankifsc');
+                    $bankname = $this->request->getPost('bankname');
+                    $bankbranch = $this->request->getPost('bankbranch');
+                    $businessbankacno = $this->request->getPost('businessbankacno');
+                    $businessbankifsc = $this->request->getPost('businessbankifsc');
+                    $businessbankname = $this->request->getPost('businessbankname');
+                    $businessbankbranch = $this->request->getPost('businessbankbranch');
+
+                    $shopact = $this->request->getPost('shopact');
+                    $shoplicenseno = $this->request->getPost('shoplicenseno');
+                    $isgst = $this->request->getPost('isgst');
+                    $gstno = $this->request->getPost('gstno');
+
+                    //----------------businessdetail--------
+                    $businessname = $this->request->getPost('businessname');
+                    $businessdesignation = $this->request->getPost('businessdesignation');
+                    $businesssegment = $this->request->getPost('businesssegment');
+                    $businesscategory = $this->request->getPost('businesscategory');
+                    $businessaddress = $this->request->getPost('businessaddress');
+                    $businesscity = $this->request->getPost('businesscity');
+                    $gstaddress = $this->request->getPost('gstaddress');
+                    $businesspan = $this->request->getPost('businesspan');
+                    $currentbusiness = $this->request->getPost('currentbusiness');
+                    $businessemail = $this->request->getPost('businessemail');
+                    $businesswebsite = $this->request->getPost('businesswebsite');
+                    $businessexp = $this->request->getPost('businessexp');
+                    if ($this->request->getPost('social') != false) {
+                        $social = implode(',', $this->request->getPost('social'));
+                    } else {
+                        $social = '';
+                    }
+                    $paymentamount = $this->request->getPost('membershipfee');
+                    $hiddengst = $this->request->getPost('hiddengst');
+                    $joiningfee = $this->request->getPost('joiningfee');
+                    $paymentmode = $this->request->getPost('paymentmode');
+                    $paymentdetail = $this->request->getPost('paymentdetail');
+                    $subcatvalue = $this->request->getPost('subcatvalue');
+                    $expsubcat = explode(',', $subcatvalue);
+                    //-------------------------------------
+
+                    $passphrase = createEpin(6);
+                    $passwordnew = $this->encryptString($passphrase);
+                    $userdetaildata = array(
+                        'utr_no' => $utr,
+                        "user_login_key" => $passwordnew,
+                        "user_create_date" => date("Y-m-d H:i:s"),
+                        "sponsor_user_id" => $sponsorid,
+                        'module_id_module' => $hidmodule,
+                        'user_name' => $name,
+                        'user_education' => $eduqual,
+                        'user_profession_certification' => $profcert,
+                        'user_blood_group' => $bloodgroup,
+                        'user_mobile' => $mobile,
+                        "user_email" => $emailid,
+                        "user_dob" => makeDate($dob, 'Y-m-d'),
+                        "user_address" => $address,
+                        "user_pincode" => $pincode,
+                        "user_post_office" => $postoffice,
+                        "user_district" => $district,
+                        "user_city" => $city,
+                        "user_state" => $state,
+                        "user_country" => $country,
+                        "user_pan" => $panno,
+                        "user_type" => 1,
+                        "user_group_link" => $glink,
+                        "user_group_link_org" => $nameofgroup,
+                        "user_bank_ac_no" => $bankacno,
+                        "user_bank_ifsc" => $bankifsc,
+                        "user_bank_name" => $bankname,
+                        "user_bank_branch" => $bankbranch,
+                        "user_business_bank_account" => $businessbankacno,
+                        "user_business_bank_ifsc" => $businessbankifsc,
+                        "user_business_bank_name" => $businessbankname,
+                        "user_business_bank_branch" => $businessbankbranch,
+                        "shop_act" => $shopact,
+                        "shop_license_no" => $shoplicenseno,
+                        "gst_registered" => $isgst,
+                        "gst_no" => $gstno
+                    );
+                    $this->webModel->transStart();
+                    $iduser = $this->webModel->createRecordInTable($userdetaildata, 'user_detail');
+                    $this->webModel->createRecordInTable(array('user_id_user' => $iduser), 'ibo_user');
+                    $paymentdetaila = array(
+                        'user_id_user' => $iduser,
+                        'payment_date' => date('Y-m-d H:i:s'),
+                        'joining_fee' => $joiningfee,
+                        'topup_fee' => $paymentamount - $hiddengst - $joiningfee,
+                        'gst' => $hiddengst,
+                        'payment_amount' => $paymentamount,
+                        'payment_method' => $paymentmode,
+                        'payment_remark' => $paymentdetail,
+                        'payment_status' => 1);
+                    $paymentid = $this->webModel->createRecordInTable($paymentdetaila, 'ibo_joining_payment_detail');
+                    for ($sbc = 0; $sbc < count($expsubcat); $sbc++) {
+                        $businessdetailarray = array(
+                            'user_id_user' => $iduser,
+                            'business_name' => $businessname,
+                            'business_designation' => $businessdesignation,
+                            'business_segment' => $businesssegment,
+                            'business_category' => $businesscategory,
+                            'business_subcategory' => ($businesssegment != 26) ? $expsubcat[$sbc] : 0,
+                            'actual_subcategory' => $expsubcat[$sbc],
+                            'business_address' => $businessaddress,
+                            'business_city' => $businesscity,
+                            'gst_address' => $gstaddress,
+                            'business_pan' => $businesspan,
+                            'current_business' => $currentbusiness,
+                            'business_email' => $businessemail,
+                            'business_website' => $businesswebsite,
+                            'overall_experience' => $businessexp,
+                            'paymentdetail_id' => $paymentid,
+                            'social_presence' => $social
+                        );
+                        $this->webModel->createRecordInTable($businessdetailarray, 'ibo_business_detail');
+                    }
+                    $usercode = $this->checkAndcreateUserCode($iduser);
+                    $updarr = array('user_code' => $usercode);
+                    $this->webModel->updateRecordInTable($updarr, 'user_detail', 'id_user', $iduser);
+                    //$updarray = array();
+                    //------------do  other functionality LINK SMS EMAIL-----
+                    $this->createGenerationTree($sponsorid, $iduser, 1);
+                    //----------------------------------------
+                    $this->webModel->transComplete();
+
+                    if ($this->webModel->transStatus() === false) {
+                        $this->session->setFlashdata('message', setMessage("Something went wrong, Please try after some time", 'f'));
+                        $this->webModel->transRollback();
+                    } else {
+                        $this->webModel->transCommit();
+                        //---User Email
+                        $objEmailTemplate = new Libraries\EmailTemplate();
+                        $emailtemplate = $objEmailTemplate->registrationEmail($name, $emailid, $passphrase);
+                        $emaildata = array('template' => $emailtemplate, 'to' => $emailid, 'subject' => "SSK BBI Registration");
+                        sendEmail($emaildata);
+                        $this->session->setFlashdata('message', setMessage("Your registration is successful, please check your email for credential", 's'));
+                        header('location:/login');
+                        exit;
+                    }
                 } else {
-                    $this->webModel->transCommit();
-                    //---User Message----                          
-                    // $message = "Dear " . ucwords(trim(strtolower($firstname))) . ", Your registration is successful. Your user id is $email and password is $password. To logon visit www.doctorapp.com. Team DoctorApp";
-                    //$response = sendSMS($mobile, $message, '1207165302971925102');
-                    // $smscreate = array("getway_id" => $response, "numbers" => $mobile, "text" => $message, "datetime" => date("Y-m-d H:i:s"));
-                    //  $this->cron_model->createRecord($smscreate, 'sms');
-                    //---User Email
-                    $emailtemplate = $this->objEmailTemplate->registrationEmail($name, $userid, $password);
-                    $emaildata = array('template' => $emailtemplate, 'to' => $email, 'subject' => "DoctorApp Registration");
-                    sendEmail($emaildata);
-                    $this->session->setFlashdata('message', setMessage("Your registration is successful, please check your email for credential", 's'));
-                    header('location:/login');
-                    exit;
+                    $this->session->setFlashdata('message', setMessage("multy time formsubmission not allowed", 'e'));
                 }
             }
         }
@@ -169,18 +301,40 @@ class Home extends WebController {
                 . view('auth/footer', $this->data);
     }
 
+    protected function checkAndcreateUserCode($iduser) {
+        $usercode = randomUsercode($iduser);
+        $userdata = $this->webModel->getTableData('id_user', 'user_detail', "user_code='$usercode'");
+        if (empty($userdata)) {
+            return $usercode;
+        } else {
+            $this->checkAndcreateUserCode($iduser);
+        }
+    }
+
+    protected function createGenerationTree($parent, $child, $level) {
+        $this->iboModel = new IboModel();
+        if ((trim($parent) != 0 || trim($parent) != "0")) {
+            $dataarray = array("sponsor" => $parent, "child" => $child, "level" => $level);
+            $this->webModel->createRecordInTable($dataarray, 'ibo_sponsor_position');
+            $sponsordetail = $this->iboModel->getSponsordetailByUser($parent);
+
+            if ($sponsordetail->sponsor_user_id != 0) {
+                if ($level < 6) {
+                    $this->createGenerationTree($sponsordetail->sponsor_user_id, $child, $level + 1);
+                }
+            }
+        }
+    }
+
     public function dashboard() {
+        $this->dashboardModel = new DashboardModel();
         $this->data['js'] = 'dashboard';
         $this->data['css'] = 'dashboard';
         $this->data['includefile'] = 'users/dashboard.php';
         $this->data['topdata'] = array(
-            "totalmodule" => 10,
-            "totalsegment" => 10,
-            "totalcategory" => 10,
-            "totalsubcategory" => 18,
-            "totalmember" => 10,
-            "totalJoiningOfTheMonth" => 700,
-            "payoutofthemonth" => 18000);
+            "totalsponsor" => $this->dashboardModel->getTotalSponsor(session()->get('muserid')),
+            "totalincome" => $this->dashboardModel->getTotalIncome(session()->get('muserid')),
+            "payoutofthemonth" => $this->dashboardModel->getTotalIncome(session()->get('muserid')), date('Y-m-01'), date('Y-m-t'));
         return view('templates/header', $this->data)
                 . view('users/dashboard', $this->data)
                 . view('templates/footer', $this->data);
@@ -188,8 +342,8 @@ class Home extends WebController {
 
     public function getDashBoardData() {
 
-        $topearnerseries = array(46, 57, 59, 54, 62);
-        $topearnerlables = array("GS Parida", "Sangram", "Manoj", "Riaz", "Rahul");
+        $topearnerseries = array(46, 57, 59, 54, 62, 78, 90, 98, 78, 10, 22, 41);
+        $topearnerlables = array("Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec");
 
         $payoutdata = array(46, 57, 59, 54);
         $businessdata = array(80, 65, 80, 97);
@@ -198,9 +352,10 @@ class Home extends WebController {
             "chart2data" => array(
                 "series" => $topearnerseries,
                 "lables" => $topearnerlables),
-            "chart3data" => array("payoutdata" => $payoutdata,
-                "businessdata" => $businessdata,
-                "monthdata" => $monthdata));
+//            "chart3data" => array("payoutdata" => $payoutdata,
+//                "businessdata" => $businessdata,
+//                "monthdata" => $monthdata)
+        );
         echo json_encode($data);
         exit;
     }

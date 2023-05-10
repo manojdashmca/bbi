@@ -31,7 +31,7 @@
                             <div class="col-12">
                                 <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Sponsor</span>
                                 <h4 class="mb-3">
-                                    <span class="counter-value"  data-target="<?= $topdata['totalmodule'] ?>">0</span>
+                                    <span class="counter-value"  data-target="<?= $topdata['totalsponsor'] ?>">0</span>
                                 </h4>
                             </div>
 
@@ -50,7 +50,7 @@
                             <div class="col-12">
                                 <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Income</span>
                                 <h4 class="mb-3">
-                                    <span class="counter-value"  data-target="<?= $topdata['totalsegment'] ?>">0</span>
+                                    <span class="counter-value"  data-target="<?= $topdata['totalincome'] ?>">0</span>
                                 </h4>
                             </div>
 
@@ -91,7 +91,7 @@
                     <!-- card body -->
                     <div class="card-body">
                         <div class="d-flex flex-wrap align-items-center mb-4">
-                            <h5 class="card-title me-2">Top(5) Earner Of the Month</h5>
+                            <h5 class="card-title me-2">Monthwise Income</h5>
 
                         </div>
 
@@ -107,10 +107,10 @@
                 <!-- end col -->
 
             </div>
-            <div class="col-xl-6">
+<!--            <div class="col-xl-6">
 
                 <div class="card card-h-100">
-                    <!-- card body -->
+                     card body 
                     <div class="card-body">
                         <div class="d-flex flex-wrap align-items-center mb-4">
                             <h5 class="card-title me-2">Monthly Business Vs Payout</h5>
@@ -126,10 +126,10 @@
                     </div>
                 </div>
 
-                <!-- end col -->
+                 end col 
 
 
-            </div>
+            </div>-->
 
             <!-- end col -->
         </div> <!-- end row-->
