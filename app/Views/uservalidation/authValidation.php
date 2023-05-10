@@ -173,7 +173,7 @@
                             data: function (validator) {
                                 return {
                                     mobile: validator.getFieldElements('mobile').val(),
-                                    userid:0
+                                    userid: 0
                                 }
                             },
                             message: 'Mobile already exists',
@@ -195,7 +195,7 @@
                             data: function (validator) {
                                 return {
                                     email: validator.getFieldElements('emailid').val(),
-                                    userid:0
+                                    userid: 0
                                 };
                             },
                             message: 'Email already exists',
@@ -239,7 +239,7 @@
                             data: function (validator) {
                                 return {
                                     pan: validator.getFieldElements('panno').val(),
-                                    userid:0
+                                    userid: 0
                                 };
                             },
                             message: 'PAN already exists',
@@ -307,6 +307,13 @@
                         regexp: {
                             regexp: '^[A-Z]{5}[0-9]{4}[A-Z]{1}$',
                             message: 'Enter a valid PAN No'
+                        }
+                    }
+                }, businessemail: {
+                    validators: {
+                        regexp: {
+                            regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                            message: 'Enter a valid email address'
                         }
                     }
                 }

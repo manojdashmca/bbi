@@ -258,6 +258,13 @@
                             message: 'Enter a valid PAN No'
                         }
                     }
+                }, businessemail: {
+                    validators: {
+                        regexp: {
+                            regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                            message: 'Enter a valid email address'
+                        }
+                    }
                 }
             }
 
