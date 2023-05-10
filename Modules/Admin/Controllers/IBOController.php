@@ -4,6 +4,7 @@ namespace Modules\Admin\Controllers;
 
 use Modules\Admin\Controllers\AdminController;
 use Modules\Admin\Models\IboModel;
+use App\Libraries;
 
 class IBOController extends AdminController {
 
@@ -50,7 +51,7 @@ class IBOController extends AdminController {
                     $city = $this->request->getPost('city');
                     $district = $this->request->getPost('district');
                     $state = $this->request->getPost('state');
-                    $country = "India";//$this->request->getPost('country');
+                    $country = "India"; //$this->request->getPost('country');
                     $mobile = $this->request->getPost('mobile');
                     $emailid = $this->request->getPost('emailid');
                     $bankacno = $this->request->getPost('bankacno');
@@ -128,7 +129,7 @@ class IBOController extends AdminController {
                         "user_bank_ac_no" => $bankacno,
                         "user_bank_ifsc" => $bankifsc,
                         "user_bank_name" => $bankname,
-                        "user_bank_branch" => $bankbranch,                        
+                        "user_bank_branch" => $bankbranch,
                         "user_business_bank_account" => $businessbankacno,
                         "user_business_bank_ifsc" => $businessbankifsc,
                         "user_business_bank_name" => $businessbankname,
@@ -188,6 +189,10 @@ class IBOController extends AdminController {
                         $this->blankModel->transRollback();
                     } else {
                         $this->blankModel->transCommit();
+                        $objEmailTemplate = new Libraries\EmailTemplate();
+                        $emailtemplate = $objEmailTemplate->registrationEmail($name, $emailid, $passphrase);
+                        $emaildata = array('template' => $emailtemplate, 'to' => $emailid, 'subject' => "SSK BBI Registration");
+                        sendEmail($emaildata);
                         $this->session->setFlashdata('message', setMessage("Member added Successfully. Member code-" . $usercode, 's'));
                     }
                 } else {
