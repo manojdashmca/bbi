@@ -144,7 +144,7 @@ class Home extends WebController {
                     $city = $this->request->getPost('city');
                     $district = $this->request->getPost('district');
                     $state = $this->request->getPost('state');
-                    $country = $this->request->getPost('country');
+                    $country = "India";//$this->request->getPost('country');
                     $mobile = $this->request->getPost('mobile');
                     $emailid = $this->request->getPost('emailid');
                     $panno = $this->request->getPost('panno');

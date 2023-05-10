@@ -347,7 +347,7 @@
                         <div class="col-lg-6">
                             <div class="form-group mb-3">
                                 <label class="form-label">Business Website</label>
-                                <input type="text" class="form-control" id="businesswebsite" name="businesswebsite" >
+                                <input type="url" class="form-control" id="businesswebsite" name="businesswebsite" >
                             </div>                                    
                         </div>
                         <div class="col-lg-6">
