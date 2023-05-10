@@ -389,7 +389,7 @@ function sendEmail($data) {
         }
     }
     //$mail->MailerDebug = true;
-    $mail->SMTPDebug = 4;
+    //$mail->SMTPDebug = 4;
     $mail->Subject = $subject; //'Here is the subject';
     $mail->Body = $template; //'This is the HTML message body <strong>in bold!</strong>';
     $mail->AltBody = '';
