@@ -377,7 +377,7 @@ function sendEmail($data) {
     $mail->SMTPSecure = 'tls';        // Enable encryption, 'ssl' also accepted
 
     $mail->From = 'communication@allayhealthcare.in';
-    $mail->FromName = 'Windna Life Science';
+    $mail->FromName = 'SSK BBI Bharat';
     $mail->AddAddress($tomailid);  // Add a recipient
     $mail->IsHTML(true);           // Set email format to HTML
     if (!empty($attachment)) {
@@ -396,9 +396,9 @@ function sendEmail($data) {
 
     try {
         if (!$mail->Send()) {
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
+            //echo 'Mailer Error: ' . $mail->ErrorInfo;
             $status = false;
-            exit;
+            //exit;
         } else {
             $status = true;
         }
