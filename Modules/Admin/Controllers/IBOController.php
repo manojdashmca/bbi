@@ -50,7 +50,7 @@ class IBOController extends AdminController {
                     $city = $this->request->getPost('city');
                     $district = $this->request->getPost('district');
                     $state = $this->request->getPost('state');
-                    $country = $this->request->getPost('country');
+                    $country = "India";//$this->request->getPost('country');
                     $mobile = $this->request->getPost('mobile');
                     $emailid = $this->request->getPost('emailid');
                     $bankacno = $this->request->getPost('bankacno');
@@ -76,7 +76,7 @@ class IBOController extends AdminController {
                     $businessdesignation = $this->request->getPost('businessdesignation');
                     $businesssegment = $this->request->getPost('businesssegment');
                     $businesscategory = $this->request->getPost('businesscategory');
-                    $businesssubcategory = $this->request->getPost('businesssubcategory');
+                    //$businesssubcategory = $this->request->getPost('businesssubcategory');
                     $businessaddress = $this->request->getPost('businessaddress');
                     $businesscity = $this->request->getPost('businesscity');
                     $gstaddress = $this->request->getPost('gstaddress');

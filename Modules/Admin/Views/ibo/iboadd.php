@@ -85,6 +85,49 @@
                                 </div>
                             </div>
                             <div>
+                                <h5 class="font-size-14 mb-3">Business Category Information</h5>
+                                <div class="row">                                
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Business Segment</label>
+                                            <select onchange="getCategoryBySegment();" name="businesssegment" id="businesssegment" class="form-select form-control">
+                                                <option value=''>Select</option>
+                                                <?php for ($x = 0; $x < count($segment); $x++) { ?>
+                                                    <option value='<?= $segment[$x]->segment_id ?>'><?= $segment[$x]->segment_name ?></option>
+                                                <?php } ?>                                              
+                                            </select>
+
+                                        </div>                                    
+                                    </div> 
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Business Category</label>
+                                            <select onchange="getSubCategoryByCategory();" name="businesscategory" id="businesscategory" class="form-select form-control">
+                                                <option value=''>Select</option>
+                                                <?php for ($x = 0; $x < count($category); $x++) { ?>
+                                                    <option value='<?= $category[$x]->category_id ?>'><?= $category[$x]->category_name ?></option>
+                                                <?php } ?> 
+                                            </select>
+
+                                        </div>                                    
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-3">
+                                            <input type='hidden' name='subcatvalue' id='subcatvalue' value=''/>
+                                            <label class="form-label">Business Sub Category</label>
+                                            <span>
+                                                <div class="row" id="subcat">
+
+                                                </div>
+
+
+                                            </span>
+
+                                        </div>                                    
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div>
                                 <h5 class="font-size-14 mb-3">Personal Information</h5>
                                 <div class="row">                                    
                                     <div class="col-lg-6">
@@ -278,44 +321,7 @@
                                             <input type="text" class="form-control" id="businessdesignation" name="businessdesignation" onblur="return getBusinessBankDetail();">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Business Segment</label>
-                                            <select onchange="getCategoryBySegment();" name="businesssegment" id="businesssegment" class="form-select form-control">
-                                                <option value=''>Select</option>
-                                                <?php for ($x = 0; $x < count($segment); $x++) { ?>
-                                                    <option value='<?= $segment[$x]->segment_id ?>'><?= $segment[$x]->segment_name ?></option>
-                                                <?php } ?>                                                
-                                            </select>
-
-                                        </div>                                    
-                                    </div> 
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Business Category</label>
-                                            <select onchange="getSubCategoryByCategory();" name="businesscategory" id="businesscategory" class="form-select form-control">
-                                                <option value=''>Select</option>
-                                                <?php for ($x = 0; $x < count($category); $x++) { ?>
-                                                    <option value='<?= $category[$x]->category_id ?>'><?= $category[$x]->category_name ?></option>
-                                                <?php } ?> 
-                                            </select>
-
-                                        </div>                                    
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <input type='hidden' name='subcatvalue' id='subcatvalue' value=''/>
-                                            <label class="form-label">Business Sub Category</label>
-                                            <span>
-                                                <div class="row" id="subcat">
-
-                                                </div>
-                                                
-
-                                            </span>
-
-                                        </div>                                    
-                                    </div>
+                                    
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Business Address</label>
