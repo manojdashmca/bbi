@@ -39,8 +39,8 @@ class DashboardModel extends Model {
         $result = $this->db->query($sql);
         return $result->getRow()->qcount;
     }
-    
-    public function getTotaljoiningByDate($fromdate='',$todate=''){
+
+    public function getTotaljoiningByDate($fromdate = '', $todate = '') {
         $sql = "select count(id_user) usercount from user_detail where 1=1";
         if (!empty($fromdate)) {
             $sql .= " AND date_format(user_create_date,'%Y-%m-%d') >= '$fromdate'";
@@ -77,6 +77,22 @@ class DashboardModel extends Model {
         }
         $result = $this->db->query($sql);
         return $result->getRow()->income;
+    }
+
+    public function getMemberInModule($moduleid) {
+        $sql = "select count(id_user) usercount from user_detail where module_id_module='$moduleid'";
+        $result = $this->db->query($sql);
+        return $result->getRow()->usercount;
+    }
+
+    public function getModuleDetail($moduleid) {
+        $sql = "select a.user_name director,b.user_name assodirector,c.user_name astdirector from location_module "
+                . "left join user_detail a on director_id=a.id_user "
+                . "left join user_detail b on associate_director_id=b.id_user "
+                . "left join user_detail c on assistant_director_id=c.id_user "
+                . "where lm_id='$moduleid'";
+        $result = $this->db->query($sql);
+        return $result->getRow();
     }
 
 }

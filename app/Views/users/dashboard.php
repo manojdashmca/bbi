@@ -78,7 +78,100 @@
 
                     </div><!-- end card body -->
                 </div><!-- end card -->
-            </div><!-- end col -->    
+            </div><!-- end col -->  
+            
+            <div class="col-xl-2 col-md-6">
+                <!-- card -->
+                <div class="card card-h-100">
+                    <!-- card body -->
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <span class="text-muted mb-3 lh-1 d-block text-truncate">My Module</span>
+                                <h4 class="mb-3">
+                                    <span ><?= $topdata['modulename'] ?></span>
+                                </h4>
+                            </div>
+
+                        </div>
+
+                    </div><!-- end card body -->
+                </div><!-- end card -->
+            </div><!-- end col -->  
+            <div class="col-xl-2 col-md-6">
+                <!-- card -->
+                <div class="card card-h-100">
+                    <!-- card body -->
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <span class="text-muted mb-3 lh-1 d-block text-truncate">My Module Director</span>
+                                <h4 class="mb-3">
+                                    <span ><?= $topdata['moduledirector'] ?></span>
+                                </h4>
+                            </div>
+
+                        </div>
+
+                    </div><!-- end card body -->
+                </div><!-- end card -->
+            </div><!-- end col --> 
+            
+            <div class="col-xl-2 col-md-6">
+                <!-- card -->
+                <div class="card card-h-100">
+                    <!-- card body -->
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <span class="text-muted mb-3 lh-1 d-block text-truncate">My Module Asso. Director</span>
+                                <h4 class="mb-3">
+                                    <span ><?= $topdata['moduleassodirector'] ?></span>
+                                </h4>
+                            </div>
+
+                        </div>
+
+                    </div><!-- end card body -->
+                </div><!-- end card -->
+            </div><!-- end col -->  
+            
+            <div class="col-xl-2 col-md-6">
+                <!-- card -->
+                <div class="card card-h-100">
+                    <!-- card body -->
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <span class="text-muted mb-3 lh-1 d-block text-truncate">My Module Ast Director</span>
+                                <h4 class="mb-3">
+                                    <span ><?= $topdata['moduleastdirector'] ?></span>
+                                </h4>
+                            </div>
+
+                        </div>
+
+                    </div><!-- end card body -->
+                </div><!-- end card -->
+            </div><!-- end col --> 
+            <div class="col-xl-2 col-md-6">
+                <!-- card -->
+                <div class="card card-h-100">
+                    <!-- card body -->
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <span class="text-muted mb-3 lh-1 d-block text-truncate">Members In My Module</span>
+                                <h4 class="mb-3">
+                                    <span ><?= $topdata['modulemember'] ?></span>
+                                </h4>
+                            </div>
+
+                        </div>
+
+                    </div><!-- end card body -->
+                </div><!-- end card -->
+            </div><!-- end col -->  
         </div><!-- end row-->
 
         <div class="row">

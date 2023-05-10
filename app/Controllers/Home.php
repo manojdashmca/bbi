@@ -54,6 +54,8 @@ class Home extends WebController {
                                 $this->session->set('musername', $result->user_name);
                                 $this->session->set('museremail', $result->user_email);
                                 $this->session->set('muserid', $result->id_user);
+                                $this->session->set('mmodulename', $result->lm_name);
+                                $this->session->set('mmoduleid', $result->module_id_module);
                                 header("location:/user-dashboard");
                                 exit;
                             } else {
@@ -327,11 +329,18 @@ class Home extends WebController {
     }
 
     public function dashboard() {
+        
         $this->dashboardModel = new DashboardModel();
         $this->data['js'] = 'dashboard';
         $this->data['css'] = 'dashboard';
         $this->data['includefile'] = 'users/dashboard.php';
+        $moduledetail=$this->dashboardModel->getModuleDetail(session()->get('mmoduleid'));
         $this->data['topdata'] = array(
+            "modulemember"=>$this->dashboardModel->getMemberInModule(session()->get('mmoduleid')),
+            "moduleastdirector"=>$moduledetail->astdirector,
+            "moduleassodirector"=>$moduledetail->assodirector,
+            "moduledirector"=>$moduledetail->director,
+            "modulename"=>session()->get('mmodulename'),
             "totalsponsor" => $this->dashboardModel->getTotalSponsor(session()->get('muserid')),
             "totalincome" => $this->dashboardModel->getTotalIncome(session()->get('muserid')),
             "payoutofthemonth" => $this->dashboardModel->getTotalIncome(session()->get('muserid')), date('Y-m-01'), date('Y-m-t'));
