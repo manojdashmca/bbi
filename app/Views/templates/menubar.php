@@ -23,6 +23,36 @@
             </a>
         </li>
         <li>
+            <a href="javascript:">
+                <i class=" fas fa-users"></i>
+                <span data-key="t-password">Members In My Module</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:">
+                <i class=" fas fa-chart-line"></i>
+                <span data-key="t-password">My Performance</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:">
+                <i class="fas fa-money-bill-alt"></i>
+                <span data-key="t-password">Payment</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:">
+                <i class="far fa-calendar-alt"></i>
+                <span data-key="t-password">Meeting Schedule</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:">
+                <i class="mdi-coffee"></i>
+                <span data-key="t-password">Events</span>
+            </a>
+        </li>
+        <li>
             <a href="<?= CUSTOMPATH ?>change-password">
                 <i class="bx bx-key"></i>
                 <span data-key="t-password">Change Password</span>
