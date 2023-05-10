@@ -483,7 +483,11 @@ class AuthController extends AdminController {
             $module = $this->request->getPost('module');
             $allsubcategory = $this->adminModel->getSubCategoryByCategorySegment($category);
             $blockedsubcategory = $this->adminModel->getAllocatedSubcategoryByModule($module);
+            if(!empty($blockedsubcategory)){
             $subcat = explode(',', $blockedsubcategory);
+            }else{
+                $subcat=[];
+            }
             for ($x = 0; $x < count($allsubcategory); $x++) {
                 if (in_array($allsubcategory[$x]->sub_category_id, $subcat)) {
                     $allsubcategory[$x]->disabled = 1;
