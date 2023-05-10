@@ -17,8 +17,7 @@ class TeamsModel extends Model {
             $sql = "select SQL_CALC_FOUND_ROWS scaab_id,user_name,user_code,user_login_name,"
                     . "date_format(join_date,'%d-%m-%Y') join_date,status "
                     . "FROM team_sr_consulting_board join user_detail on user_id_user=id_user "
-                    . "WHERE status=1 ";
-            !empty($data['mobile']) ? $sql .= " AND user_mobile = '" . $data['mobile'] . "'" : $sql .= '';
+                    . "WHERE status=1 ";            
             !empty($data['name']) ? $sql .= " AND  user_name like '%" . $data['name'] . "%'" : $sql .= '';
             !empty($data['username']) ? $sql .= " AND (a.user_code = '" . $data['username'] . "' OR a.user_login_name= '" . $data['username'] . "')" : $sql .= '';
             !empty($data['fromdate']) ? $sql .= " AND  date_format(join_date,'%Y-%m-%d') >= '" . date('Y-m-d', strtotime($data['fromdate'])) . "'" : $sql .= '';
@@ -46,7 +45,7 @@ class TeamsModel extends Model {
                     . "if(addition_type=1,'Manual','Autometic') addition_type,status "
                     . "FROM team_consulting_board join user_detail on user_id_user=id_user "
                     . "WHERE status=1 ";
-            !empty($data['mobile']) ? $sql .= " AND user_mobile = '" . $data['mobile'] . "'" : $sql .= '';
+            
             !empty($data['name']) ? $sql .= " AND  user_name like '%" . $data['name'] . "%'" : $sql .= '';
             !empty($data['username']) ? $sql .= " AND (a.user_code = '" . $data['username'] . "' OR a.user_login_name= '" . $data['username'] . "')" : $sql .= '';
             !empty($data['fromdate']) ? $sql .= " AND  date_format(added_on,'%Y-%m-%d') >= '" . date('Y-m-d', strtotime($data['fromdate'])) . "'" : $sql .= '';
@@ -72,8 +71,7 @@ class TeamsModel extends Model {
                     . "date_format(added_on,'%d-%m-%Y') join_date,"
                     . "if(addition_type=1,'Manual','Autometic') addition_type,status "
                     . "FROM team_state join user_detail on user_id_user=id_user "
-                    . "WHERE status=1 ";
-            !empty($data['mobile']) ? $sql .= " AND user_mobile = '" . $data['mobile'] . "'" : $sql .= '';
+                    . "WHERE status=1 ";            
             !empty($data['name']) ? $sql .= " AND  user_name like '%" . $data['name'] . "%'" : $sql .= '';
             !empty($data['username']) ? $sql .= " AND (a.user_code = '" . $data['username'] . "' OR a.user_login_name= '" . $data['username'] . "')" : $sql .= '';
             !empty($data['fromdate']) ? $sql .= " AND  date_format(added_on,'%Y-%m-%d') >= '" . date('Y-m-d', strtotime($data['fromdate'])) . "'" : $sql .= '';
@@ -99,8 +97,7 @@ public function selectNationalTeam($data, $ordercolumn = 3, $orderdirecttion = '
                     . "date_format(added_on,'%d-%m-%Y') join_date,"
                     . "if(addition_type=1,'Manual','Autometic') addition_type,status "
                     . "FROM team_national join user_detail on user_id_user=id_user "
-                    . "WHERE status=1 ";
-            !empty($data['mobile']) ? $sql .= " AND user_mobile = '" . $data['mobile'] . "'" : $sql .= '';
+                    . "WHERE status=1 ";            
             !empty($data['name']) ? $sql .= " AND  user_name like '%" . $data['name'] . "%'" : $sql .= '';
             !empty($data['username']) ? $sql .= " AND (a.user_code = '" . $data['username'] . "' OR a.user_login_name= '" . $data['username'] . "')" : $sql .= '';
             !empty($data['fromdate']) ? $sql .= " AND  date_format(added_on,'%Y-%m-%d') >= '" . date('Y-m-d', strtotime($data['fromdate'])) . "'" : $sql .= '';
@@ -127,8 +124,7 @@ public function selectNationalTeam($data, $ordercolumn = 3, $orderdirecttion = '
                     . "date_format(added_on,'%d-%m-%Y') join_date,"
                     . "if(addition_type=1,'Manual','Autometic') addition_type,status "
                     . "FROM team_zone join user_detail on user_id_user=id_user "
-                    . "WHERE status=1 ";
-            !empty($data['mobile']) ? $sql .= " AND user_mobile = '" . $data['mobile'] . "'" : $sql .= '';
+                    . "WHERE status=1 ";           
             !empty($data['name']) ? $sql .= " AND  user_name like '%" . $data['name'] . "%'" : $sql .= '';
             !empty($data['username']) ? $sql .= " AND (a.user_code = '" . $data['username'] . "' OR a.user_login_name= '" . $data['username'] . "')" : $sql .= '';
             !empty($data['fromdate']) ? $sql .= " AND  date_format(added_on,'%Y-%m-%d') >= '" . date('Y-m-d', strtotime($data['fromdate'])) . "'" : $sql .= '';

@@ -1,7 +1,7 @@
 <script>
     function bindDatatable() {
         var name = $("#name").val();
-        var code = $("#code").val();
+        var username = $("#username").val();
         var daterange = $("#daterange").val();
         $('#example').DataTable().destroy();
         $('#example').DataTable({
@@ -18,7 +18,7 @@
                 url: '<?= ADMINPATH ?>consulting_board_data',
                 data: function (d) {
                     d.name = name;
-                    d.code = code;
+                    d.username = username;
                     d.daterange = daterange;
                 }
             }
