@@ -121,7 +121,8 @@
                             url: '<?= ADMINPATH ?>check-mobile',
                             data: function (validator) {
                                 return {
-                                    mobile: validator.getFieldElements('mobile').val()
+                                    mobile: validator.getFieldElements('mobile').val(),
+                                    userid: 0
                                 }
                             },
                             message: 'Mobile already exists',
@@ -142,7 +143,8 @@
                             url: '<?= ADMINPATH ?>check-email',
                             data: function (validator) {
                                 return {
-                                    email: validator.getFieldElements('emailid').val()
+                                    email: validator.getFieldElements('emailid').val(),
+                                    userid: 0
                                 };
                             },
                             message: 'Email already exists',
@@ -185,7 +187,8 @@
                             url: '<?= ADMINPATH ?>check-pan',
                             data: function (validator) {
                                 return {
-                                    pan: validator.getFieldElements('panno').val()
+                                    pan: validator.getFieldElements('panno').val(),
+                                    userid: 0
                                 };
                             },
                             message: 'PAN already exists',
@@ -246,6 +249,13 @@
                         regexp: {
                             regexp: '^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$',
                             message: 'Enter a valid GSTIN'
+                        }
+                    }
+                }, businesspan: {
+                    validators: {
+                        regexp: {
+                            regexp: '^[A-Z]{5}[0-9]{4}[A-Z]{1}$',
+                            message: 'Enter a valid PAN No'
                         }
                     }
                 }
