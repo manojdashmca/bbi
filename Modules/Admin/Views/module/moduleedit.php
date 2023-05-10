@@ -55,7 +55,13 @@
                                         <div class="col-lg-4 col-md-6">                                    
                                             <div class="form-group  mb-3">
                                                 <label class="form-label">Module State</label>
-                                                <input type="text" class="form-control" id="state" name="state" value="<?=$moduledetail->lm_state?>">
+                                                <select  class="form-control" id="state" name="state">
+                                                    <option value="">Select State</option>
+                                                    <?php for($x=0;$x<count($state);$x++){?>
+                                                    <option value="<?=$state[$x]->state_name?>" <?=($moduledetail->lm_state==$state[$x]->state_name)?'selected="selected"':''?>><?=$state[$x]->state_name?></option>
+                                                    <?php }?>
+                                                </select>
+                                                
                                             </div>                                  
 
                                         </div>

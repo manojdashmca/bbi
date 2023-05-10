@@ -54,7 +54,7 @@ class ModuleController extends AdminController {
                 }
             }
         }
-
+        $this->data['state']=$this->moduleModel->getState();
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\module\moduleadd', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
@@ -159,6 +159,7 @@ class ModuleController extends AdminController {
                 }
             }
         }
+        $this->data['state']=$this->moduleModel->getState();
         $id = base64_decode($moduleid);
         $moduledetail = $this->moduleModel->getModuleDetail($id);
         $this->data['encmoduleid'] = $moduleid;

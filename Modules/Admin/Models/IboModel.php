@@ -317,5 +317,13 @@ class IboModel extends Model {
         $result = $this->db->query($sql);
         return $result->getResult();
     }
+    
+    public function getMemberDetailByCode($code) {
+        $sql = "SELECT id_user,user_name "
+                . "from user_detail  "
+                . "where user_code='$code' or user_login_name='$code'";
+        $result = $this->db->query($sql);
+        return $result->getRow();
+    }
 
 }

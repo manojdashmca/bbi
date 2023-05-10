@@ -15,7 +15,7 @@ class ModuleModel extends Model {
     public function selectModule($data, $ordercolumn = 7, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
         try {
             $return = array();
-            $columnarray = array('lm_id', 'lm_code', 'lm_name', 'lm_city','lm_state','lm_country', 'b.user_name', 'c.user_name', 'd.user_name', 'lm_status');
+            $columnarray = array('lm_id', 'lm_code', 'lm_name', 'lm_city', 'lm_state', 'lm_country', 'b.user_name', 'c.user_name', 'd.user_name', 'lm_status');
             $sql = "select SQL_CALC_FOUND_ROWS lm_id,lm_code,lm_name,lm_city,lm_state,lm_country,b.user_name as director,c.user_name associate,d.user_name assistant,
                 if(lm_status='1','Active','Blocked') status 
                 FROM location_module as a
@@ -73,11 +73,11 @@ class ModuleModel extends Model {
         $sql = "select a.*,b.user_name as director                 
                 FROM location_module as a
                 left join user_detail b on a.director_id=b.id_user        
-                where lm_status=1 and (lm_code='$id' OR LOWER(lm_name)= '". strtolower($id)."')";
+                where lm_status=1 and (lm_code='$id' OR LOWER(lm_name)= '" . strtolower($id) . "')";
         $result = $this->db->query($sql);
         return $result->getRow();
     }
-    
+
     public function selectSegment($data, $ordercolumn = 1, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
         try {
             $return = array();
@@ -87,7 +87,7 @@ class ModuleModel extends Model {
                 FROM master_segment                 
                 where 1=1 ";
             !empty($data['name']) ? $sql .= " AND segment_name like '%" . $data['name'] . "%'" : $sql .= '';
-            
+
             $sql .= " ORDER BY $columnarray[$ordercolumn] $orderdirecttion limit $offset,$limit";
 
             $sql1 = "SELECT FOUND_ROWS() as count";
@@ -101,18 +101,18 @@ class ModuleModel extends Model {
         }
         return $return;
     }
-    
+
     public function selectCategory($data, $ordercolumn = 1, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
         try {
             $return = array();
-            $columnarray = array('category_id', 'category_name','segment_name', 'category_status');
+            $columnarray = array('category_id', 'category_name', 'segment_name', 'category_status');
             $sql = "select SQL_CALC_FOUND_ROWS category_id,category_name,segment_name,
                 if(category_status='1','Active','Blocked') status 
                 FROM master_category join master_segment on segment_id_segment=segment_id                
                 where 1=1 ";
             !empty($data['cname']) ? $sql .= " AND category_name like '%" . $data['cname'] . "%'" : $sql .= '';
             !empty($data['sname']) ? $sql .= " AND segment_name like '%" . $data['sname'] . "%'" : $sql .= '';
-            
+
             $sql .= " ORDER BY $columnarray[$ordercolumn] $orderdirecttion limit $offset,$limit";
 
             $sql1 = "SELECT FOUND_ROWS() as count";
@@ -126,11 +126,11 @@ class ModuleModel extends Model {
         }
         return $return;
     }
-    
+
     public function selectSubCategory($data, $ordercolumn = 1, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
         try {
             $return = array();
-            $columnarray = array('sub_category_id','sub_category_name','category_name', 'segment_name', 'sub_category_status');
+            $columnarray = array('sub_category_id', 'sub_category_name', 'category_name', 'segment_name', 'sub_category_status');
             $sql = "select SQL_CALC_FOUND_ROWS sub_category_id,sub_category_name,category_name,segment_name,
                 if(sub_category_status='1','Active','Blocked') status 
                 FROM master_sub_category msc 
@@ -140,7 +140,7 @@ class ModuleModel extends Model {
             !empty($data['scname']) ? $sql .= " AND sub_category_name like '%" . $data['scname'] . "%'" : $sql .= '';
             !empty($data['cname']) ? $sql .= " AND category_name like '%" . $data['cname'] . "%'" : $sql .= '';
             !empty($data['sname']) ? $sql .= " AND segment_name like '%" . $data['sname'] . "%'" : $sql .= '';
-            
+
             $sql .= " ORDER BY $columnarray[$ordercolumn] $orderdirecttion limit $offset,$limit";
 
             $sql1 = "SELECT FOUND_ROWS() as count";
@@ -154,23 +154,29 @@ class ModuleModel extends Model {
         }
         return $return;
     }
-    
-    public function getSegmentDetail($id){
+
+    public function getSegmentDetail($id) {
         $sql = "select * from master_segment where segment_id=$id ";
         $result = $this->db->query($sql);
         return $result->getRow();
     }
-    
-    public function getCategoryDetail($id){
+
+    public function getCategoryDetail($id) {
         $sql = "select * from master_category where category_id=$id ";
         $result = $this->db->query($sql);
         return $result->getRow();
     }
-    
-    public function getSubcategoryDetail($id){
+
+    public function getSubcategoryDetail($id) {
         $sql = "select * from master_sub_category where sub_category_id=$id ";
         $result = $this->db->query($sql);
         return $result->getRow();
+    }
+
+    public function getState() {
+        $sql = "SELECT * from state where 1=1";
+        $result = $this->db->query($sql);
+        return $result->getResult();
     }
 
 }

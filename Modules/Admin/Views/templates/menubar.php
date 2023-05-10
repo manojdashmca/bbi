@@ -58,6 +58,19 @@
                 <li><a href="<?= ADMINPATH ?>subcategory-list" data-key="t-companyperformance">Sub-Category List</a></li>
             </ul>
         </li>
+        <li>
+            <a href="javascript: void(0);" class="has-arrow" aria-expanded="true">
+                <i class="fas fa-layer-group"></i>
+                <span data-key="t-ibo">Teams</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+                <li><a href="<?= ADMINPATH ?>sr_consulting_board" data-key="t-allibo">Sr C & A Board</a></li>
+                <li><a href="<?= ADMINPATH ?>consulting_board" data-key="t-addibo">C & A Board</a></li> 
+                <li><a href="<?= ADMINPATH ?>state_team" data-key="t-addibo">State Team</a></li> 
+                <li><a href="<?= ADMINPATH ?>national_team" data-key="t-addibo">National Team</a></li> 
+                <li><a href="<?= ADMINPATH ?>zone_team" data-key="t-addibo">Zone Team</a></li> 
+            </ul>
+        </li> 
         <!--        <li>
                     <a href="<?= ADMINPATH ?>coupon-list">
                         <i class="bx bx-money"></i>

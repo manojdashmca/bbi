@@ -54,7 +54,12 @@
                                         <div class="col-lg-4 col-md-6">                                    
                                             <div class="form-group  mb-3">
                                                 <label class="form-label">State Name</label>
-                                                <input type="text" class="form-control" id="state" name="state">
+                                                <select  class="form-control" id="state" name="state">
+                                                    <option value="">Select State</option>
+                                                    <?php for($x=0;$x<count($state);$x++){?>
+                                                    <option value="<?=$state[$x]->state_name?>"><?=$state[$x]->state_name?></option>
+                                                    <?php }?>
+                                                </select>
                                             </div>                                  
 
                                         </div>

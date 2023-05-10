@@ -319,7 +319,7 @@ class IBOController extends AdminController {
     }
 
     public function getMemberDetailById($id) {
-        $result = $this->franchiseModel->getFranchiseDetailByCode($id);
+        $result = $this->iboModel->getMemberDetailByCode($id);
         if (!empty($result)) {
             $return['data'] = $result;
             $return['status'] = "success";

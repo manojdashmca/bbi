@@ -18,6 +18,19 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("get-sponsordetail-by-id/(:any)", "IBOController::getSponsorDetailById/$1");
     $routes->get("get-member-by-id/(:any)", "IBOController::getMemberDetailById/$1");
     
+    $routes->get("sr_consulting_board", "TeamsController::srConsultingBoard");    
+    $routes->post("sr_consulting_board_data", "TeamsController::srConsultingBoardData");
+    $routes->get("consulting_board", "TeamsController::consultingBoard");    
+    $routes->post("consulting_board_data", "TeamsController::consultingBoardData");
+    $routes->get("state_team", "TeamsController::stateTeam");    
+    $routes->post("state_team_data", "TeamsController::stateTeamData");
+    $routes->get("national_team", "TeamsController::nationalTeam");    
+    $routes->post("national_team_data", "TeamsController::nationalTeamData");
+    $routes->get("zone_team", "TeamsController::zoneTeam");    
+    $routes->post("zone_team_data", "TeamsController::zoneTeamData");
+    $routes->post("update-teams-status", "TeamsController::updateTeamsStatus");
+    $routes->post("add-member-to-table", "TeamsController::addUserToTable");
+    
     //genealogy
     $routes->get("sponsor-view", "TreeController::sponsorview");
     $routes->post("tree-sponsorship-data", "TreeController::sponshorshipdata");

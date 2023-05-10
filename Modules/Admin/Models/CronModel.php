@@ -21,7 +21,7 @@ class CronModel extends Model {
     }
 
     public function getSrConsultingMember() {
-        $sql = "select user_id_user  from sr_consulting_and_advisory_board where status=1";
+        $sql = "select user_id_user  from team_sr_consulting_board where status=1";
         $result = $this->db->query($sql);
         return $result->getResult();
     }
