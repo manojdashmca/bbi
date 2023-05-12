@@ -5,7 +5,7 @@ namespace Modules\Admin\Controllers;
 use Modules\Admin\Controllers\AdminController;
 use Modules\Admin\Models\OrderModel;
 use Modules\Admin\Models\ProductModel;
-
+use App\Libraries\EmailTemplate;
 class OrderController extends AdminController {
 
     public function __construct() {

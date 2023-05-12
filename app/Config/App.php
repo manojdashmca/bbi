@@ -5,8 +5,8 @@ namespace Config;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Handlers\FileHandler;
 
-class App extends BaseConfig
-{
+class App extends BaseConfig {
+
     /**
      * --------------------------------------------------------------------------
      * Base Site URL
@@ -24,7 +24,8 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'http://43.204.206.237';
+    //public $baseURL = 'http://43.204.206.237';
+    //public $baseURL = 'http://bbi.com:8090';
 
     /**
      * --------------------------------------------------------------------------
@@ -462,4 +463,5 @@ class App extends BaseConfig
      * @var bool
      */
     public $CSPEnabled = false;
+
 }
