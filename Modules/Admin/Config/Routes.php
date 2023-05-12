@@ -112,6 +112,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("confirm-transaction", "CronController::confirmTransaction");
     $routes->get("generate-payout", "CronController::generatePayout");
     $routes->get("update-gross-income", "CronController::updateGrossIncome");
+    $routes->get("send-pending-emails", "CronController::sendPendingEmails");
     
 
 //    $routes->set404Override(function () {

@@ -146,7 +146,7 @@ class Home extends WebController {
                     $city = $this->request->getPost('city');
                     $district = $this->request->getPost('district');
                     $state = $this->request->getPost('state');
-                    $country = "India";//$this->request->getPost('country');
+                    $country = "India"; //$this->request->getPost('country');
                     $mobile = $this->request->getPost('mobile');
                     $emailid = $this->request->getPost('emailid');
                     $panno = $this->request->getPost('panno');
@@ -284,9 +284,15 @@ class Home extends WebController {
                         $this->webModel->transCommit();
                         //---User Email
                         $objEmailTemplate = new Libraries\EmailTemplate();
+                        //---------welcome email----------------
+                        $emailTemplateWelcome = $objEmailTemplate->welcomeEmail($name);
+                        $emailarray = array('smtp_email_content' => $emailTemplateWelcome, 'smtp_email_type' => 'Welcome To SSK Bharat BBI ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $emailid);
+                        $this->webModel->createRecordInTable($emailarray, 'smtp_email');
+                        //---login credential email---
                         $emailtemplate = $objEmailTemplate->registrationEmail($name, $emailid, $passphrase);
-                        $emaildata = array('template' => $emailtemplate, 'to' => $emailid, 'subject' => "SSK BBI Registration");
-                        sendEmail($emaildata);
+                        $emailarray1 = array('smtp_email_content' => $emailtemplate, 'smtp_email_type' => 'SSK Bharat BBI Login Credential ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $emailid);
+                        $this->webModel->createRecordInTable($emailarray1, 'smtp_email');
+                        //----------------------------
                         $this->session->setFlashdata('message', setMessage("Your registration is successful, please check your email for credential", 's'));
                         header('location:/login');
                         exit;
@@ -329,18 +335,18 @@ class Home extends WebController {
     }
 
     public function dashboard() {
-        
+
         $this->dashboardModel = new DashboardModel();
         $this->data['js'] = 'dashboard';
         $this->data['css'] = 'dashboard';
         $this->data['includefile'] = 'users/dashboard.php';
-        $moduledetail=$this->dashboardModel->getModuleDetail(session()->get('mmoduleid'));
+        $moduledetail = $this->dashboardModel->getModuleDetail(session()->get('mmoduleid'));
         $this->data['topdata'] = array(
-            "modulemember"=>$this->dashboardModel->getMemberInModule(session()->get('mmoduleid')),
-            "moduleastdirector"=>$moduledetail->astdirector,
-            "moduleassodirector"=>$moduledetail->assodirector,
-            "moduledirector"=>$moduledetail->director,
-            "modulename"=>session()->get('mmodulename'),
+            "modulemember" => $this->dashboardModel->getMemberInModule(session()->get('mmoduleid')),
+            "moduleastdirector" => $moduledetail->astdirector,
+            "moduleassodirector" => $moduledetail->assodirector,
+            "moduledirector" => $moduledetail->director,
+            "modulename" => session()->get('mmodulename'),
             "totalsponsor" => $this->dashboardModel->getTotalSponsor(session()->get('muserid')),
             "totalincome" => $this->dashboardModel->getTotalIncome(session()->get('muserid')),
             "payoutofthemonth" => $this->dashboardModel->getTotalIncome(session()->get('muserid')), date('Y-m-01'), date('Y-m-t'));

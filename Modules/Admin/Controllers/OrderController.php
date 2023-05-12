@@ -100,13 +100,19 @@ class OrderController extends AdminController {
                 $iboupdarray = array();
                 $updarray = array('payment_approved_by' => session()->get('userid'), 'payment_status' => $status, 'payment_approve_comment' => 'Manual Approve by admin', 'payment_approve_reject_date' => date('Y-m-d H:i:s'));
                 if ($status == 2) {
-                    $iboupdarray['approval_status'] = 1;                    
+                    $iboupdarray['approval_status'] = 1;
                     $message = "Payment Approved Successfully";
-                    $this->adminModel->updateRecordInTable(array('user_status'=>1), 'user_detail', 'id_user', $orderdetail->user_id_user);
+                    $this->adminModel->updateRecordInTable(array('user_status' => 1), 'user_detail', 'id_user', $orderdetail->user_id_user);
                 }if ($status == 3) {
                     $iboupdarray['approval_status'] = 2;
                     $message = "Payment Rejected Successfully";
                 }
+                $objEmailTemplate = new Libraries\EmailTemplate();
+                //---------welcome email----------------
+                $paymentstatus=array(2=>"Payment Approved @ SSK Bharat BBI",3=>"Paymenr Rejected @ SSK Bharat BBI");
+                $emailTemplate = $objEmailTemplate->paymentStatusEmail($orderdetail->user_name, $status);
+                $emailarray = array('smtp_email_content' => $emailTemplate, 'smtp_email_type' => $paymentstatus[$status], 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $orderdetail->user_email);
+                $this->adminModel->createRecordInTable($emailarray, 'smtp_email');
                 $this->adminModel->updateRecordInTable($iboupdarray, 'ibo_business_detail', 'paymentdetail_id', $paymentid);
                 $this->adminModel->updateRecordInTable($updarray, 'ibo_joining_payment_detail', 'mpd_id', $paymentid);
                 $this->blankModel->transComplete();

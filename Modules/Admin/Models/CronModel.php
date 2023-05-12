@@ -10,6 +10,13 @@ class CronModel extends Model {
         parent::__construct();
     }
 
+    public function getQueuedEmail($limit = 10) {
+        $sql = "SELECT * from smtp_email where smtp_send_status=0 order by smtp_send_id asc limit 0,$limit ";
+        $result = $this->db->query($sql);
+        $return = $result->getResult();
+        return $return;
+    }
+
     public function getNoneConfirmedTransaction() {
         $sql = "SELECT mpd_id,user_id_user,module_id_module,sponsor_user_id,director_id,associate_director_id,assistant_director_id "
                 . "from ibo_joining_payment_detail join user_detail on user_id_user=id_user "

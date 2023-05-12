@@ -25,7 +25,18 @@ class CronController extends AdminController {
      * curl --silent http://www.sskbbi.co.in/delete-system-log
      * Frequency- Once Per Day(Mid Night 12:00 AM)
      */
-
+    public function sendPendingEmails() {
+        $queuedemail = $this->cronModel->getQueuedEmail(5);
+        foreach ($queuedemail as $email) {
+            $emaildata = array('template' => $email->smtp_email_content, 'to' => $email->smtp_target_emails, 'subject' => $email->smtp_email_type);
+            (!empty($email->smtp_attachment)) ? $emaildata['attachment'][] = __DIR__ . '/../../public/uploads/emailattachments/' . $email->smtp_attachment : '';
+            $status = sendEmail($emaildata);
+            if ($status) {
+                $updarray = array('smtp_send_status' => 1, 'smtp_deliver_date_time' => date('Y-m-d H:i:s'));
+                $this->blankModel->updateRecordInTable($updarray, 'smtp_email', 'smtp_send_id', $email->smtp_send_id);
+            }
+        }
+    }
     public function deleteSystemLogs() {
         try {
             $counter = 0;

@@ -48,7 +48,10 @@ class OrderModel extends Model {
     
 
     public function getPaymentDetailById($orderid) {
-        $sql = "SELECT * from ibo_joining_payment_detail where mpd_id='$orderid'";
+        $sql = "SELECT a.*,b.user_name,b.user_email "
+                . "from ibo_joining_payment_detail as a "
+                . "join user_detail as b on a.user_id_user=b.id_user "
+                . "where mpd_id='$orderid'";
         $result = $this->db->query($sql);
         return $result->getRow();
     }

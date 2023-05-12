@@ -36,8 +36,8 @@ class EmailTemplate {
                                         Charkop Market,Kandivali West<br/>
                                         Mumbai, Maharastra, India-400067<br/>
                                         +91 816 949 1109,+91 937 239 0109 <br/>
-					Email- support@winwellness.in<br/>
-                                        Website- www.winwellness.in
+					Email- support@sskbbi.in<br/>
+                                        Website- www.sskbbi.in
                                     </td>
                                 </tr>
                                 <tr>
@@ -61,7 +61,7 @@ class EmailTemplate {
                     </tr>
                     <tr>
                         <td style="padding-bottom:20px; padding-left:15px;" colspan="2">    
-                            <br/><br/><br/>Thank you,<br/><br/>Windna Life Science Pvt Ltd
+                            <br/><br/><br/>Best regards,<br/><br/>SSK Bharat BBI
                         </td>
                     </tr>
                     <tr>
@@ -107,9 +107,9 @@ class EmailTemplate {
         return $template;
     }
 
-    public function changePasswordEmail($username){
-         $contentdata = "Dear " . $username . ",";
-        $contentdata .= "<p>You just changed your password, If not done please contact to site admin. </p>";        
+    public function changePasswordEmail($username) {
+        $contentdata = "Dear " . $username . ",";
+        $contentdata .= "<p>You just changed your password, If not done please contact to site admin. </p>";
         $content = $this->createTemplate($contentdata);
         return $content;
     }
@@ -129,6 +129,18 @@ class EmailTemplate {
         $contentdata .= "<p>URL-: " . base_url() . "</p>";
         $contentdata .= "<p>User Name-: " . $emailid . "</p>";
         $contentdata .= "<p>Password-: " . $password . "</p>";
+        $contentdata .= "<p>Note-: Account activation is subject to payment confirmation, Once the payment get confirmed you will get communicated.</p>";
+        $template = $this->createTemplate($contentdata);
+        return $template;
+    }
+
+    public function welcomeEmail($username) {
+        $contentdata = "Dear " . $username . ",";
+        $contentdata .= "<p>On behalf of the entire team at SSK BHARAT BBI, I am delighted to welcome you to our organization! We are thrilled that you have decided to join our team and be a part of our business building initiative.<p>";
+        $contentdata .= "<p>At SSK BHARAT BBI, our mission is to help business people like you connect with others in the industry, and provide a nurturing environment for growth and success. Our goal is to help you expand your network, find new opportunities, and take your business to new heights.</p>";
+        $contentdata .= "<p>We understand that every member of our organization has unique skills and talents, and we are committed to providing the resources and support you need to thrive. We believe that by working together, we can achieve great things and make a positive impact on the business world.</p>";
+        $contentdata .= "<p>We look forward to getting to know you and working with you to achieve your goals. Please feel free to reach out to us if you have any questions or if there is anything we can do to support you.</p>";
+        $contentdata .= "<p>Once again, welcome to SSK BHARAT BBI. We are excited to have you as a part of our team and look forward to working with you!</p>";
         $template = $this->createTemplate($contentdata);
         return $template;
     }
@@ -142,10 +154,16 @@ class EmailTemplate {
         return $content;
     }
 
-    
-
-    
-    
-    
+    public function paymentStatusEmail($username, $status) {
+        $contentdata = "Dear " . $username . ",";
+        if ($status == 2) {
+            $contentdata .= "<p>Your Payment has been approved. Now you can login to your SSK Bharat BBI account. </p>";
+            $contentdata .= "<p>Note-To ensure your account security, please change the password after your first login.</p>";
+        } else {
+            $contentdata .= "<p>Your Payment has been rejected by admin. For more detail please conctact support team on the mentioned communication detail. </p>";
+        }
+        $content = $this->createTemplate($contentdata);
+        return $content;
+    }
 
 }
