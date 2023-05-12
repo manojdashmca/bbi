@@ -1,5 +1,9 @@
 #codeigniter 4
 /writable/
+!/writable/Mylog/index.html
+!/writable/cache/index.html
+!/writable/debugbar/index.html
+!/writable/session/index.html
 /vendor/
 .env
 app/Config/App.php
