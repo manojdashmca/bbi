@@ -210,7 +210,7 @@ class AuthController extends AdminController {
             $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
 
             //--------create email-------
-            //$objEmailTemplate = new Libraries\EmailTemplate();
+            //$objEmailTemplate = new EmailTemplate();
             //$template = $objEmailTemplate->profileUpdationEmail($name);
             //$createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Profile update Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $email);
             //$this->adminModel->createRecordInTable($createarray, 'smtp_email');
@@ -247,7 +247,7 @@ class AuthController extends AdminController {
             $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
 
             //--------create email-------
-            //$objEmailTemplate = new Libraries\EmailTemplate();
+            //$objEmailTemplate = new EmailTemplate();
             //$template = $objEmailTemplate->profileUpdationEmail($name);
             //$createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Profile update Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $email);
             //$this->adminModel->createRecordInTable($createarray, 'smtp_email');
@@ -276,7 +276,7 @@ class AuthController extends AdminController {
             $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
 
             //--------create email-------
-            //$objEmailTemplate = new Libraries\EmailTemplate();
+            //$objEmailTemplate = new EmailTemplate();
             //$template = $objEmailTemplate->profileUpdationEmail($name);
             //$createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Profile update Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $email);
             //$this->adminModel->createRecordInTable($createarray, 'smtp_email');
@@ -311,7 +311,7 @@ class AuthController extends AdminController {
             $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
 
             //--------create email-------
-            //$objEmailTemplate = new Libraries\EmailTemplate();
+            //$objEmailTemplate = new EmailTemplate();
             //$template = $objEmailTemplate->profileUpdationEmail($name);
             //$createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Profile update Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $email);
             //$this->adminModel->createRecordInTable($createarray, 'smtp_email');
@@ -335,7 +335,7 @@ class AuthController extends AdminController {
             $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
 
             //--------create email-------
-            //$objEmailTemplate = new Libraries\EmailTemplate();
+            //$objEmailTemplate = new EmailTemplate();
             //$template = $objEmailTemplate->profileUpdationEmail($name);
             //$createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Profile update Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $email);
             //$this->adminModel->createRecordInTable($createarray, 'smtp_email');
@@ -424,7 +424,7 @@ class AuthController extends AdminController {
             $this->adminModel->updateRecordInTable($userdetaildata, 'user_detail', 'id_user', $userid);
 
             //--------create email-------
-            //$objEmailTemplate = new Libraries\EmailTemplate();
+            //$objEmailTemplate = new EmailTemplate();
             //$template = $objEmailTemplate->profileUpdationEmail($name);
             //$createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Profile update Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $email);
             //$this->adminModel->createRecordInTable($createarray, 'smtp_email');
@@ -452,7 +452,7 @@ class AuthController extends AdminController {
             $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
 
             //--------create email-------
-            //$objEmailTemplate = new Libraries\EmailTemplate();
+            //$objEmailTemplate = new EmailTemplate();
             //$template = $objEmailTemplate->profileUpdationEmail($name);
             //$createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Profile update Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $email);
             //$this->adminModel->createRecordInTable($createarray, 'smtp_email');

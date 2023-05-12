@@ -42,7 +42,7 @@ class PersonalController extends AdminController {
                         $updatearray = array('user_login_key' => $newpassword, 'user_last_update' => date('Y-m-d H:i:s'));
                         $this->adminModel->updateRecordInTable($updatearray, 'users', 'id_user', $this->session->get('userid'));
                         //--------create email-------
-                        $objEmailTemplate = new Libraries\EmailTemplate();
+                        $objEmailTemplate = new EmailTemplate();
                         $template = $objEmailTemplate->changePasswordEmail($this->session->get('username'));
                         $createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Password change Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $data->user_email);
                         $this->adminModel->createRecordInTable($createarray, 'smtp_email');
@@ -109,7 +109,7 @@ class PersonalController extends AdminController {
             session()->set('username',$name);
             
             //--------create email-------
-            $objEmailTemplate = new Libraries\EmailTemplate();
+            $objEmailTemplate = new EmailTemplate();
             $template = $objEmailTemplate->profileUpdationEmail($name);
             $createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Profile update Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $email);
             $this->adminModel->createRecordInTable($createarray, 'smtp_email');

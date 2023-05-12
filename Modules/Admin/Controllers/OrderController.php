@@ -107,7 +107,7 @@ class OrderController extends AdminController {
                     $iboupdarray['approval_status'] = 2;
                     $message = "Payment Rejected Successfully";
                 }
-                $objEmailTemplate = new Libraries\EmailTemplate();
+                $objEmailTemplate = new EmailTemplate();
                 //---------welcome email----------------
                 $paymentstatus=array(2=>"Payment Approved @ SSK Bharat BBI",3=>"Paymenr Rejected @ SSK Bharat BBI");
                 $emailTemplate = $objEmailTemplate->paymentStatusEmail($orderdetail->user_name, $status);
