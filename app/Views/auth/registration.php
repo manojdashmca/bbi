@@ -504,7 +504,7 @@
                         <div class="col-lg-6">
                             <div class="form-group mb-3">
                                 <label class="form-label">Payment Mode</label>
-                                <select name="paymentmode" id="paymentmode" class="form-select form-control">
+                                <select name="paymentmode" id="paymentmode" class="form-select form-control" onchange="openModal(this.value)">
                                     <option value=''>Select</option>
                                     <option value='Cash'>Cash</option>
                                     <option value='Bank Transfer'>Bank Transfer</option>
@@ -528,7 +528,13 @@
                     </div>
                 </div>
 
-                <!-- end row -->
+                <!-- end row -->                
+                <div class="text-center mt-4">
+                    <div class="form-check form-group mb-3">
+                        <input class="form-check-input" type="checkbox" name="terms" value="Yes">
+                        <label class="form-check-label" for="formCheck1">I Agree With the SSK Bharat BBI <a href="terms-and-conditions" target="_blank">terms and conditions</a></label>
+                    </div>
+                </div>
                 <div class="text-center mt-4">
                     <input type="hidden" name="utr" id="utr" value="<?= time() . rand(1000, 9999) ?>"/>    
                     <input type="reset" class="btn btn-primary waves-effect waves-light" value="Cancel"/>
@@ -538,5 +544,23 @@
 
         </div>
         <p class="text-center">Already have an account?<a href="login"> Login</a></p>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-center" id="qrModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Scan The QR for Payment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>               
+                <div class="modal-body">
+                    <div class="row">
+                       <img src="panelassets/images/sskbbiqr.jpeg"/>
+                    </div>                  
+
+
+                </div>
+                
+        </div>
     </div>
 </div>

@@ -3,7 +3,7 @@
     <head>
 
         <meta charset="utf-8" />
-        <title>Dashboard | BBI</title>
+        <title>SSK Bharat BBI | <?=$title?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Webapplication of windna" name="description" />
         <meta content="WinDNA" name="author" />

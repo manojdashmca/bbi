@@ -316,6 +316,12 @@
                             message: 'Enter a valid email address'
                         }
                     }
+                }, terms: {
+                    validators: {
+                        notEmpty: {
+                            message: "Accept our terms and conditions"
+                        }
+                    }
                 }
             }
         });
@@ -549,5 +555,11 @@
                 }
             }
         });
+    }
+
+    function openModal(valu) {
+        if (valu == 'QR Scan') {
+            $('#qrModal').modal('show');
+        }
     }
 </script>

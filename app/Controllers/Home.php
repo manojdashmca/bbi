@@ -16,6 +16,7 @@ class Home extends WebController {
     }
 
     public function login() {
+        $this->data['title']="Login";
         $this->data['js'] = 'login';
         $this->data['includefile'] = 'authValidation.php';
         $redirect = '';
@@ -84,8 +85,9 @@ class Home extends WebController {
     }
 
     public function forgotpassword() {
+        $this->data['title']="Forgot Password";
         $this->data['js'] = 'login';
-        // $this->data['includefile'] = 'authValidation.php';
+        $this->data['includefile'] = 'authValidation.php';
         if ($this->request->getMethod() == 'post') {
 
             if (!$this->validate([
@@ -117,6 +119,7 @@ class Home extends WebController {
     }
 
     public function registerMe() {
+        $this->data['title']="Registration";
         $this->iboModel = new IboModel();
         $this->data['js'] = 'login';
         $this->data['includefile'] = 'authValidation.php';
@@ -335,7 +338,7 @@ class Home extends WebController {
     }
 
     public function dashboard() {
-
+        $this->data['title']="Dashboard";
         $this->dashboardModel = new DashboardModel();
         $this->data['js'] = 'dashboard';
         $this->data['css'] = 'dashboard';
@@ -376,6 +379,7 @@ class Home extends WebController {
     }
 
     public function mysponsor() {
+        $this->data['title']="My Sponsor";
         $this->data['js'] = 'flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'users/mysponsor.php';
@@ -418,6 +422,7 @@ class Home extends WebController {
     }
 
     public function myprofile() {
+        $this->data['title']="My Profile";
         $this->iboModel = new IboModel();
         $iduser = session()->get('muserid');
         $userdetaildata = $this->iboModel->getIbodetailById($iduser);
@@ -428,6 +433,7 @@ class Home extends WebController {
     }
 
     public function mypayout() {
+        $this->data['title']="My Payout";
         $this->data['js'] = 'flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'users/mypayout.php';
@@ -485,6 +491,7 @@ class Home extends WebController {
     }
 
     public function changepassword() {
+        $this->data['title']="Change Password";
         $this->data['js'] = 'validation,sweetalert,alertify';
         $this->data['css'] = 'validation,sweetalert,alertify';
         $this->data['includefile'] = 'users/changepassword.php';
@@ -527,6 +534,12 @@ class Home extends WebController {
         }
         return view('templates/header', $this->data)
                 . view('users/changepassword', $this->data)
+                . view('templates/footer', $this->data);
+    }
+    
+    public function payments(){
+        return view('templates/header', $this->data)
+                . view('users/payments', $this->data)
                 . view('templates/footer', $this->data);
     }
 

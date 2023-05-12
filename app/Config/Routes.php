@@ -49,6 +49,7 @@ $routes->get('my-sponsor', 'Home::mysponsor');
 $routes->post('my-sponsorship-data', 'Home::mySponsorshipData');
 $routes->get('my-profile', 'Home::myprofile');
 $routes->get('my-payout', 'Home::mypayout');
+$routes->get('payments', 'Home::payments');
 $routes->post('my-payout-data', 'Home::myPayoutData');
 $routes->get('logout', 'Home::logout');
 $routes->match(['get', 'post'], 'change-password', 'Home::changePassword');

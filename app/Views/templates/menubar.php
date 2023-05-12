@@ -35,7 +35,7 @@
             </a>
         </li>
         <li>
-            <a href="javascript:">
+            <a href="<?=CUSTOMPATH?>payments">
                 <i class="fas fa-money-bill-alt"></i>
                 <span data-key="t-password">Payment</span>
             </a>
