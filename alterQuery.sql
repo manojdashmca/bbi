@@ -1,0 +1,1 @@
+ALTER TABLE `smtp_email` CHANGE `smpt_send_id` `smtp_send_id` INT(11) NOT NULL AUTO_INCREMENT;
