@@ -18,7 +18,7 @@ class AdminController extends BaseController {
         parent::__construct();
         $openmethods = array('login', 'logout', 'test', 'forgotpassword', 'resetpassword','addressByPincode','getBankDetailByIfsc',
             'getCategoryBySegment','getSubCategoryByCategoryModule','checkpan','checkmobile','checkmobile','checkemail',
-            'getSponsorDetailById','getModuleDetailById');
+            'getSponsorDetailById','getModuleDetailById','sendPendingEmails');
         if (!in_array($this->method, $openmethods)) {
             if ($this->session->has('login')) {
                 if ($this->session->get('usertype') != 4) {
