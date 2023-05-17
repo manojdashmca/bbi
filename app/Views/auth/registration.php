@@ -2,7 +2,7 @@
     <div class="form-section">
         <div class="logo">
             <a href="javascript:void()">
-                <img src="<?= CUSTOMPATH ?>panelassets/images/logobbi.png" alt="" height="150">
+                <img src="<?= CUSTOMPATH ?>panelassets/images/logowhite.png" alt="" height="150">
             </a>
         </div>
         <h3>Fill The Joining Form</h3>
@@ -555,7 +555,7 @@
             </div>               
                 <div class="modal-body">
                     <div class="row">
-                       <img src="panelassets/images/logowhite.png"/>
+                       <img src="<?= CUSTOMPATH ?>panelassets/images/sskbbiqr.jpeg" alt="" height="550">
                     </div>                  
 
 
