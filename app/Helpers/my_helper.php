@@ -368,16 +368,16 @@ function sendEmail($data) {
 
     $mail = new PHPMailer();
     $mail->IsSMTP();                               // Set mailer to use SMTP
-    $mail->Host = 'smtp.zoho.in';              // Specify main and backup server
+    $mail->Host = 'email-smtp.ap-northeast-1.amazonaws.com';              // Specify main and backup server
     $mail->Port = 587;              // Set the SMTP port
     $mail->SMTPAuth = true;                        // Enable SMTP authentication
     $mail->AuthType = 'LOGIN';
-    $mail->Username = 'communication@allayhealthcare.in';          // SMTP username
-    $mail->Password = 'pM1D0PDhYnTZ';      // SMTP password
+    $mail->Username = 'AKIA4KZPG5ILONLGXPUQ';          // SMTP username
+    $mail->Password = 'BNWUp2DVi5xtAuzLVBDU9i8sj9nRPkZ+cCwfgDYngnab';      // SMTP password
     $mail->SMTPSecure = 'tls';        // Enable encryption, 'ssl' also accepted
 
-    $mail->From = 'communication@allayhealthcare.in';
-    $mail->FromName = 'SSK BBI Bharat';
+    $mail->From = 'noreplay@sskbbi.in';
+    $mail->FromName = 'SSK Bharat BBI ';
     $mail->AddAddress($tomailid);  // Add a recipient
     $mail->IsHTML(true);           // Set email format to HTML
     if (!empty($attachment)) {
@@ -405,7 +405,7 @@ function sendEmail($data) {
     } catch (Exception $e) {
         $status = false;
     }
-
+    
     return $status;
 }
 

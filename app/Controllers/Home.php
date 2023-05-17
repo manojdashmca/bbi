@@ -542,5 +542,11 @@ class Home extends WebController {
                 . view('users/payments', $this->data)
                 . view('templates/footer', $this->data);
     }
+    
+    public function termsandcondition(){
+        return view('auth/externalheader', $this->data)
+                . view('auth/termsandcondition', $this->data)
+                . view('auth/externalfooter', $this->data);
+    }
 
 }

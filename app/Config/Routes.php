@@ -44,6 +44,7 @@ $routes->match(['get', 'post'], 'forgot-password', 'Home::forgotpassword');
 $routes->match(['get', 'post'], 'register-me', 'Home::registerMe');
 $routes->get('user-dashboard', 'Home::dashboard');
 $routes->get('get-dashboard-data', 'Home::getDashBoardData');
+$routes->get('terms-and-conditions', 'Home::termsandcondition');
 
 $routes->get('my-sponsor', 'Home::mysponsor');
 $routes->post('my-sponsorship-data', 'Home::mySponsorshipData');

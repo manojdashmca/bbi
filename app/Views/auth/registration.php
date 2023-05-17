@@ -555,7 +555,7 @@
             </div>               
                 <div class="modal-body">
                     <div class="row">
-                       <img src="panelassets/images/sskbbiqr.jpeg"/>
+                       <img src="panelassets/images/logowhite.png"/>
                     </div>                  
 
 

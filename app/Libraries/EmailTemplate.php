@@ -1,4 +1,4 @@
-<?php
+o<?php
 
 namespace App\Libraries;
 
@@ -31,10 +31,10 @@ class EmailTemplate {
                                 <tr style="background: url(' . base_url() . '/mailer/header_bg.jpg); height:90px; width:100%">
                                     <td  width="310" align="left" style="padding-left:10px;"><img height="46" src="' . base_url() . '/mailer/logo.png"/></td>
                                     <td width="430" align="right" style="padding-right:10px;">
-                                        Office No.13, Amrut Madhura,<br>
-                                        RSC 28, Sector 3, Opp. Apna Bazaar,<br/>
-                                        Charkop Market,Kandivali West<br/>
-                                        Mumbai, Maharastra, India-400067<br/>
+                                        E Square Mall, Office No 212,<br>
+                                        2nd Floor, State Bank building,<br/>
+                                        Subhash Road, Vile Parle East<br/>
+                                        Mumbai, Maharastra, India-400077<br/>
                                         +91 816 949 1109,+91 937 239 0109 <br/>
 					Email- support@sskbbi.in<br/>
                                         Website- www.sskbbi.in
@@ -68,7 +68,7 @@ class EmailTemplate {
                     <tr>
                         <td colspan="2"><br/>This email was sent from an email address that can\'t receive emails. Please don\'t reply to this email. <i>The information in this e-mail may be confidential and/or legally privileged.  It is intended solely for the use of the addressee.  Access to this e-mail by anyone else is unauthorized.  If you are not the intended recipient, any disclosure, copying, distribution or any action taken or omitted to be taken in reliance on it, is prohibited and may be unlawful</i></td>
                     </tr>
-                    <td style="background: url(' . base_url() . '/mailer/footer_bg.png) repeat-x; height:60px; width:100%"  colspan="2"  ><span style="float:left; padding-left:20px; margin-top:35px;">All right reserved, Allay Healthcare 2010-' . date('Y') . '</span>
+                    <td style="background: url(' . base_url() . '/mailer/footer_bg.png) repeat-x; height:60px; width:100%"  colspan="2"  ><span style="float:left; padding-left:20px; margin-top:35px;">All right reserved, SSK Bharat BBI ' . date('Y') . '</span>
                         <span style="float:right; padding-right:20px; padding-top:15px;">
                             <p style="text-align:center">
                                     <!--Facebook icon-->

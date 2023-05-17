@@ -2,7 +2,7 @@
     <div class="form-section">
         <div class="logo">
             <a href="javascript:void()">
-                <img src="<?= CUSTOMPATH ?>panelassets/images/logobbi.png" alt="" height="150">
+                <img src="<?= CUSTOMPATH ?>panelassets/images/logowhite.png" alt="" height="150">
             </a>
         </div>
         <h3>Sign Into Your Account</h3>
