@@ -289,11 +289,11 @@ class Home extends WebController {
                         $objEmailTemplate = new Libraries\EmailTemplate();
                         //---------welcome email----------------
                         $emailTemplateWelcome = $objEmailTemplate->welcomeEmail($name);
-                        $emailarray = array('smtp_email_content' => $emailTemplateWelcome, 'smtp_email_type' => 'Welcome To SSK Bharat BBI ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $emailid);
+                        $emailarray = array('smtp_email_content' => $emailTemplateWelcome, 'smtp_email_type' => 'Welcome To SSK Bharat BBI ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => $emailid);
                         $this->webModel->createRecordInTable($emailarray, 'smtp_email');
                         //---login credential email---
                         $emailtemplate = $objEmailTemplate->registrationEmail($name, $emailid, $passphrase);
-                        $emailarray1 = array('smtp_email_content' => $emailtemplate, 'smtp_email_type' => 'SSK Bharat BBI Login Credential ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $emailid);
+                        $emailarray1 = array('smtp_email_content' => $emailtemplate, 'smtp_email_type' => 'SSK Bharat BBI Login Credential ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => $emailid);
                         $this->webModel->createRecordInTable($emailarray1, 'smtp_email');
                         //----------------------------
                         $this->session->setFlashdata('message', setMessage("Your registration is successful, please check your email for credential", 's'));
@@ -518,7 +518,7 @@ class Home extends WebController {
                         //--------create email-------
                         $objEmailTemplate = new Libraries\EmailTemplate();
                         $template = $objEmailTemplate->changePasswordEmail(session()->get('musername'));
-                        $createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Password change Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $data->user_email);
+                        $createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Password change Intimation ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => $data->user_email);
                         $this->webModel->createRecordInTable($createarray, 'smtp_email');
                         //---------create Email
                         $this->session->setFlashdata('message', setMessage("Password changed successfully.", 's'));

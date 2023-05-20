@@ -107,7 +107,7 @@ class UserController extends WebController {
                 //--------create email-------
                 $objEmailTemplate = new Libraries\EmailTemplate();
                 $template = $objEmailTemplate->profileUpdationEmail($this->session->get('username'));
-                $createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Profile Updation Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $email);
+                $createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Profile Updation Intimation ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => $email);
                 $this->webModel->createRecordInTable($createarray, 'smtp_email');
                 //---------create Email
                 if ($error) {
@@ -153,7 +153,7 @@ class UserController extends WebController {
                         //--------create email-------
                         $objEmailTemplate = new Libraries\EmailTemplate();
                         $template = $objEmailTemplate->changePasswordEmail($this->session->get('username'));
-                        $createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Password change Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $data->user_email);
+                        $createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Password change Intimation ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => $data->user_email);
                         $this->webModel->createRecordInTable($createarray, 'smtp_email');
                         //---------create Email
                         $this->session->setFlashdata('message', setMessage("Password changed successfully.", 's'));

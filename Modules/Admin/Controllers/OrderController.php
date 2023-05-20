@@ -111,7 +111,7 @@ class OrderController extends AdminController {
                 //---------welcome email----------------
                 $paymentstatus=array(2=>"Payment Approved @ SSK Bharat BBI",3=>"Paymenr Rejected @ SSK Bharat BBI");
                 $emailTemplate = $objEmailTemplate->paymentStatusEmail($orderdetail->user_name, $status);
-                $emailarray = array('smtp_email_content' => $emailTemplate, 'smtp_email_type' => $paymentstatus[$status], 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $orderdetail->user_email);
+                $emailarray = array('smtp_email_content' => $emailTemplate, 'smtp_email_type' => $paymentstatus[$status], 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => $orderdetail->user_email);
                 $this->adminModel->createRecordInTable($emailarray, 'smtp_email');
                 $this->adminModel->updateRecordInTable($iboupdarray, 'ibo_business_detail', 'paymentdetail_id', $paymentid);
                 $this->adminModel->updateRecordInTable($updarray, 'ibo_joining_payment_detail', 'mpd_id', $paymentid);
