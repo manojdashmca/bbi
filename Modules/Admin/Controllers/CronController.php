@@ -25,6 +25,7 @@ class CronController extends AdminController {
      * curl --silent http://www.sskbbi.co.in/delete-system-log
      * Frequency- Once Per Day(Mid Night 12:00 AM)
      */
+
     public function sendPendingEmails() {
         $queuedemail = $this->cronModel->getQueuedEmail(5);
         foreach ($queuedemail as $email) {
@@ -37,6 +38,7 @@ class CronController extends AdminController {
             }
         }
     }
+
     public function deleteSystemLogs() {
         try {
             $counter = 0;
@@ -173,7 +175,11 @@ class CronController extends AdminController {
             $trndata = $this->cronModel->getNoneConfirmedTransaction();
 
             $srconsultingboard = $this->cronModel->getSrConsultingMember();
-            $srmembershare = floor(500 / count($srconsultingboard));
+            if (!empty($srconsultingboard)) {
+                $srmembershare = floor(500 / count($srconsultingboard));
+            } else {
+                $srmembershare = 0;
+            }
             for ($x = 0; $x < count($trndata); $x++) {
                 $trnid = $trndata[$x]->mpd_id;
                 $moduledirector = $trndata[$x]->director_id;
