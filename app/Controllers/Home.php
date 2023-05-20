@@ -16,12 +16,12 @@ class Home extends WebController {
     }
 
     public function login() {
-        $this->data['title']="Login";
+        $this->data['title'] = "Login";
         $this->data['js'] = 'login';
         $this->data['includefile'] = 'authValidation.php';
         $redirect = '';
         if ($this->request->getMethod() == 'post') {
-
+            $this->validateCaptcha();
             if (!$this->validate([
                         'userName' => "required",
                         'userPassword' => 'required',
@@ -85,11 +85,11 @@ class Home extends WebController {
     }
 
     public function forgotpassword() {
-        $this->data['title']="Forgot Password";
+        $this->data['title'] = "Forgot Password";
         $this->data['js'] = 'login';
         $this->data['includefile'] = 'authValidation.php';
         if ($this->request->getMethod() == 'post') {
-
+            $this->validateCaptcha();
             if (!$this->validate([
                         'username' => "required"
                     ])) {
@@ -119,12 +119,12 @@ class Home extends WebController {
     }
 
     public function registerMe() {
-        $this->data['title']="Registration";
+        $this->data['title'] = "Registration";
         $this->iboModel = new IboModel();
         $this->data['js'] = 'login';
         $this->data['includefile'] = 'authValidation.php';
         if ($this->request->getMethod() == 'post') {
-
+            $this->validateCaptcha();
             if (!$this->validate([
                         'name' => 'required',
                         'hidval' => 'required',
@@ -338,7 +338,7 @@ class Home extends WebController {
     }
 
     public function dashboard() {
-        $this->data['title']="Dashboard";
+        $this->data['title'] = "Dashboard";
         $this->dashboardModel = new DashboardModel();
         $this->data['js'] = 'dashboard';
         $this->data['css'] = 'dashboard';
@@ -379,7 +379,7 @@ class Home extends WebController {
     }
 
     public function mysponsor() {
-        $this->data['title']="My Sponsor";
+        $this->data['title'] = "My Sponsor";
         $this->data['js'] = 'flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'users/mysponsor.php';
@@ -422,7 +422,7 @@ class Home extends WebController {
     }
 
     public function myprofile() {
-        $this->data['title']="My Profile";
+        $this->data['title'] = "My Profile";
         $this->iboModel = new IboModel();
         $iduser = session()->get('muserid');
         $userdetaildata = $this->iboModel->getIbodetailById($iduser);
@@ -433,7 +433,7 @@ class Home extends WebController {
     }
 
     public function mypayout() {
-        $this->data['title']="My Payout";
+        $this->data['title'] = "My Payout";
         $this->data['js'] = 'flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'users/mypayout.php';
@@ -491,7 +491,7 @@ class Home extends WebController {
     }
 
     public function changepassword() {
-        $this->data['title']="Change Password";
+        $this->data['title'] = "Change Password";
         $this->data['js'] = 'validation,sweetalert,alertify';
         $this->data['css'] = 'validation,sweetalert,alertify';
         $this->data['includefile'] = 'users/changepassword.php';
@@ -536,17 +536,32 @@ class Home extends WebController {
                 . view('users/changepassword', $this->data)
                 . view('templates/footer', $this->data);
     }
-    
-    public function payments(){
+
+    public function payments() {
         return view('templates/header', $this->data)
                 . view('users/payments', $this->data)
                 . view('templates/footer', $this->data);
     }
-    
-    public function termsandcondition(){
+
+    public function termsandcondition() {
         return view('auth/externalheader', $this->data)
                 . view('auth/termsandcondition', $this->data)
                 . view('auth/externalfooter', $this->data);
+    }
+
+    protected function validateCaptcha() {
+        //echo "<pre>";
+        //print_r($this->request->getPost());
+        $captcha = $this->request->getPost('g-recaptcha-response');
+        $response = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LcdR7oZAAAAAJZY8iAeUDo9KanXAdhH5_h80t-o&response=" . $captcha . "&remoteip=" . $this->request->getIPAddress()), true);
+        //echo "<pre>";
+        //print_r($response);exit;
+        if ($response['success'] == false) {
+            $redirecturl = str_replace(base_url(), '', $_SERVER['HTTP_REFERER']);
+            header('location:' . $redirecturl);
+            $this->session->setFlashdata('message', setMessage('Looks like you are not a legitmate user', 'i'));
+            exit;
+        }
     }
 
 }

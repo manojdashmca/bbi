@@ -15,7 +15,7 @@ class AuthController extends AdminController {
 
     public function login() {
         if ($this->request->getMethod() == 'post') {
-            //$this->validateCaptcha();
+            $this->validateCaptcha();
             if (!$this->validate([
                         'username' => "required",
                         'userpassword' => 'required',
