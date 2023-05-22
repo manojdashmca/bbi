@@ -16,7 +16,13 @@
                                 <div class="col-lg-8 col-md-8 col-sm-6">
                                     <div class=" form-group mb-3">
                                         <label class="form-label">Module Name/Id</label>
-                                        <input type="text" class="form-control" id="moduleid" name="moduleid">
+                                        <select name="moduleid" id="moduleid" class="form-control form-select">
+                                            <option value="">Select Module</option>
+                                            <?php for ($x=0;$x<count($mod);$x++){?>
+                                            <option value="<?=$mod[$x]->lm_code?>"><?=$mod[$x]->lm_name.' ('.$mod[$x]->lm_code.')'?></option>
+                                            <?php }?>
+                                        </select>
+<!--                                        <input type="text" class="form-control" id="moduleid" name="moduleid">-->
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-6 mt-4">

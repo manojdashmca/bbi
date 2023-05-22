@@ -55,7 +55,7 @@ class IboModel extends Model {
                 . "WHEN '2' THEN 'Manual' "
                 . "END as activation_type,a.user_education,a.user_profession_certification,a.user_group_link,a.user_group_link_org,a.user_blood_group,"
                 . "user_activation_date,a.user_create_date,joining_type,"
-                . "CONCAT_WS(' / ',b.user_code,b.user_login_name,b.user_name) as sponsor "                
+                . "CONCAT_WS(' / ',b.user_code,b.user_login_name,b.user_name) as sponsor "
                 . "from user_detail a join ibo_user on a.id_user=user_id_user "
                 . "LEFT JOIN user_detail as b on a.sponsor_user_id=b.id_user "
                 . "where a.id_user='$id'";
@@ -295,35 +295,45 @@ class IboModel extends Model {
         $result = $this->db->query($sql);
         return $result->getRow()->count;
     }
-    
-    public function getBusinesssegment(){
-        $sql="Select * from master_segment where segment_status=1";
+
+    public function getBusinesssegment() {
+        $sql = "Select * from master_segment where segment_status=1";
         $result = $this->db->query($sql);
         return $result->getResult();
-    }public function getBusinessCategory($segmentid=0){
-        $sql="Select * from master_category where category_status=1";
-        if(!empty($segmentid)){
-            $sql.=" AND segment_id_segment='$segmentid'";
-        }
-        $result = $this->db->query($sql);
-        return $result->getResult();
-    }public function getBusinessSubCategory($segmentid=0,$categoryid=0){
-        $sql="Select * from master_sub_category where sub_category_status=1";
-        if(!empty($segmentid)){
-            $sql.=" AND segment_id_segment='$segmentid'";
-        }if(!empty($segmentid)){
-            $sql.=" AND category_id_category='$categoryid'";
+    }
+
+    public function getBusinessCategory($segmentid = 0) {
+        $sql = "Select * from master_category where category_status=1";
+        if (!empty($segmentid)) {
+            $sql .= " AND segment_id_segment='$segmentid'";
         }
         $result = $this->db->query($sql);
         return $result->getResult();
     }
-    
+
+    public function getBusinessSubCategory($segmentid = 0, $categoryid = 0) {
+        $sql = "Select * from master_sub_category where sub_category_status=1";
+        if (!empty($segmentid)) {
+            $sql .= " AND segment_id_segment='$segmentid'";
+        }if (!empty($segmentid)) {
+            $sql .= " AND category_id_category='$categoryid'";
+        }
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+
     public function getMemberDetailByCode($code) {
         $sql = "SELECT id_user,user_name "
                 . "from user_detail  "
                 . "where user_code='$code' or user_login_name='$code'";
         $result = $this->db->query($sql);
         return $result->getRow();
+    }
+
+    public function getModuleDropDown() {
+        $sql = "Select lm_code, lm_name from location_module where lm_status=1";
+        $result = $this->db->query($sql);
+        return $result->getResult();
     }
 
 }

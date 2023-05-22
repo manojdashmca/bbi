@@ -305,6 +305,7 @@ class Home extends WebController {
                 }
             }
         }
+        $this->data['mod'] = $this->iboModel->getModuleDropDown();
         $this->data['segment'] = $this->iboModel->getBusinesssegment();
         $this->data['category'] = $this->iboModel->getBusinessCategory();
         return view('auth/header_registration', $this->data)

@@ -38,8 +38,8 @@
                                 <span style="--i:5">o</span>
                                 <span style="--i:6">m</span>
                                 <span style="--i:7">e</span>
-                                <span class="color-yellow" style="--i:8">t</span>
-                                <span class="color-yellow" style="--i:9">o</span>
+                                <span class="color-red" style="--i:8">t</span>
+                                <span class="color-red" style="--i:9">o</span>
 
                                 <span style="--i:10">S</span>
                                 <span style="--i:11">S</span>
