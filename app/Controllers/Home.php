@@ -566,6 +566,10 @@ class Home extends WebController {
     }
 
     public function webContactForm() {
+        header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
+        header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
+        header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
+
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             $name = trim($this->request->getPost('name'));
             $email = trim($this->request->getPost('email'));
