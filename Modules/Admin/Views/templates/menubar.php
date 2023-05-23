@@ -88,16 +88,16 @@
                         <li><a href="<?= ADMINPATH ?>e-wallet-transaction" data-key="t-ewallettransaction">E-Wallet Transaction</a></li>                
                     </ul>
                 </li>-->
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bx-rupee"></i>
-                        <span data-key="t-payout">Payout</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="<?= ADMINPATH ?>payout-dates" data-key="t-dailypayout">Payout Dates</a></li>
-                        <li><a href="<?= ADMINPATH ?>payout-member" data-key="t-weeklypayout">Member Payout</a></li>                        
-                    </ul>
-                </li>
+        <li>
+            <a href="javascript: void(0);" class="has-arrow">
+                <i class="bx bx-rupee"></i>
+                <span data-key="t-payout">Payout</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+                <li><a href="<?= ADMINPATH ?>payout-dates" data-key="t-dailypayout">Payout Dates</a></li>
+                <li><a href="<?= ADMINPATH ?>payout-member" data-key="t-weeklypayout">Member Payout</a></li>                        
+            </ul>
+        </li>
         <li class="menu-title mt-2" data-key="t-components">Mislanious</li>
 
         <!--        <li>
@@ -111,16 +111,16 @@
                     </ul>
                 </li>-->
 
-        <!--        <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="dripicons-document"></i>
-                        <span data-key="t-utility">Utility</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="<?= ADMINPATH ?>grievances-list" data-key="t-grivancereport">Grievances Report</a></li>
-                        <li><a href="<?= ADMINPATH ?>news-list" data-key="t-newslist">News List</a></li>
-                    </ul>
-                </li>-->
+        <li>
+            <a href="javascript: void(0);" class="has-arrow">
+                <i class="dripicons-document"></i>
+                <span data-key="t-utility">Utility</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+                <li><a href="<?= ADMINPATH ?>webcontact" data-key="t-grivancereport">Web Contact</a></li>
+                <li><a href="<?= ADMINPATH ?>startamodule" data-key="t-newslist">Start A Module</a></li>
+            </ul>
+        </li>
 
         <!--        <li>
                     <a href="javascript: void(0);" class="has-arrow">

@@ -37,9 +37,9 @@ class ConfigurationController extends AdminController {
             $textdata['default_password'] = trim($this->request->getPost('default_password'));
             $radiodata['server_status'] = trim($this->request->getPost('server_status'));
             $radiodata['server_status'] = trim($this->request->getPost('server_status'));
-            $radiodata['send_sms'] = trim($this->request->getPost('send_sms'));            
-            $radiodata['send_email'] = trim($this->request->getPost('send_email'));            
-            $radiodata['use_default_password'] = trim($this->request->getPost('use_default_password'));            
+            $radiodata['send_sms'] = trim($this->request->getPost('send_sms'));
+            $radiodata['send_email'] = trim($this->request->getPost('send_email'));
+            $radiodata['use_default_password'] = trim($this->request->getPost('use_default_password'));
             $radiodata['maintenance_mode'] = trim($this->request->getPost('maintenance_mode'));
             $data['text'] = $textdata;
             $data['radio'] = $radiodata;

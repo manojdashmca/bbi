@@ -17,20 +17,20 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("ibo-edit/(:any)", "IBOController::edit/$1");
     $routes->get("get-sponsordetail-by-id/(:any)", "IBOController::getSponsorDetailById/$1");
     $routes->get("get-member-by-id/(:any)", "IBOController::getMemberDetailById/$1");
-    
-    $routes->get("sr_consulting_board", "TeamsController::srConsultingBoard");    
+
+    $routes->get("sr_consulting_board", "TeamsController::srConsultingBoard");
     $routes->post("sr_consulting_board_data", "TeamsController::srConsultingBoardData");
-    $routes->get("consulting_board", "TeamsController::consultingBoard");    
+    $routes->get("consulting_board", "TeamsController::consultingBoard");
     $routes->post("consulting_board_data", "TeamsController::consultingBoardData");
-    $routes->get("state_team", "TeamsController::stateTeam");    
+    $routes->get("state_team", "TeamsController::stateTeam");
     $routes->post("state_team_data", "TeamsController::stateTeamData");
-    $routes->get("national_team", "TeamsController::nationalTeam");    
+    $routes->get("national_team", "TeamsController::nationalTeam");
     $routes->post("national_team_data", "TeamsController::nationalTeamData");
-    $routes->get("zone_team", "TeamsController::zoneTeam");    
+    $routes->get("zone_team", "TeamsController::zoneTeam");
     $routes->post("zone_team_data", "TeamsController::zoneTeamData");
     $routes->post("update-teams-status", "TeamsController::updateTeamsStatus");
     $routes->post("add-member-to-table", "TeamsController::addUserToTable");
-    
+
     //genealogy
     $routes->get("sponsor-view", "TreeController::sponsorview");
     $routes->post("tree-sponsorship-data", "TreeController::sponshorshipdata");
@@ -65,7 +65,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     //------Payout Controller   
     $routes->get("payout-dates", "PayoutController::payoutDates");
     $routes->post("payout-dates-data", "PayoutController::payourDatesData");
-    $routes->get("payout-member", "PayoutController::memberPayout"); 
+    $routes->get("payout-member", "PayoutController::memberPayout");
     $routes->post("payout-member-data", "PayoutController::payourMemberData");
 
     //------Reports Controller   
@@ -87,6 +87,10 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->match(['get', 'post'], "add-new-user", "UsersController::addNewUser");
     //-----Configuration Controller
     $routes->match(['get', 'post'], "configuration", "ConfigurationController::index");
+    $routes->get("webcontact", "UtilityController::webcontact");
+    $routes->match(['get', 'post'], "webcontact-data", "UtilityController::webcontactData");
+    $routes->get("startamodule", "UtilityController::startamodule");
+    $routes->match(['get', 'post'], "startamodule-data", "UtilityController::startamoduleData");
 
     $routes->get("addressByPincode/(:any)", "AuthController::addressByPincode/$1");
     $routes->get("getBankDetailByIfsc/(:any)", "AuthController::getBankDetailByIfsc/$1");
@@ -100,11 +104,11 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
 
     $routes->post("get-category-by-segment", "AuthController::getCategoryBySegment");
     $routes->post("get-subcategory-by-category-module", "AuthController::getSubCategoryByCategoryModule");
-    
+
     $routes->post("check-pan", "AuthController::checkpan");
     $routes->post("check-mobile", "AuthController::checkmobile");
     $routes->post("check-email", "AuthController::checkemail");
-    
+
     //----------------------------Cron------------------    
     $routes->get("delete-system-log", "CronController::deleteSystemLogs");
     $routes->get("create-payout-date", "CronController::createPayoutDate");
@@ -113,8 +117,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("generate-payout", "CronController::generatePayout");
     $routes->get("update-gross-income", "CronController::updateGrossIncome");
     $routes->get("send-pending-emails", "CronController::sendPendingEmails");
-    $routes->get("delete-email-attachment", "CronController::deleteEmailAttachment");    
-    
+    $routes->get("delete-email-attachment", "CronController::deleteEmailAttachment");
 
 //    $routes->set404Override(function () {
 //        return view('\Modules\Admin\Views\auth\404');

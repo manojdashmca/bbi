@@ -577,7 +577,7 @@ class Home extends WebController {
         $requestip = $this->request->getIPAddress();
         $platform = $this->request->getUserAgent()->getPlatform();
         $browser = $this->getBrowser();
-        $createarray = array('name' => $name, 'email' => $email, 'subject' => $subject, 'message' => $message, 'create_ip' => $requestip,
+        $createarray = array('name' => $name, 'email' => $email, 'mobile' => $mobile, 'subject' => $subject, 'message' => $message, 'create_ip' => $requestip,
             'create_browser' => $browser, 'create_os' => $platform);
         $this->webModel->transStart();
         $this->webModel->createRecordInTable($createarray, 'webcontact');
@@ -602,7 +602,7 @@ class Home extends WebController {
             echo "Contact form submitted successfully, Our team will get back to you soon";
         }
     }
-    
+
     public function startaModuleForm() {
         header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
         header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
@@ -615,7 +615,7 @@ class Home extends WebController {
         $requestip = $this->request->getIPAddress();
         $platform = $this->request->getUserAgent()->getPlatform();
         $browser = $this->getBrowser();
-        $createarray = array('name' => $name, 'email' => $email, 'area' => $area, 'message' => $message, 'create_ip' => $requestip,
+        $createarray = array('name' => $name, 'email' => $email, 'mobile' => $mobile, 'area' => $area, 'message' => $message, 'create_ip' => $requestip,
             'create_browser' => $browser, 'create_os' => $platform);
         $this->webModel->transStart();
         $this->webModel->createRecordInTable($createarray, 'startamodule');
