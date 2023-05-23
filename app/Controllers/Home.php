@@ -569,8 +569,6 @@ class Home extends WebController {
         header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
         header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
         header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
-
-
         $name = trim($this->request->getPost('name'));
         $email = trim($this->request->getPost('email'));
         $subject = trim($this->request->getPost('subject'));
