@@ -634,10 +634,10 @@ class Home extends WebController {
 
         if ($this->webModel->transStatus() === false) {
             $this->webModel->transRollback();
-            echo "Unable to submit contactform, please try after some time";
+            echo "Unable to submit your request, please try after some time";
         } else {
             $this->webModel->transCommit();
-            echo "Contact form submitted successfully, Our team will get back to you soon";
+            echo "Your request has been submitted successfully, Our team will get back to you soon";
         }
     }
 
