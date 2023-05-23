@@ -185,4 +185,23 @@ class EmailTemplate {
         return $template;
     }
 
+    public function startamoduleAdminEmail($name, $email, $mobile, $area, $message) {
+        $contentdata = "Dear  Admin,";
+        $contentdata .= "<p>One start a module request has been placed on the web form, below is the detail of<p>";
+        $contentdata .= "Name-: " . $name;
+        $contentdata .= "Email-: " . $email;
+        $contentdata .= "Mobile-: " . $mobile;
+        $contentdata .= "Area-: " . $area;
+        $contentdata .= "Message-: " . $message;
+        $template = $this->createTemplate($contentdata);
+        return $template;
+    }
+
+    public function startamoduleUserEmail($username) {
+        $contentdata = "Dear " . $username . ",";
+        $contentdata .= "<p>We acknowledge the receipt of your request to start amodule. Our Support team will contact you soon<p>";
+        $template = $this->createTemplate($contentdata);
+        return $template;
+    }
+
 }

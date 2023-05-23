@@ -204,7 +204,7 @@ body {
     color: #fea900;
 }
 .login-6 .waviy span.color-red{
-    color: #f04124;
+    color: #cf2030;
 }
 
 @keyframes waviy {
@@ -282,13 +282,13 @@ body {
     text-align: center;
     margin: 0 0 24px;
     font-size: 25px;
-    color: #f04124;
+    color: #cf2030;
     font-weight: 400;
 }
 
 .login-6 .form-check-input:checked {
-    background-color: #f04124!important;
-    border-color: #f04124!important;
+    background-color: #cf2030!important;
+    border-color: #cf2030!important;
 }
 
 .login-6 .login-inner-form .social-list{

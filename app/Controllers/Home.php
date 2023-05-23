@@ -602,5 +602,43 @@ class Home extends WebController {
             echo "Contact form submitted successfully, Our team will get back to you soon";
         }
     }
+    
+    public function startaModuleForm() {
+        header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
+        header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
+        header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
+        $name = trim($this->request->getPost('name'));
+        $email = trim($this->request->getPost('email'));
+        $mobile = trim($this->request->getPost('mobile'));
+        $area = trim($this->request->getPost('area'));
+        $message = trim($this->request->getPost('message'));
+        $requestip = $this->request->getIPAddress();
+        $platform = $this->request->getUserAgent()->getPlatform();
+        $browser = $this->getBrowser();
+        $createarray = array('name' => $name, 'email' => $email, 'area' => $area, 'message' => $message, 'create_ip' => $requestip,
+            'create_browser' => $browser, 'create_os' => $platform);
+        $this->webModel->transStart();
+        $this->webModel->createRecordInTable($createarray, 'startamodule');
+        //---User Email
+        $objEmailTemplate = new Libraries\EmailTemplate();
+        //---------welcome email----------------
+        $emailTemplateAdmin = $objEmailTemplate->startamoduleAdminEmail($name, $email, $mobile, $subject, $message);
+        $emailarray = array('smtp_email_content' => $emailTemplateAdmin, 'smtp_email_type' => 'Start A module Form Data ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => COMMUNICATION_EMAIL);
+        $this->webModel->createRecordInTable($emailarray, 'smtp_email');
+        //---login credential email---
+        $emailtemplate = $objEmailTemplate->startamoduleUserEmail($name);
+        $emailarray1 = array('smtp_email_content' => $emailtemplate, 'smtp_email_type' => 'SSK Bharat BBI Start Amodule Form Submission ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => $email);
+        $this->webModel->createRecordInTable($emailarray1, 'smtp_email');
+        //----------------------------
+        $this->webModel->transComplete();
+
+        if ($this->webModel->transStatus() === false) {
+            $this->webModel->transRollback();
+            echo "Unable to submit contactform, please try after some time";
+        } else {
+            $this->webModel->transCommit();
+            echo "Contact form submitted successfully, Our team will get back to you soon";
+        }
+    }
 
 }
