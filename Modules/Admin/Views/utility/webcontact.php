@@ -74,8 +74,8 @@
                                         <tr>
                                             <th>Sl No</th>
                                             <th>Name</th>
-                                            <th>Mobile</th>
                                             <th>Email</th>
+                                            <th>Mobile</th>                                            
                                             <th>Subject</th>
                                             <th>Text</th>
                                             <th>Date</th>                                            

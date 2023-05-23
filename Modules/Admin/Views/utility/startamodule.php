@@ -80,8 +80,8 @@
                                         <tr>
                                             <th>Sl No</th>
                                             <th>Name</th>
-                                            <th>Mobile</th>
                                             <th>Email</th>
+                                            <th>Mobile</th>                                            
                                             <th>Area</th>
                                             <th>Text</th>
                                             <th>Date</th>                                            

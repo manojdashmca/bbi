@@ -57,7 +57,7 @@ class AuthController extends AdminController {
                                 $this->session->set('useremail', $result->user_email);
                                 $this->session->set('userid', $result->id_user);
                                 if ($result->user_type == 4) {
-                                    header("location:" . ADMINPATH . "ibo-list");
+                                    header("location:" . ADMINPATH . "dashboard");
                                 }
                                 exit;
                             }
