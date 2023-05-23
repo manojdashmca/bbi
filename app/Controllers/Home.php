@@ -622,7 +622,7 @@ class Home extends WebController {
         //---User Email
         $objEmailTemplate = new Libraries\EmailTemplate();
         //---------welcome email----------------
-        $emailTemplateAdmin = $objEmailTemplate->startamoduleAdminEmail($name, $email, $mobile, $subject, $message);
+        $emailTemplateAdmin = $objEmailTemplate->startamoduleAdminEmail($name, $email, $mobile, $area, $message);
         $emailarray = array('smtp_email_content' => $emailTemplateAdmin, 'smtp_email_type' => 'Start A module Form Data ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => COMMUNICATION_EMAIL);
         $this->webModel->createRecordInTable($emailarray, 'smtp_email');
         //---login credential email---
