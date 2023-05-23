@@ -54,8 +54,7 @@ $routes->get('payments', 'Home::payments');
 $routes->post('my-payout-data', 'Home::myPayoutData');
 $routes->get('logout', 'Home::logout');
 $routes->match(['get', 'post'], 'change-password', 'Home::changePassword');
-
-
+$routes->match(['get', 'post'], 'contact-form', 'Home::webContactForm');
 //----------------------------------------
 $routes->set404Override(function () {
     return view('\App\Views\home\404');

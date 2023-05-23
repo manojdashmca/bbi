@@ -565,4 +565,40 @@ class Home extends WebController {
         }
     }
 
+    public function webContactForm() {
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $name = trim($this->request->getPost('name'));
+            $email = trim($this->request->getPost('email'));
+            $subject = trim($this->request->getPost('subject'));
+            $message = trim($this->request->getPost('message'));
+            $requestip = $this->request->getIPAddress();
+            $platform = $this->request->getUserAgent()->getPlatform();
+            $browser = $this->getBrowser();
+            $createarray = array('name' => $name, 'email' => $email, 'subject' => $subject, 'message' => $message, 'create_ip' => $requestip,
+                'create_browser' => $browser, 'create_os' => $platform);
+            $this->webModel->transStart();
+            $this->webModel->createRecordInTable($createarray, 'webcontact');
+            //---User Email
+            $objEmailTemplate = new Libraries\EmailTemplate();
+            //---------welcome email----------------
+            $emailTemplateAdmin = $objEmailTemplate->contactAdminEmail($name, $email, $subject, $message);
+            $emailarray = array('smtp_email_content' => $emailTemplateAdmin, 'smtp_email_type' => 'Web Contact form Filled ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => COMMUNICATION_EMAIL);
+            $this->webModel->createRecordInTable($emailarray, 'smtp_email');
+            //---login credential email---
+            $emailtemplate = $objEmailTemplate->contactUserEmail($name);
+            $emailarray1 = array('smtp_email_content' => $emailtemplate, 'smtp_email_type' => 'SSK Bharat BBI Contact Form Submission ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => $email);
+            $this->webModel->createRecordInTable($emailarray1, 'smtp_email');
+            //----------------------------
+            $this->webModel->transComplete();
+
+            if ($this->webModel->transStatus() === false) {
+                $this->webModel->transRollback();
+                echo "Unable to submit contactform, please try after some time";
+            } else {
+                $this->webModel->transCommit();
+                echo "Contact form submitted successfully, Our team will get back to you soon";
+            }
+        }
+    }
+
 }

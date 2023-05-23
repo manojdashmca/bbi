@@ -166,4 +166,23 @@ class EmailTemplate {
         return $content;
     }
 
+    public function contactAdminEmail($name, $email, $mobile, $subject, $message) {
+        $contentdata = "Dear  Admin,";
+        $contentdata .= "<p>One contact request has been placed on the web contact form, below is the detail of<p>";
+        $contentdata .= "Name-: " . $name;
+        $contentdata .= "Email-: " . $email;
+        $contentdata .= "Mobile-: " . $mobile;
+        $contentdata .= "Subject-: " . $subject;
+        $contentdata .= "Message-: " . $message;
+        $template = $this->createTemplate($contentdata);
+        return $template;
+    }
+
+    public function contactUserEmail($username) {
+        $contentdata = "Dear " . $username . ",";
+        $contentdata .= "<p>We acknowledge the receipt of your request to contact you. Our Support team will contact you soon<p>";
+        $template = $this->createTemplate($contentdata);
+        return $template;
+    }
+
 }
