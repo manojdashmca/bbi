@@ -12,7 +12,7 @@ class WebController extends BaseController {
         $this->webModel = new WebModel();
         $cntrl = explode('\\', $this->controller);
         $opencontroller = $cntrl[(sizeof($cntrl) - 1)];
-        $openmethods = array('login', 'logout', 'forgotpassword', 'registerMe', 'termsandcondition', 'webContactForm');
+        $openmethods = array('login', 'logout', 'forgotpassword', 'registerMe', 'termsandcondition', 'webContactForm','startaModuleForm');
         if (!in_array($this->method, $openmethods)) {
             if ($this->session->has('mlogin')) {
                 
