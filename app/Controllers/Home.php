@@ -571,6 +571,7 @@ class Home extends WebController {
         header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
         $name = trim($this->request->getPost('name'));
         $email = trim($this->request->getPost('email'));
+        $mobile = trim($this->request->getPost('mobile'));
         $subject = trim($this->request->getPost('subject'));
         $message = trim($this->request->getPost('message'));
         $requestip = $this->request->getIPAddress();
@@ -583,7 +584,7 @@ class Home extends WebController {
         //---User Email
         $objEmailTemplate = new Libraries\EmailTemplate();
         //---------welcome email----------------
-        $emailTemplateAdmin = $objEmailTemplate->contactAdminEmail($name, $email, $subject, $message);
+        $emailTemplateAdmin = $objEmailTemplate->contactAdminEmail($name, $email, $mobile, $subject, $message);
         $emailarray = array('smtp_email_content' => $emailTemplateAdmin, 'smtp_email_type' => 'Web Contact form Filled ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => COMMUNICATION_EMAIL);
         $this->webModel->createRecordInTable($emailarray, 'smtp_email');
         //---login credential email---
