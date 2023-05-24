@@ -544,7 +544,7 @@
                 <div class="text-center mt-4">
                     <input type="hidden" name="utr" id="utr" value="<?= time() . rand(1000, 9999) ?>"/>    
                     <input type="reset" class="btn btn-primary waves-effect waves-light" value="Cancel"/>
-                    <input type="submit" class="btn btn-success waves-effect waves-light" value="Cretae Member"/>
+                    <input type="submit" class="btn btn-success waves-effect waves-light" value="Create Member"/>
                 </div>
             </form>
 
