@@ -514,7 +514,7 @@ class Home extends WebController {
                 if ($newpassword == $confirmpassword) {
                     $data = $this->webModel->getTableData('user_login_key,user_email', 'user_detail', 'id_user=' . session()->get('muserid'));
                     if ($this->decryptToken($data->user_login_key) == $oldpassword) {
-                        $updatearray = array('user_login_key' => $newpassword);
+                        $updatearray = array('user_login_key' => $this->encryptString($newpassword));
                         $this->webModel->updateRecordInTable($updatearray, 'user_detail', 'id_user', session()->get('muserid'));
                         //--------create email-------
                         $objEmailTemplate = new Libraries\EmailTemplate();
