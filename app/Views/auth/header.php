@@ -48,7 +48,7 @@
                                 <span style="--i:14">B</span>
                                 <span style="--i:15">I</span>
                             </div>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type</p>
+                            <p>Let’s Learn,Build and Grow Together</p>
                         </div>
                         <div class="bg-photo">
                             <img src="<?= CUSTOMPATH ?>loginassets/img/img-6.png" alt="bg" class="img-fluid">
