@@ -6,30 +6,6 @@
 <?php if (!empty($userdetail->user_pincode)) { ?>
             getAddress('<?= $userdetail->user_post_office ?>')
 <?php } ?>
-        $('#nomineedetail').formValidation({
-            message: 'This value is not valid',
-            icon: {
-            },
-            fields: {
-                nomineename: {
-                    validators: {
-                        notEmpty: {
-                            message: "Nominee Name Is Required"
-                        }
-                    }
-                }, nomineerelation: {
-                    validators: {
-                        notEmpty: {
-                            message: "Nominee Relation Is Required"
-                        }
-                    }
-                }
-            }
-        }).on('success.form.fv', function (e) {
-            // Prevent form submission
-            e.preventDefault();
-            updatenominee();
-        });
         $('#bankingdetail').formValidation({
             message: 'This value is not valid',
             icon: {
@@ -144,21 +120,48 @@
                         }
                     }
                 }, mobile: {
+                    verbose: false,
                     validators: {
                         notEmpty: {
                             message: "User Mobile No Is Required"
+                        },
+                        regexp: {
+                            regexp: '[5-9]{1}[0-9]{9}$',
+                            message: 'Invalid mobile no'
+                        }, stringLength: {
+                            max: 10
+                        }, remote: {
+                            url: '<?= ADMINPATH ?>check-mobile',
+                            data: function (validator) {
+                                return {
+                                    mobile: validator.getFieldElements('mobile').val(),
+                                    userid: <?= $openuser ?>
+                                }
+                            },
+                            message: 'Mobile already exists',
+                            type: 'POST'
                         }
-                    }
-                }, whatsappno: {
-                    validators: {
-                        notEmpty: {
-                            message: "Enter Franchise Point"
-                        }
+
                     }
                 }, emailid: {
+                    verbose: false,
                     validators: {
                         notEmpty: {
                             message: "Email Id Is Required"
+                        },
+                        regexp: {
+                            regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                            message: 'Enter a valid email address'
+                        }, remote: {
+                            url: '<?= ADMINPATH ?>check-email',
+                            data: function (validator) {
+                                return {
+                                    email: validator.getFieldElements('emailid').val(),
+                                    userid: <?= $openuser ?>
+                                };
+                            },
+                            message: 'Email already exists',
+                            type: 'POST'
                         }
                     }
                 }
@@ -173,7 +176,7 @@
             icon: {
             },
             fields: {
-                 name: {
+                name: {
                     validators: {
                         notEmpty: {
                             message: "User Name Required"

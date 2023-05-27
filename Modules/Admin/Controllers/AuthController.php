@@ -190,7 +190,6 @@ class AuthController extends AdminController {
         $status = array('status' => 'error', 'message' => 'Unauthorised access');
         if ($this->request->isAJAX()) {
             $emailid = $this->request->getPost('emailid');
-            $whatsappno = $this->request->getPost('whatsappno');
             $mobile = $this->request->getPost('mobile');
             $country = $this->request->getPost('country');
             $state = $this->request->getPost('state');
@@ -202,10 +201,9 @@ class AuthController extends AdminController {
             $userid = base64_decode($this->request->getPost('encuser'));
 
             $updarray = array('user_email' => $emailid, 'user_mobile' => $mobile,
-                'user_whatsappno' => $whatsappno, 'user_city' => $city,
-                'user_country' => $country, 'user_address' => $address,
-                'user_pincode' => $pincode, 'user_district' => $district,
-                'user_state' => $state, 'user_post_office' => $postoffice);
+                'user_city' => $city, 'user_country' => $country, 'user_address' => $address,
+                'user_pincode' => $pincode, 'user_district' => $district, 'user_state' => $state,
+                'user_post_office' => $postoffice);
 
             $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
 

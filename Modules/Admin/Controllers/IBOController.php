@@ -243,6 +243,7 @@ class IBOController extends AdminController {
         $userdetaildata = $this->iboModel->getIbodetailById($iduser);
         $this->data['userdetail'] = $userdetaildata;
         $this->data['encuserid'] = $userid;
+        $this->data['openuser'] = $iduser;
         $this->data['password'] = $this->decryptToken($userdetaildata->user_login_key);
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\ibo\iboedit', $this->data)

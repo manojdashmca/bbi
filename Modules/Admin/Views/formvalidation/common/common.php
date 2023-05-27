@@ -154,14 +154,13 @@
         var address = $("#address").val();
         var city = $("#city").val();
         var country = $("#country").val();
-        var mobile = $("#mobile").val();
-        var whatsappno = $("#whatsappno").val();
+        var mobile = $("#mobile").val();        
         var emailid = $("#emailid").val();
         var encuser = $("#cinfoencuserid").val();
         $.ajax({
             type: "POST",
             url: '<?= ADMINPATH ?>update-contact-detail',
-            data: {emailid: emailid, whatsappno: whatsappno, mobile: mobile, country: country, city: city, state: state, district: district, postoffice: postoffice, pincode: pincode, address: address, encuser: encuser},
+            data: {emailid: emailid, mobile: mobile, country: country, city: city, state: state, district: district, postoffice: postoffice, pincode: pincode, address: address, encuser: encuser},
             success: function (data) {
                 var jsonData = JSON.parse(data);
                 if (jsonData.status == 'success') {

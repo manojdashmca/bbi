@@ -5,11 +5,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">IBO Profile</h4>
+                    <h4 class="mb-sm-0 font-size-18">Member Profile</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">IBO</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Member</a></li>
                             <li class="breadcrumb-item active">Profile</li>
                         </ol>
                     </div>
@@ -189,7 +189,7 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">Post Office</label>
-                                                    <select class="form-control" id="postoffice" name="postoffice">
+                                                    <select class="form-control form-select" id="postoffice" name="postoffice">
                                                         <option value="">Select Post Office</option>
                                                     </select>
                                                 </div>                                    
