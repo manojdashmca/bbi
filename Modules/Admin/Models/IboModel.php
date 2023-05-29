@@ -15,18 +15,22 @@ class IboModel extends Model {
     public function selectIBO($data, $ordercolumn = 7, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
         try {
             $return = array();
-            $columnarray = array('a.id_user', 'a.user_name', 'a.user_code', 'a.user_city', 'a.user_mobile', 'a.sponsor_user_id', 'a.user_create_date');
-            $sql = "select SQL_CALC_FOUND_ROWS a.id_user,a.user_name,CONCAT_WS(' / ',a.user_code,a.user_login_name) user_coden,a.user_city,a.user_mobile ,CONCAT_WS(' / ',b.user_code,b.user_login_name,b.user_name) as sponsor,
-                date_format(a.user_create_date,'%d-%m-%Y %H:%i:%s') createedon,
+            $columnarray = array('a.id_user', 'a.user_name', 'a.user_code','lm_name', 'a.user_city', 'a.user_mobile', 'a.sponsor_user_id', 'a.user_create_date');
+            $sql = "select SQL_CALC_FOUND_ROWS distinct(a.id_user),a.user_name,CONCAT_WS(' / ',a.user_code,a.user_login_name) user_coden,lm_name,a.user_city,a.user_mobile ,CONCAT_WS(' / ',b.user_code,b.user_login_name,b.user_name) as sponsor,
+                segment_name,category_name,date_format(a.user_create_date,'%d-%m-%Y %H:%i:%s') createedon,
                 CASE a.user_status WHEN '0' THEN 'In Active'
                 WHEN '1' THEN 'Active'
                 WHEN '2' THEN 'Blocked' END as user_status
                 FROM user_detail as a
-                LEFT JOIN user_detail as b on a.sponsor_user_id=b.id_user                 
+                LEFT JOIN user_detail as b on a.sponsor_user_id=b.id_user  
+                LEFT JOIN ibo_business_detail c on a.id_user=c.user_id_user 
+                LEFT JOIN master_segment on business_segment=segment_id 
+                LEFT JOIN master_category on business_category=category_id 
+                LEFT JOIN location_module on a.module_id_module=lm_id 
                 where a.user_type =1 ";
 
             !empty($data['name']) ? $sql .= " AND a.user_name like '%" . $data['name'] . "%'" : $sql .= '';
-            !empty($data['pan']) ? $sql .= " AND a.user_pan = '" . $data['pan'] . "'" : $sql .= '';
+            !empty($data['moduleid']) ? $sql .= " AND a.module_id_module = '" . $data['moduleid'] . "'" : $sql .= '';
             !empty($data['mobile']) ? $sql .= " AND a.user_mobile = '" . $data['mobile'] . "'" : $sql .= '';
             !empty($data['username']) ? $sql .= " AND (a.user_code = '" . $data['username'] . "' OR a.user_login_name= '" . $data['username'] . "')" : $sql .= '';
             !empty($data['fromdate']) ? $sql .= " AND DATE_FORMAT(a.user_create_date,'%Y-%m-%d') >= '" . $data['fromdate'] . "'" : $sql .= '';
@@ -331,7 +335,7 @@ class IboModel extends Model {
     }
 
     public function getModuleDropDown() {
-        $sql = "Select lm_code, lm_name from location_module where lm_status=1";
+        $sql = "Select lm_id,lm_code, lm_name from location_module where lm_status=1";
         $result = $this->db->query($sql);
         return $result->getResult();
     }

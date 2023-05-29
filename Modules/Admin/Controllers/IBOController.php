@@ -18,6 +18,7 @@ class IBOController extends AdminController {
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'ibo/ibolist.php,common/common.php';
+        $this->data['module'] = $this->iboModel->getModuleDropDown();
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\ibo\ibolist', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
@@ -257,7 +258,7 @@ class IBOController extends AdminController {
             $offset = trim($this->request->getPost('start'));
             $draw = trim($this->request->getPost('draw'));
             $name = trim($this->request->getPost('name'));
-            $pan = trim($this->request->getPost('pan'));
+            $moduleid = trim($this->request->getPost('moduleid'));
             $mobile = trim($this->request->getPost('mobile'));
             $username = trim($this->request->getPost('username'));
             $order = $this->request->getPost('order');
@@ -265,7 +266,7 @@ class IBOController extends AdminController {
             $orderdirecttion = $order[0]['dir'];
             //$this->request->getPost('status') != '' ? $status = implode(',', $this->request->getPost('status')) : $status = '';
             $daterange = generateDateFromDateRange($this->request->getPost('daterange'));
-            $data = array('name' => $name, 'pan' => $pan, 'mobile' => $mobile, 'username' => $username, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
+            $data = array('name' => $name, 'moduleid' => $moduleid, 'mobile' => $mobile, 'username' => $username, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
             $userlist = $this->iboModel->selectIbo($data, $ordercolumn, $orderdirecttion, $offset, $limit);
             $returndata['data'] = $this->fn_formatedIbodata($userlist['data'], $offset);
             $returndata['draw'] = $draw;

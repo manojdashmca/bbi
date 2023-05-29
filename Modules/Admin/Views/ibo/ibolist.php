@@ -50,7 +50,12 @@
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="validationCustom04">PAN</label>
-                                        <input type="text" class="form-control" id="pan" placeholder="PAN"/>
+                                        <select name="moduleid" id="moduleid" class="form-control form-select">
+                                            <option value="">Select Module</option>
+                                            <?php for ($x=0;$x<count($module);$x++){?>
+                                            <option value="<?=$module[$x]->lm_id?>"><?=$module[$x]->lm_name.' ('.$module[$x]->lm_code.')'?></option>
+                                            <?php }?>
+                                        </select>
 
                                     </div>
                                 </div>
@@ -81,9 +86,12 @@
                                             <th>Sl No</th>
                                             <th>Name</th>
                                             <th>User Name</th>
+                                            <th>Module Name</th>
                                             <th>City</th>
                                             <th>Mobile</th>
                                             <th>Sponsor Code & Name</th>
+                                            <th>Segment</th>
+                                            <th>Category</th>
                                             <th>DOJ</th>
                                             <th>Status</th>
                                             <th>Action</th>

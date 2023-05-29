@@ -79,7 +79,7 @@
         var mobile = $("#mobile").val();
         var daterange = $("#daterange").val();
         var username = $("#username").val();
-        var pan = $("#pan").val();
+        var moduleid = $("#moduleid").val();
         $('#userlist').DataTable().destroy();
         $('#userlist').DataTable({
             responsive: true,
@@ -99,7 +99,7 @@
                     d.mobile = mobile;
                     d.daterange = daterange;
                     d.username = username;
-                    d.pan = pan;
+                    d.moduleid = moduleid;
                 }
             }
         });

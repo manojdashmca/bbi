@@ -151,7 +151,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Post Office</label>
-                                            <select class="form-control" id="postoffice" name="postoffice">
+                                            <select class="form-control form-select" id="postoffice" name="postoffice">
                                                 <option value="">Select Post Office</option>
                                             </select>
                                         </div>                                    
