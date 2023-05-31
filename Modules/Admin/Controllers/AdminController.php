@@ -15,7 +15,7 @@ class AdminController extends BaseController {
         $this->data['js'] = '';
         $this->data['css'] = '';
         $this->data['includefile'] = '';
-        parent::__construct();
+        parent::__construct();        
         $openmethods = array('login', 'logout', 'test', 'forgotpassword', 'resetpassword','addressByPincode','getBankDetailByIfsc',
             'getCategoryBySegment','getSubCategoryByCategoryModule','checkpan','checkmobile','checkmobile','checkemail',
             'getSponsorDetailById','getModuleDetailById','deleteSystemLogs','createPayoutDate','updateSyncStatus',
