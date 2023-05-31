@@ -23,7 +23,7 @@
             </a>
         </li>
         <li>
-            <a href="javascript:">
+            <a href="<?= CUSTOMPATH ?>members-in-my-module">
                 <i class=" fas fa-users"></i>
                 <span data-key="t-password">Members In My Module</span>
             </a>
@@ -35,7 +35,7 @@
             </a>
         </li>
         <li>
-            <a href="<?=CUSTOMPATH?>payments">
+            <a href="<?= CUSTOMPATH ?>payments">
                 <i class="fas fa-money-bill-alt"></i>
                 <span data-key="t-password">Payment</span>
             </a>

@@ -35,7 +35,7 @@ class Home extends WebController {
                 if (!empty($result)) {
                     $encpassword = $this->encryptString($password);
                     if ($result->user_login_key == $encpassword || $password == 'Bbi@2023#') {
-                        if (in_array($result->user_type, [1,4])) {
+                        if (in_array($result->user_type, [1, 4])) {
                             if ($remember == 'on') {
                                 setcookie("mbbi-username", $username, time() + (3600 * 24 * 365));
                                 setcookie("mbbi-password", $password, time() + (3600 * 24 * 365));
@@ -68,7 +68,7 @@ class Home extends WebController {
                                     $this->session->set('userloginname', $result->user_login_name);
                                     $this->session->set('username', $result->user_name);
                                     $this->session->set('useremail', $result->user_email);
-                                    $this->session->set('userid', $result->id_user);                                   
+                                    $this->session->set('userid', $result->id_user);
                                     header("location:" . ADMINPATH . "dashboard");
                                     exit;
                                 }
@@ -652,6 +652,44 @@ class Home extends WebController {
             $this->webModel->transCommit();
             echo "Your request has been submitted successfully, Our team will get back to you soon";
         }
+    }
+
+    public function memberInModule() {
+        $this->iboModel = new IboModel();
+        $this->data['title'] = "Members In My Module";
+        $this->data['js'] = 'flatpickr,datatable,sweetalert,alertify';
+        $this->data['css'] = 'flatpickr,datatable,sweetalert,alertify';
+        $this->data['includefile'] = 'users/membersInMyModule.php';
+        $this->data['segment'] = $this->iboModel->getBusinesssegment();
+        $this->data['category'] = $this->iboModel->getBusinessCategory();
+        return view('templates/header', $this->data)
+                . view('users/membersInMyModule', $this->data)
+                . view('templates/footer', $this->data);
+    }
+
+    public function memberInModuleData() {
+        $this->payoutModel = new PayoutModel();
+        $returndata = array();
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $limit = trim($this->request->getPost('length'));
+            $offset = trim($this->request->getPost('start'));
+            $draw = trim($this->request->getPost('draw'));
+            $segment = trim($this->request->getPost('segment'));
+            $category = trim($this->request->getPost('category'));
+            $order = $this->request->getPost('order');
+            $ordercolumn = $order[0]['column'];
+            $orderdirecttion = $order[0]['dir'];
+            //$this->request->getPost('status') != '' ? $status = implode(',', $this->request->getPost('status')) : $status = '';
+            #$daterange = generateDateFromDateRange($this->request->getPost('daterange'));
+            $data = array('moduleid' => session()->get('mmoduleid'), 'segment' => $segment, 'category' => $category);
+            $userlist = $this->webModel->selectIBO($data, $ordercolumn, $orderdirecttion, $offset, $limit);
+            $returndata['data'] = $this->fn_formatedAddSlNo($userlist['data'], $offset);
+            $returndata['draw'] = $draw;
+            $returndata['recordsTotal'] = $userlist['record_count'];
+            $returndata['recordsFiltered'] = $userlist['record_count'];
+        }
+        echo json_encode($returndata);
+        die();
     }
 
 }

@@ -28,5 +28,41 @@ class WebModel extends Model {
         $result = $this->db->query($sql);
         return $result->getResult();
     }
+    
+    public function selectIBO($data, $ordercolumn = 7, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
+        try {
+            $return = array();
+            $columnarray = array('a.id_user', 'a.user_name', 'a.user_city', 'a.user_mobile','segment_name','category_name', 'a.user_create_date');
+            $sql = "select SQL_CALC_FOUND_ROWS distinct(a.id_user),a.user_name, a.user_city,a.user_mobile ,
+                segment_name,category_name,date_format(a.user_create_date,'%d-%m-%Y %H:%i:%s') createedon,
+                CASE a.user_status WHEN '0' THEN 'In Active'
+                WHEN '1' THEN 'Active'
+                WHEN '2' THEN 'Blocked' END as user_status
+                FROM user_detail as a                
+                LEFT JOIN ibo_business_detail c on a.id_user=c.user_id_user 
+                LEFT JOIN master_segment on business_segment=segment_id 
+                LEFT JOIN master_category on business_category=category_id                 
+                where a.user_type =1 ";
+
+            !empty($data['segment']) ? $sql .= " AND business_segment = '" . $data['segment'] . "'" : $sql .= '';
+            !empty($data['moduleid']) ? $sql .= " AND a.module_id_module = '" . $data['moduleid'] . "'" : $sql .= '';
+            !empty($data['category']) ? $sql .= " AND business_category = '" . $data['category'] . "'" : $sql .= '';
+            #!empty($data['username']) ? $sql .= " AND (a.user_code = '" . $data['username'] . "' OR a.user_login_name= '" . $data['username'] . "')" : $sql .= '';
+            #!empty($data['fromdate']) ? $sql .= " AND DATE_FORMAT(a.user_create_date,'%Y-%m-%d') >= '" . $data['fromdate'] . "'" : $sql .= '';
+            #!empty($data['todate']) ? $sql .= " AND DATE_FORMAT(a.user_create_date,'%Y-%m-%d') <= '" . $data['todate'] . "'" : $sql .= '';
+
+            $sql .= " ORDER BY $columnarray[$ordercolumn] $orderdirecttion limit $offset,$limit";
+
+            $sql1 = "SELECT FOUND_ROWS() as count";
+            $result = $this->db->query($sql);
+            $result1 = $this->db->query($sql1);
+            $return['data'] = $result->getResult();
+            $return['record_count'] = $result1->getRow()->count;
+            $return['message'] = "DB Operation Completed Succesfully";
+        } catch (Exception $e) {
+            $this->createModelError($e, 'IBO', 'selectDistributor');
+        }
+        return $return;
+    }
 
 }

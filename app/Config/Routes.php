@@ -56,6 +56,9 @@ $routes->get('logout', 'Home::logout');
 $routes->match(['get', 'post'], 'change-password', 'Home::changePassword');
 $routes->match(['get', 'post'], 'contact-form', 'Home::webContactForm');
 $routes->match(['get', 'post'], 'startamodule-form', 'Home::startaModuleForm');
+$routes->get('members-in-my-module', 'Home::memberInModule');
+$routes->post('members-in-my-module-data', 'Home::memberInModuleData');
+
 //----------------------------------------
 $routes->set404Override(function () {
     return view('\App\Views\home\404');
