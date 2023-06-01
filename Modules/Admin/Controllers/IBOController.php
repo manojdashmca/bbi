@@ -161,7 +161,7 @@ class IBOController extends AdminController {
                             'business_designation' => $businessdesignation,
                             'business_segment' => $businesssegment,
                             'business_category' => $businesscategory,
-                            'business_subcategory' => ($businesssegment != 26) ? $expsubcat[$sbc] : 0,
+                            'business_subcategory' => ($businesssegment != 32) ? $expsubcat[$sbc] : 0,
                             'actual_subcategory' => $expsubcat[$sbc],
                             'business_address' => $businessaddress,
                             'business_city' => $businesscity,

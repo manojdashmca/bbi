@@ -444,7 +444,7 @@
     function calculatePaymentAmount() {
         var segment = $('#businesssegment').val();
 
-        if (segment == 26 || segment == 27) {
+        if (segment == 32 || segment == 33) {
             return 15000;
         } else {
             return 25000;
