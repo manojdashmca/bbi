@@ -26,8 +26,9 @@ if ($includefile) {
     function correctCaptcha() {
         var response = grecaptcha.getResponse();
         $('#validcaptcha').val(response);
-        // $('#forgotpasswordform').formValidation("revalidateField", "validcaptcha");
+        $('#forgotpasswordform').formValidation("revalidateField", "validcaptcha");
         $('#loginform').formValidation("revalidateField", "validcaptcha");
+        $('#registrationform').formValidation("revalidateField", "validcaptcha");
 
 
         $("form").each(function () {

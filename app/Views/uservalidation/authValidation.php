@@ -103,19 +103,20 @@
                         }
                     }
                 },
-                gender: {
-                    validators: {
-                        notEmpty: {
-                            message: "Choose User Gender"
-                        }
-                    }
-                }, maritalstatus: {
-                    validators: {
-                        notEmpty: {
-                            message: "Choose User Marital Status"
-                        }
-                    }
-                }, address: {
+//                gender: {
+//                    validators: {
+//                        notEmpty: {
+//                            message: "Choose User Gender"
+//                        }
+//                    }
+//                }, maritalstatus: {
+//                    validators: {
+//                        notEmpty: {
+//                            message: "Choose User Marital Status"
+//                        }
+//                    }
+//                },
+                address: {
                     validators: {
                         notEmpty: {
                             message: "User Address Is Required"
@@ -316,17 +317,41 @@
                             message: 'Enter a valid email address'
                         }
                     }
-                }, terms: {
+                }
+//                , terms: {
+//                    excluded: false,
+//                    validators: {
+//                        notEmpty: {
+//                            message: "Accept our terms and conditions"
+//                        }
+//                    }
+//                }
+                , validcaptcha: {
+                    excluded: false,
                     validators: {
                         notEmpty: {
-                            message: "Accept our terms and conditions"
+                            message: "Please verify the captcha"
                         }
                     }
                 }
             }
+        }).on('success.form.fv', function (e) {
+            // Prevent form submission
+            e.preventDefault();
+            submitregistrationform();
         });
 
     });
+
+    function submitregistrationform() {
+        var x = $("#termsadcd").is(":checked"); 
+        if (x) {            
+            document.getElementById("registrationform").submit();
+        } else {
+            openModalTerms();
+            return false;
+        }
+    }
 
     function CheckSponsor() {
         $('#hidval').val('');
@@ -492,6 +517,7 @@
         $('#membershipfee').val(amounttobepayed);
         $('#hiddengst').val(gst);
         $('#joiningfee').val(paymentamount);
+        $('#registrationform').formValidation("revalidateField", "membershipfee");
     }
 
     function calculatePaymentAmount() {
@@ -560,6 +586,20 @@
     function openModal(valu) {
         if (valu == 'QR Scan') {
             $('#qrModal').modal('show');
+        }
+    }
+
+    function openModalTerms() {
+        $('#termsmodal').modal('show');
+    }
+    function closeModal() {
+        $('#termsmodal').modal('hide');
+    }
+    function chnagemodal() {
+        $('#registrationform').formValidation("revalidateField", "state");
+        var x = $("#termsadcd").is(":checked");
+        if (x) {
+            $('#termsmodal').modal('hide');
         }
     }
 </script>
