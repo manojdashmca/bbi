@@ -586,7 +586,7 @@
                         </tr>
                         <tr>
                             <th>Address</th>
-                            <td>Hill Road, Bandra West, Mubmai-00050</td>
+                            <td>Hill Road, Bandra West, Mummai-400050</td>
                         </tr>
                     </table>
                 </div>                  
