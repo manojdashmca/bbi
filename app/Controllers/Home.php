@@ -137,7 +137,7 @@ class Home extends WebController {
         $this->data['js'] = 'login';
         $this->data['includefile'] = 'authValidation.php';
         if ($this->request->getMethod() == 'post') {
-            $this->validateCaptcha();
+            //$this->validateCaptcha();
             if (!$this->validate([
                         'name' => 'required',
                         'hidval' => 'required',
@@ -251,6 +251,7 @@ class Home extends WebController {
                     $this->webModel->transStart();
                     $iduser = $this->webModel->createRecordInTable($userdetaildata, 'user_detail');
                     $this->webModel->createRecordInTable(array('user_id_user' => $iduser), 'ibo_user');
+                    $usercode = $this->checkAndcreateUserCode($iduser);
                     $paymentdetaila = array(
                         'user_id_user' => $iduser,
                         'payment_date' => date('Y-m-d H:i:s'),
@@ -261,6 +262,22 @@ class Home extends WebController {
                         'payment_method' => $paymentmode,
                         'payment_remark' => $paymentdetail,
                         'payment_status' => 1);
+                    if ($_FILES['paymentproof']['error'] != 4) {
+                        $validationRule = [
+                            'pimage' => [
+                                'rules' => 'mime_in[paymentproof,image/jpg,image/jpeg,image/png,image/webp]'
+                                . '|max_size[paymentproof,2097152]',
+                            ],
+                        ];                        
+                        if ($this->validate($validationRule)) {
+                            $img = $this->request->getFile('paymentproof');                           
+                            if (!$img->hasMoved()) {
+                                $filename = $usercode . '_paymentproof.' . pathinfo($_FILES["paymentproof"]["name"], PATHINFO_EXTENSION);
+                                $img->move('uploads/images/paymentproof/', $filename, true);
+                                $paymentdetaila['paymentproof'] = $filename;
+                            }
+                        }
+                    }                    
                     $paymentid = $this->webModel->createRecordInTable($paymentdetaila, 'ibo_joining_payment_detail');
                     for ($sbc = 0; $sbc < count($expsubcat); $sbc++) {
                         $businessdetailarray = array(
@@ -284,7 +301,6 @@ class Home extends WebController {
                         );
                         $this->webModel->createRecordInTable($businessdetailarray, 'ibo_business_detail');
                     }
-                    $usercode = $this->checkAndcreateUserCode($iduser);
                     $updarr = array('user_code' => $usercode);
                     $this->webModel->updateRecordInTable($updarr, 'user_detail', 'id_user', $iduser);
                     //$updarray = array();

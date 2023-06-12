@@ -56,8 +56,7 @@
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
-                                        <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
-                                        <button class="btn btn-success margintop-29" id="addnew" type="button"><i class=" fas fa-plus-circle"></i> Add New Order</button>
+                                        <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>                                        
                                     </div>                                        
                                 </div>
                             </div> 
@@ -79,7 +78,8 @@
                                             <th>GST</th>
                                             <th>Payment Amount</th>
                                             <th>Payment Type</th>
-                                            <th>Payment Detail</th> 
+                                            <th>Payment Detail</th>
+                                            <th>Uploaded Image</th>
                                             <th>Payment Status</th>
                                             <th>Booked Services</th>
                                             <th>Payout Status</th>

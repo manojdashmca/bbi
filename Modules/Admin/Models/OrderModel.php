@@ -18,7 +18,7 @@ class OrderModel extends Model {
             $columnarray = array('mpd_id', 'user_name', 'payment_date','joining_fee','joining_gst', 'payment_amount', 'payment_method', 'payment_remark', 'payment_status','payout_status');
             $sql = "select SQL_CALC_FOUND_ROWS mpd_id,CONCAT_WS(' / ',user_name,user_code,user_login_name) user_coden,"
                     . "date_format(payment_date,'%d-%m-%Y %H:%i:%s') payment_date,joining_fee,topup_fee,gst,payment_amount,"
-                    . "payment_method,payment_remark,"                    
+                    . "payment_method,payment_remark,paymentproof,"                    
                     . "CASE payment_status WHEN '1' THEN 'Created' "
                     . "WHEN '2' THEN 'Approved' "
                     . "WHEN '3' THEN 'Rejected' "

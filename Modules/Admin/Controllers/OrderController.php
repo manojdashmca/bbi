@@ -6,6 +6,7 @@ use Modules\Admin\Controllers\AdminController;
 use Modules\Admin\Models\OrderModel;
 use Modules\Admin\Models\ProductModel;
 use App\Libraries\EmailTemplate;
+
 class OrderController extends AdminController {
 
     public function __construct() {
@@ -14,8 +15,8 @@ class OrderController extends AdminController {
     }
 
     public function index() {
-        $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
-        $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
+        $this->data['js'] = 'validation,lightbox,flatpickr,datatable,sweetalert,alertify';
+        $this->data['css'] = 'validation,lightbox,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'order/orderlist.php';
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\order\orderlist', $this->data)
@@ -71,6 +72,11 @@ class OrderController extends AdminController {
         $arraydata = (array) $data;
         for ($x = 0; $x < count($arraydata); $x++) {
             $values = array();
+            if ($data[$x]->paymentproof) {
+                $data[$x]->paymentproof = '<a href="/uploads/images/paymentproof/' . $data[$x]->paymentproof . '" class="image-popup" data-title="Payment Proof" data-description="Uploaded Payment Prooft">
+                                                                <img src="/uploads/images/paymentproof/' . $data[$x]->paymentproof . '"  alt="ayment" height="60" width="120">
+                                                            </a>';
+            }
             $action = '';
             //$action .= '<a class="blue" title="View Detail" href="#" onclick=""><i class="fas fa-search"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 
@@ -80,6 +86,7 @@ class OrderController extends AdminController {
                 $action .= '<a class="blue"  title="Approve Order" href="#" onclick="return updateTrnStatus(&#39;' . base64_encode($data[$x]->mpd_id) . '&#39;,2);"><i class="fas fa-check-circle"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                 $action .= '<a class="blue"  title="Reject Order" href="#" onclick="return updateTrnStatus(&#39;' . base64_encode($data[$x]->mpd_id) . '&#39;,3);"><i class="fas fa-times-circle"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
             }
+
             $arraydata[$x]->action = $action;
             $values = array_values((array) $arraydata[$x]);
             $values[0] = $offset + $x + 1;
@@ -109,7 +116,7 @@ class OrderController extends AdminController {
                 }
                 $objEmailTemplate = new EmailTemplate();
                 //---------welcome email----------------
-                $paymentstatus=array(2=>"Payment Approved @ SSK Bharat BBI",3=>"Paymenr Rejected @ SSK Bharat BBI");
+                $paymentstatus = array(2 => "Payment Approved @ SSK Bharat BBI", 3 => "Paymenr Rejected @ SSK Bharat BBI");
                 $emailTemplate = $objEmailTemplate->paymentStatusEmail($orderdetail->user_name, $status);
                 $emailarray = array('smtp_email_content' => $emailTemplate, 'smtp_email_type' => $paymentstatus[$status], 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => $orderdetail->user_email);
                 $this->adminModel->createRecordInTable($emailarray, 'smtp_email');

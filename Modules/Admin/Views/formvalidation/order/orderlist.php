@@ -2,6 +2,7 @@
     $(document).ready(function () {
         flatpickr("#daterange", {mode: "range", dateFormat: "d-m-Y"});
         //new Choices("#status", {removeItemButton: !0});
+        GLightbox({selector: ".image-popup", title: !1});
         bindDatatable();
         $('#searchsubmit').click(function () {
             bindDatatable();

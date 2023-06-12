@@ -326,6 +326,19 @@
 //                        }
 //                    }
 //                }
+                , paymentproof: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Upload a payment prrof'
+                        },
+                        file: {
+                            extension: 'jpeg,jpg,png',
+                            type: 'image/jpeg,image/png',
+                            maxSize: 2097152, // 2048 * 1024
+                            message: 'The selected file is not valid'
+                        }
+                    }
+                }
                 , validcaptcha: {
                     excluded: false,
                     validators: {
@@ -344,8 +357,8 @@
     });
 
     function submitregistrationform() {
-        var x = $("#termsadcd").is(":checked"); 
-        if (x) {            
+        var x = $("#termsadcd").is(":checked");
+        if (x) {
             document.getElementById("registrationform").submit();
         } else {
             openModalTerms();
@@ -586,6 +599,9 @@
     function openModal(valu) {
         if (valu == 'QR Scan') {
             $('#qrModal').modal('show');
+        }
+        if (valu == 'Bank Transfer') {
+            $('#bankingModal').modal('show');
         }
     }
 
