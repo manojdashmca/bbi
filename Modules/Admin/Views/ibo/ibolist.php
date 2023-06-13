@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
-                                        <label class="form-label" for="validationCustom04">PAN</label>
+                                        <label class="form-label" for="validationCustom04">Module</label>
                                         <select name="moduleid" id="moduleid" class="form-control form-select">
                                             <option value="">Select Module</option>
                                             <?php for ($x=0;$x<count($module);$x++){?>
