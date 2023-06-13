@@ -75,12 +75,7 @@
                             <li class="nav-item">
                                 <a class="nav-link px-3" data-bs-toggle="tab" href="#banking" role="tab">Banking Info</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3" data-bs-toggle="tab" href="#nominee" role="tab">Nominee Info</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3" data-bs-toggle="tab" href="#kyc" role="tab">KYC Info</a>
-                            </li>
+                            
                             <li class="nav-item">
                                 <a class="nav-link px-3" data-bs-toggle="tab" href="#password" role="tab">Login Info</a>
                             </li>
@@ -101,19 +96,7 @@
                                 <div>  
                                     <form name="personaldetail" id="personaldetail" method="post">
                                         <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label">Title</label>
-                                                    <div>
-                                                        <input type="radio" name="title" value="Sri" class="form-check-input" <?= ($userdetail->user_title == 'Sri') ? 'checked="checked"' : '' ?>/> Sri  
-                                                        <input type="radio" name="title" value="Mr" class="form-check-input" <?= ($userdetail->user_title == 'Mr') ? 'checked="checked"' : '' ?>/> Mr  
-                                                        <input type="radio" name="title" value="Mrs" class="form-check-input" <?= ($userdetail->user_title == 'Mrs') ? 'checked="checked"' : '' ?>/> Mrs  
-                                                        <input type="radio" name="title" value="Miss" class="form-check-input" <?= ($userdetail->user_title == 'Miss') ? 'checked="checked"' : '' ?>/> Miss  
-                                                        <input type="radio" name="title" value="Dr" class="form-check-input" <?= ($userdetail->user_title == 'Dr') ? 'checked="checked"' : '' ?> /> Dr  
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                            
                                             <div class="col-lg-6">
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">User Code</label>
@@ -126,40 +109,15 @@
                                                     <input type="text" class="form-control" id="name" name="name" value="<?= $userdetail->user_name ?>">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label">Father/Husband Name</label>
-                                                    <input type="text" class="form-control" id="fatherhusband" name="fatherhusband" value="<?= $userdetail->user_father_husband ?>">
-                                                </div>                                    
-                                            </div> 
+                                            
                                             <div class="col-lg-6">
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">Date Of Birth</label>
                                                     <input type="text" class="form-control flatpickr-input" id="dob" name="dob" placeholder="dd-mm-yyyy" value="<?= makeDate($userdetail->user_dob, 'd-m-Y') ?>">
                                                 </div>                                    
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-xl-3">
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label">Gender</label>
-                                                    <div>
-                                                        <input type="radio" name="gender" value="Male" class="form-check-input" <?= ($userdetail->user_gender == 'Male') ? 'checked="checked"' : '' ?>/> Male  
-                                                        <input type="radio" name="gender" value="Female" class="form-check-input" <?= ($userdetail->user_gender == 'Female') ? 'checked="checked"' : '' ?>/> Female  
-                                                        <input type="radio" name="gender" value="Trans" class="form-check-input" <?= ($userdetail->user_gender == 'Trans') ? 'checked="checked"' : '' ?>/> Trans Gender 
-
-                                                    </div>
-                                                </div>                                    
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-xl-3">
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label">Marital Status</label>
-                                                    <div>
-                                                        <input type="radio" name="maritalstatus" value="Single" class="form-check-input" <?= ($userdetail->user_marital_status == 'Single') ? 'checked="checked"' : '' ?>/> Single  
-                                                        <input type="radio" name="maritalstatus" value="Married" class="form-check-input" <?= ($userdetail->user_marital_status == 'Married') ? 'checked="checked"' : '' ?>/> Married  
-                                                        <input type="radio" name="maritalstatus" value="Widow" class="form-check-input" <?= ($userdetail->user_marital_status == 'Widow') ? 'checked="checked"' : '' ?>/> Widow  
-                                                        <input type="radio" name="maritalstatus" value="Divorcee" class="form-check-input" <?= ($userdetail->user_marital_status == 'Divorcee') ? 'checked="checked"' : '' ?>/> Divorcee  
-                                                    </div>
-                                                </div>                                    
-                                            </div>
+                                            
+                                            
                                         </div>
 
                                         <!-- end row -->
@@ -237,12 +195,7 @@
                                                     <input type="text" class="form-control" id="mobile" name="mobile" value="<?= $userdetail->user_mobile ?>">
                                                 </div>                                    
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label">Whatsapp No</label>
-                                                    <input type="text" class="form-control" id="whatsappno" name="whatsappno" value="<?= $userdetail->user_whatsappno ?>">
-                                                </div>                                    
-                                            </div>
+                                            
                                             <div class="col-lg-6">
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">Email Id</label>
@@ -320,121 +273,10 @@
                     </div>
                     <!-- end tab pane -->
 
-                    <div class="tab-pane" id="nominee" role="tabpanel">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">Nominee Detail</h5>
-                            </div>
-                            <div class="card-body">
-                                <div>
-                                    <form name="nomineedetail" id="nomineedetail" method="post">
-                                        <div class="row">                                    
-                                            <div class="col-lg-6">
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label">Nominee Name</label>
-                                                    <input type="text" class="form-control" id="nomineename" name="nomineename" value="<?= $userdetail->user_nominee_name ?>">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label">Nominee Relation</label>
-                                                    <input type="text" class="form-control" id="nomineerelation" name="nomineerelation" value="<?= $userdetail->user_nominee_relation ?>">
-                                                </div>                                    
-                                            </div>                                                                 
-                                        </div>
-                                        <div class="text-center mt-4">
-                                            <input type="hidden" name="ninfoencuserid" id="ninfoencuserid" value="<?= $encuserid ?>"/>                                        
-                                            <input type="submit" class="btn btn-success waves-effect waves-light" value="Update"/>
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </div>
-                            <!-- end card body -->
-                        </div>
-                        <!-- end card -->
-                    </div>
+                    
                     <!-- end tab pane -->
 
-                    <div class="tab-pane" id="kyc" role="tabpanel">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">KYC Detail</h5>
-                            </div>
-                            <div class="card-body">
-                                <div>  
-                                    <form name="kycdetail" id="kycdetail" method="post">
-                                        <div class="row">                                        
-                                            <div class="col-lg-6">
-                                                <div class="row">                                        
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group mb-3">
-                                                            <label class="form-label">Address Proof</label>
-                                                            <input type="file" class="form-control" name="addressproof" id="addressproff" >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <?php if (!empty($userdetail->kyc_address)) { ?>
-                                                            <a href="/uploads/images/kyc/<?= $userdetail->kyc_address ?>" class="image-popup" data-title="KYC" data-description="User Addressproof KYC Document">
-                                                                <img src="/uploads/images/kyc/<?= $userdetail->kyc_address ?>"  alt="Kyc-Address" height="100" width="250">
-                                                            </a>
-
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="row">                                        
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group mb-3">
-                                                            <label class="form-label">PAN Copy</label>
-                                                            <input type="file" class="form-control" name="pancopy" id="pancopy">
-                                                        </div>  
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <?php if (!empty($userdetail->kyc_pan)) { ?>
-                                                            <a href="/uploads/images/kyc/<?= $userdetail->kyc_pan ?>" class="image-popup" data-title="KYC" data-description="User PAN KYC Document">
-                                                                <img src="/uploads/images/kyc/<?= $userdetail->kyc_pan ?>"  alt="Kyc-PAN" height="100" width="250">
-                                                            </a>
-
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-                                            </div> 
-                                            <div class="col-lg-6">
-                                                <div class="row">                                        
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group mb-3">
-                                                            <label class="form-label">Image</label>
-                                                            <input type="file" class="form-control" name="userimage" id="userimage">
-                                                        </div>  
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <?php if (!empty($userdetail->kyc_image)) { ?>
-                                                            <a href="/uploads/images/kyc/<?= $userdetail->kyc_image ?>" class="image-popup" data-title="KYC" data-description="User Image KYC Document">
-                                                                <img src="/uploads/images/kyc/<?= $userdetail->kyc_image ?>"  alt="Kyc-Image" height="100" width="250">
-                                                            </a>
-
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="text-center mt-4">
-                                            <input type="hidden" id="usercode" name="usercode" value="<?= $userdetail->user_code ?>">
-                                            <input type="hidden" name="kinfoencuserid" id="kinfoencuserid" value="<?= $encuserid ?>"/>                                        
-                                            <input type="submit" class="btn btn-success waves-effect waves-light" value="Update"/>
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </div>
-                            <!-- end card body -->
-                        </div>
-                        <!-- end card -->
-                    </div>
-                    <!-- end tab pane -->
+                    
 
                     <div class="tab-pane" id="password" role="tabpanel">
                         <div class="card">

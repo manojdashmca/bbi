@@ -6,30 +6,7 @@
 <?php if (!empty($userdetail->user_pincode)) { ?>
             getAddress('<?= $userdetail->user_post_office ?>')
 <?php } ?>
-        $('#nomineedetail').formValidation({
-            message: 'This value is not valid',
-            icon: {
-            },
-            fields: {
-                nomineename: {
-                    validators: {
-                        notEmpty: {
-                            message: "Nominee Name Is Required"
-                        }
-                    }
-                }, nomineerelation: {
-                    validators: {
-                        notEmpty: {
-                            message: "Nominee Relation Is Required"
-                        }
-                    }
-                }
-            }
-        }).on('success.form.fv', function (e) {
-            // Prevent form submission
-            e.preventDefault();
-            updatenominee();
-        });
+
         $('#bankingdetail').formValidation({
             message: 'This value is not valid',
             icon: {
@@ -149,12 +126,6 @@
                             message: "User Mobile No Is Required"
                         }
                     }
-                }, whatsappno: {
-                    validators: {
-                        notEmpty: {
-                            message: "Enter Franchise Point"
-                        }
-                    }
                 }, emailid: {
                     validators: {
                         notEmpty: {
@@ -173,22 +144,10 @@
             icon: {
             },
             fields: {
-                title: {
-                    validators: {
-                        notEmpty: {
-                            message: "Choose User Salutation"
-                        }
-                    }
-                }, name: {
+                name: {
                     validators: {
                         notEmpty: {
                             message: "User Name Required"
-                        }
-                    }
-                }, fatherhusband: {
-                    validators: {
-                        notEmpty: {
-                            message: "User Father/Husband Name Required"
                         }
                     }
                 },
@@ -196,19 +155,6 @@
                     validators: {
                         notEmpty: {
                             message: "Date Of Birth Is Required"
-                        }
-                    }
-                },
-                gender: {
-                    validators: {
-                        notEmpty: {
-                            message: "Choose User Gender"
-                        }
-                    }
-                }, maritalstatus: {
-                    validators: {
-                        notEmpty: {
-                            message: "Choose User Marital Status"
                         }
                     }
                 }
@@ -219,34 +165,11 @@
             e.preventDefault();
             updatePersonalDetail();
         });
-        $('#kycdetail').formValidation({
-            message: 'This value is not valid',
-            icon: {
-            },
-            fields: {
-                nomineename: {
-                    addressproof: {
 
-                    }
-                }, pancopy: {
-                    validators: {
-
-                    }
-                }, image: {
-                    validators: {
-
-                    }
-                }
-            }
-        }).on('success.form.fv', function (e) {
-            // Prevent form submission
-            e.preventDefault();
-            updateKycDetail();
-        });
     });
 
 
-    
 
-    
+
+
 </script>

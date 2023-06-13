@@ -6,22 +6,10 @@
             icon: {
             },
             fields: {
-                title: {
-                    validators: {
-                        notEmpty: {
-                            message: "Choose User Salutation"
-                        }
-                    }
-                }, name: {
+                 name: {
                     validators: {
                         notEmpty: {
                             message: "User Name Required"
-                        }
-                    }
-                }, fatherhusband: {
-                    validators: {
-                        notEmpty: {
-                            message: "User Father/Husband Name Required"
                         }
                     }
                 },
@@ -32,19 +20,7 @@
                         }
                     }
                 },
-                gender: {
-                    validators: {
-                        notEmpty: {
-                            message: "Choose User Gender"
-                        }
-                    }
-                }, maritalstatus: {
-                    validators: {
-                        notEmpty: {
-                            message: "Choose User Marital Status"
-                        }
-                    }
-                }, address: {
+                 address: {
                     validators: {
                         notEmpty: {
                             message: "User Address Is Required"
@@ -98,25 +74,13 @@
                             message: "Enter Franchise Point"
                         }
                     }
-                }, emailid: {
+                },emailid: {
                     validators: {
                         notEmpty: {
                             message: "Email Id Is Required"
                         }
                     }
-                }, nomineename: {
-                    validators: {
-                        notEmpty: {
-                            message: "Nominee Name Is Required"
-                        }
-                    }
-                }, nomineerelation: {
-                    validators: {
-                        notEmpty: {
-                            message: "Nominee Relation Is Required"
-                        }
-                    }
-                }, bankacno: {
+                },  bankacno: {
                     validators: {
                         notEmpty: {
                             message: "Bank Account No Is Required"

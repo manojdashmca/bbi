@@ -35,59 +35,22 @@
                             <div>
                                 <h5 class="font-size-14 mb-3">Basic Detail</h5>
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Title</label>
-                                            <div>
-                                                <input type="radio" name="title" value="Sri" class="form-check-input"> Sri  
-                                                <input type="radio" name="title" value="Mr" class="form-check-input"> Mr  
-                                                <input type="radio" name="title" value="Mrs" class="form-check-input"> Mrs  
-                                                <input type="radio" name="title" value="Miss" class="form-check-input"> Miss  
-                                                <input type="radio" name="title" value="Dr" class="form-check-input"> Dr  
-                                            </div>
-
-                                        </div>
-                                    </div>
+                                    
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Name</label>
                                             <input type="text" class="form-control" id="name" name="name">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Father/Husband Name</label>
-                                            <input type="text" class="form-control" id="fatherhusband" name="fatherhusband">
-                                        </div>                                    
-                                    </div> 
+                                     
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Date Of Birth</label>
                                             <input type="text" class="form-control flatpickr-input" id="dob" name="dob" placeholder="dd-mm-yyyy">
                                         </div>                                    
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-xl-3">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Gender</label>
-                                            <div>
-                                                <input type="radio" name="gender" value="Male" class="form-check-input"> Male  
-                                                <input type="radio" name="gender" value="Female" class="form-check-input"> Female  
-                                                <input type="radio" name="gender" value="Trans" class="form-check-input"> Trans Gender 
-
-                                            </div>
-                                        </div>                                    
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-xl-3">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Marital Status</label>
-                                            <div>
-                                                <input type="radio" name="maritalstatus" value="Single" class="form-check-input"> Single  
-                                                <input type="radio" name="maritalstatus" value="Married" class="form-check-input"> Married  
-                                                <input type="radio" name="maritalstatus" value="Widow" class="form-check-input"> Widow  
-                                                <input type="radio" name="maritalstatus" value="Divorcee" class="form-check-input"> Divorcee  
-                                            </div>
-                                        </div>                                    
-                                    </div>
+                                    
+                                    
                                 </div>
 
                                 <!-- end row -->
@@ -145,12 +108,7 @@
                                             <input type="text" class="form-control" id="mobile" name="mobile">
                                         </div>                                    
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Whatsapp No</label>
-                                            <input type="text" class="form-control" id="whatsappno" name="whatsappno">
-                                        </div>                                    
-                                    </div>
+                                    
                                     <div class="col-lg-6">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Email Id</label>
@@ -161,23 +119,7 @@
 
                                 <!-- end row -->
                             </div>
-                            <div>
-                                <h5 class="font-size-14 mb-3">Nomination Detail</h5>
-                                <div class="row">                                    
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Nominee Name</label>
-                                            <input type="text" class="form-control" id="nomineename" name="nomineename">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Nominee Relation</label>
-                                            <input type="text" class="form-control" id="nomineerelation" name="nomineerelation">
-                                        </div>                                    
-                                    </div>                                                                 
-                                </div>
-                            </div>
+                            
                             <div>
                                 <h5 class="font-size-14 mb-3">Banking Detail</h5>
                                 <div class="row">
@@ -213,30 +155,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <h5 class="font-size-14 mb-3">KYC Detail</h5>
-                                <div class="row">                                        
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Address Proof</label>
-                                            <input type="file" class="form-control" name="addressproof" id="addressproff">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">PAN Copy</label>
-                                            <input type="file" class="form-control" name="pancopy" id="pancopy">
-                                        </div>                                    
-                                    </div> 
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Image</label>
-                                            <input type="file" class="form-control" name="image" id="image">
-                                        </div>                                    
-                                    </div>
-
-                                </div>
-                            </div>
+                            
                             <div class="text-center mt-4">
                                 <input type="hidden" name="utr" id="utr" value="<?=time().rand(1000,9999)?>"/>
                                 <input type="reset" class="btn btn-primary waves-effect waves-light" value="Reset"/>

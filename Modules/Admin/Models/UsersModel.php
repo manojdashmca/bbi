@@ -40,9 +40,9 @@ class UsersModel extends Model {
     }
 
     public function getUserDetailById($id) {
-        $sql = "SELECT id_user,user_login_name,user_login_key,user_code,user_title,user_name,user_father_husband,user_gender,user_marital_status,user_mobile,user_whatsappno,"
-                . "user_email,user_dob,user_address,user_city,user_pincode,user_post_office,user_district,user_state,user_country,user_pan,user_nominee_name,"
-                . "user_nominee_relation,user_nominee_address,user_bank_ac_no,user_bank_ifsc,user_bank_name,user_bank_branch,kyc_address,kyc_pan,kyc_image "
+        $sql = "SELECT id_user,user_login_name,user_login_key,user_code,user_name,user_mobile,"
+                . "user_email,user_dob,user_address,user_city,user_pincode,user_post_office,user_district,user_state,user_country,user_pan,"
+                . "user_bank_ac_no,user_bank_ifsc,user_bank_name,user_bank_branch "
                 . "from user_detail "
                 . " where id_user='$id'";
         $result = $this->db->query($sql);

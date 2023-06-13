@@ -30,11 +30,8 @@ class UsersController extends AdminController {
 
             if (!$this->validate([
                         'name' => 'required',
-                        'title' => 'required',
-                        'fatherhusband' => 'required',
-                        'dob' => 'required',
-                        'gender' => 'required',
-                        'maritalstatus' => 'required'
+                        'pincode' => 'required',                        
+                        'dob' => 'required'
                     ])) {
 
                 $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
@@ -42,12 +39,8 @@ class UsersController extends AdminController {
                 $utr = $this->request->getPost('utr');
                 $utrstatus = $this->usersModel->checkUTR($utr, 'user_detail');
                 if ($utrstatus) {
-                    $name = $this->request->getPost('name');
-                    $title = $this->request->getPost('title');
-                    $fatherhusband = $this->request->getPost('fatherhusband');
-                    $dob = $this->request->getPost('dob');
-                    $gender = $this->request->getPost('gender');
-                    $maritalstatus = $this->request->getPost('maritalstatus');
+                    $name = $this->request->getPost('name');                    
+                    $dob = $this->request->getPost('dob');                    
                     $address = $this->request->getPost('address');
                     $pincode = $this->request->getPost('pincode');
                     $postoffice = $this->request->getPost('postoffice');
@@ -55,11 +48,8 @@ class UsersController extends AdminController {
                     $district = $this->request->getPost('district');
                     $state = $this->request->getPost('state');
                     $country = $this->request->getPost('country');
-                    $mobile = $this->request->getPost('mobile');
-                    $whatsappno = $this->request->getPost('whatsappno');
-                    $emailid = $this->request->getPost('emailid');
-                    $nomineename = $this->request->getPost('nomineename');
-                    $nomineerelation = $this->request->getPost('nomineerelation');
+                    $mobile = $this->request->getPost('mobile');                    
+                    $emailid = $this->request->getPost('emailid');                    
                     $bankacno = $this->request->getPost('bankacno');
                     $bankifsc = $this->request->getPost('bankifsc');
                     $bankname = $this->request->getPost('bankname');
@@ -73,15 +63,9 @@ class UsersController extends AdminController {
                     $userdetaildata = array(
                         "utr_no" => $utr,
                         "user_login_key" => $passwordnew,
-                        "user_create_date" => date("Y-m-d H:i:s"),
-                        'user_title' => $title,
+                        "user_create_date" => date("Y-m-d H:i:s"),                        
                         'user_name' => $name,
-                        'user_father_husband' => $fatherhusband,
-                        'user_gender' => $gender,
-                        'user_marital_status' => $maritalstatus,
                         'user_mobile' => $mobile,
-                        'user_whatsappno' => $whatsappno,
-                        'is_mobile_verified' => 1,
                         "user_email" => $emailid,
                         "user_dob" => makeDate($dob, 'Y-m-d'),
                         "user_address" => $address,
@@ -92,9 +76,7 @@ class UsersController extends AdminController {
                         "user_state" => $state,
                         "user_country" => $country,
                         "user_pan" => $panno,
-                        "user_type" => 4,
-                        "user_nominee_name" => $nomineename,
-                        "user_nominee_relation" => $nomineerelation,
+                        "user_type" => 4,                        
                         "user_bank_ac_no" => $bankacno,
                         "user_bank_ifsc" => $bankifsc,
                         "user_bank_name" => $bankname,
@@ -103,56 +85,7 @@ class UsersController extends AdminController {
                     $iduser = $this->usersModel->createRecordInTable($userdetaildata, 'user_detail');
                     $this->usersModel->createRecordInTable(array('user_id_user' => $iduser), 'admin_user');
                     $usercode = createUserCode($iduser);
-                    $updarray = array('user_code' => $usercode);
-                    if ($_FILES['addressproof']['error'] != 4) {
-                        $validationRule = [
-                            'pimage' => [
-                                'rules' => 'mime_in[addressproof,image/jpg,image/jpeg,image/png,image/webp]'
-                                . '|max_size[addressproof,10000000]',
-                            ],
-                        ];
-                        if ($this->validate($validationRule)) {
-                            $img = $this->request->getFile('addressproof');
-                            if (!$img->hasMoved()) {
-                                $filename = $usercode . '_address.' . pathinfo($_FILES["addressproof"]["name"], PATHINFO_EXTENSION);
-                                $img->move('uploads/images/kyc/', $filename);
-                                $updarray['kyc_address'] = $filename;
-                            }
-                        }
-                    }
-                    if ($_FILES['pancopy']['error'] != 4) {
-                        $validationRule = [
-                            'pimage' => [
-                                'rules' => 'mime_in[pancopy,image/jpg,image/jpeg,image/png,image/webp]'
-                                . '|max_size[pancopy,10000000]',
-                            ],
-                        ];
-                        if ($this->validate($validationRule)) {
-                            $img = $this->request->getFile('pancopy');
-                            if (!$img->hasMoved()) {
-                                $filename = $usercode . '_pan.' . pathinfo($_FILES["pancopy"]["name"], PATHINFO_EXTENSION);
-                                $img->move('uploads/images/kyc/', $filename);
-                                $updarray['kyc_pan'] = $filename;
-                            }
-                        }
-                    }
-                    if ($_FILES['image']['error'] != 4) {
-                        $validationRule = [
-                            'pimage' => [
-                                'rules' => 'mime_in[image,image/jpg,image/jpeg,image/png,image/webp]'
-                                . '|max_size[image,10000000]',
-                            ],
-                        ];
-                        if ($this->validate($validationRule)) {
-                            $img = $this->request->getFile('image');
-                            if (!$img->hasMoved()) {
-                                $filename = $usercode . '_image.' . pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-                                $img->move('uploads/images/kyc/', $filename);
-                                $updarray['kyc_image'] = $filename;
-                            }
-                        }
-                    }
-
+                    $updarray = array('user_code' => $usercode);  
                     $this->usersModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $iduser);
                     $this->blankModel->transComplete();
 
