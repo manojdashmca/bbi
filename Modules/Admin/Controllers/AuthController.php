@@ -223,12 +223,8 @@ class AuthController extends AdminController {
 
     public function updatePersonalDetail() {
         $status = array('status' => 'error', 'message' => 'Unauthorised access');
-        if ($this->request->isAJAX()) {
-            $title = $this->request->getPost('title');
+        if ($this->request->isAJAX()) {            
             $name = $this->request->getPost('name');
-            $fatherhusband = $this->request->getPost('fatherhusband');
-            $gender = $this->request->getPost('gender');
-            $maritalstatus = $this->request->getPost('maritalstatus');
             $dob = $this->request->getPost('dob');
             $glink = $this->request->getPost('glink');
             $eduqual = $this->request->getPost('eduqual');
@@ -238,10 +234,10 @@ class AuthController extends AdminController {
 
             $userid = base64_decode($this->request->getPost('encuser'));
 
-            $updarray = array('user_title' => $title, 'user_name' => $name,
-                'user_father_husband' => $fatherhusband, 'user_gender' => $gender,
-                'user_marital_status' => $maritalstatus, 'user_dob' => makeDate($dob, 'Y-m-d'),
-                'user_group_link' => $glink, 'user_education' => $eduqual, 'user_profession_certification' => $profcert, 'user_blood_group' => $bloodgroup, 'user_group_link_org' => $nameofgroup);
+            $updarray = array('user_name' => $name,'user_dob' => makeDate($dob, 'Y-m-d'),
+                'user_group_link' => $glink, 'user_education' => $eduqual, 
+                'user_profession_certification' => $profcert, 'user_blood_group' => $bloodgroup, 
+                'user_group_link_org' => $nameofgroup);
 
             $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
 
