@@ -534,7 +534,7 @@ class ModuleController extends AdminController {
     }
 
     public function subcategorylist() {
-        $this->checkAccessControll(6);
+        $this->checkAccessControll(6,'m');
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'module/subcategorylist.php';
