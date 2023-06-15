@@ -69,6 +69,8 @@ class Home extends WebController {
                                     $this->session->set('username', $result->user_name);
                                     $this->session->set('useremail', $result->user_email);
                                     $this->session->set('userid', $result->id_user);
+                                    $this->session->set('accessmodules', explode(",", $result->user_modules));
+                                    $this->session->set('accesscontrols', explode(",", $result->user_module_controls));
                                     header("location:" . ADMINPATH . "dashboard");
                                     exit;
                                 }
@@ -268,16 +270,16 @@ class Home extends WebController {
                                 'rules' => 'mime_in[paymentproof,image/jpg,image/jpeg,image/png,image/webp]'
                                 . '|max_size[paymentproof,2097152]',
                             ],
-                        ];                        
+                        ];
                         if ($this->validate($validationRule)) {
-                            $img = $this->request->getFile('paymentproof');                           
+                            $img = $this->request->getFile('paymentproof');
                             if (!$img->hasMoved()) {
                                 $filename = $usercode . '_paymentproof.' . pathinfo($_FILES["paymentproof"]["name"], PATHINFO_EXTENSION);
                                 $img->move('uploads/images/paymentproof/', $filename, true);
                                 $paymentdetaila['paymentproof'] = $filename;
                             }
                         }
-                    }                    
+                    }
                     $paymentid = $this->webModel->createRecordInTable($paymentdetaila, 'ibo_joining_payment_detail');
                     for ($sbc = 0; $sbc < count($expsubcat); $sbc++) {
                         $businessdetailarray = array(
