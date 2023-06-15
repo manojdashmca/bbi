@@ -15,13 +15,12 @@ class IboModel extends Model {
     public function selectIBO($data, $ordercolumn = 7, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
         try {
             $return = array();
-            $columnarray = array('a.id_user', 'a.user_name', 'a.user_code','lm_name', 'a.user_city', 'a.user_mobile', 'a.sponsor_user_id', 'a.user_create_date');
+            $columnarray = array('a.id_user', 'a.user_name', 'a.user_code','lm_name', 'a.user_city', 'a.user_mobile', 'a.sponsor_user_id', 'a.user_create_date','a.user_status','ibo_user_status');
             $sql = "select SQL_CALC_FOUND_ROWS distinct(a.id_user),a.user_name,CONCAT_WS(' / ',a.user_code,a.user_login_name) user_coden,lm_name,a.user_city,a.user_mobile ,CONCAT_WS(' / ',b.user_code,b.user_login_name,b.user_name) as sponsor,
                 segment_name,category_name,date_format(a.user_create_date,'%d-%m-%Y %H:%i:%s') createedon,
-                CASE a.user_status WHEN '0' THEN 'In Active'
-                WHEN '1' THEN 'Active'
-                WHEN '2' THEN 'Blocked' END as user_status
-                FROM user_detail as a
+                if(a.user_status='1','Granted','Blocked') user_status,
+                if(ibo_user_status='1','Active','Deactivated') userstatus 
+                FROM user_detail as a JOIN ibo_user x on a.id_user=x.user_id_user  
                 LEFT JOIN user_detail as b on a.sponsor_user_id=b.id_user  
                 LEFT JOIN ibo_business_detail c on a.id_user=c.user_id_user 
                 LEFT JOIN master_segment on business_segment=segment_id 

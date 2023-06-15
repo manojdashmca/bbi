@@ -15,20 +15,12 @@ class OrderController extends AdminController {
     }
 
     public function index() {
+        $this->checkAccessControll(4,'m');
         $this->data['js'] = 'validation,lightbox,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,lightbox,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'order/orderlist.php';
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\order\orderlist', $this->data)
-                . view('\Modules\Admin\Views\templates\footer', $this->data);
-    }
-
-    public function manageShipping() {
-        $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
-        $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
-        $this->data['includefile'] = 'order/ordermanageshipping.php';
-        return view('\Modules\Admin\Views\templates\header', $this->data)
-                . view('\Modules\Admin\Views\order\ordermanageshipping', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
     }
 
@@ -79,14 +71,14 @@ class OrderController extends AdminController {
             }
             $action = '';
             //$action .= '<a class="blue" title="View Detail" href="#" onclick=""><i class="fas fa-search"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-
-            if ($data[$x]->paymentstatus == 'Approved') {
-                //$action .= '<a class="blue" title="Print Invoice" href="#" onclick=""><i class="fas fa-print"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-            }if ($data[$x]->paymentstatus == 'Created') {
-                $action .= '<a class="blue"  title="Approve Order" href="#" onclick="return updateTrnStatus(&#39;' . base64_encode($data[$x]->mpd_id) . '&#39;,2);"><i class="fas fa-check-circle"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-                $action .= '<a class="blue"  title="Reject Order" href="#" onclick="return updateTrnStatus(&#39;' . base64_encode($data[$x]->mpd_id) . '&#39;,3);"><i class="fas fa-times-circle"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            if (in_array(8, session()->get('accesscontrols'))) {
+                if ($data[$x]->paymentstatus == 'Approved') {
+                    //$action .= '<a class="blue" title="Print Invoice" href="#" onclick=""><i class="fas fa-print"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }if ($data[$x]->paymentstatus == 'Created') {
+                    $action .= '<a class="blue"  title="Approve Order" href="#" onclick="return updateTrnStatus(&#39;' . base64_encode($data[$x]->mpd_id) . '&#39;,2);"><i class="fas fa-check-circle"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                    $action .= '<a class="blue"  title="Reject Order" href="#" onclick="return updateTrnStatus(&#39;' . base64_encode($data[$x]->mpd_id) . '&#39;,3);"><i class="fas fa-times-circle"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
             }
-
             $arraydata[$x]->action = $action;
             $values = array_values((array) $arraydata[$x]);
             $values[0] = $offset + $x + 1;
@@ -99,6 +91,7 @@ class OrderController extends AdminController {
     public function updateOrderStatus() {
         $data = array('status' => 'error', 'message' => 'Unauthorised access');
         if ($this->request->isAJAX()) {
+            $this->checkAccessControll(8, 'c', 0);
             $paymentid = base64_decode($this->request->getPost('encorderid'));
             $status = $this->request->getPost('status');
             $orderdetail = $this->orderModel->getPaymentDetailById($paymentid);

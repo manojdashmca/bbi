@@ -131,4 +131,37 @@
             Swal.fire('', 'Enter a member id and click on get detail to get the detail!', 'error');
         }
     }
+    
+    function deleteUser(id) {
+        
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to delete this Member!",
+            icon: "warning",
+            showCancelButton: !0,
+            confirmButtonColor: "#2ab57d",
+            cancelButtonColor: "#fd625e",
+            confirmButtonText: "Yes, do it!"
+        }).then(function (e) {
+            if (e.isConfirmed == true) {
+                $.ajax({
+                    type: "POST",
+                    url: '<?= ADMINPATH ?>delete-ibo-user',
+                    data: {encuser: id},
+                    success: function (data) {
+                        var jsonData = JSON.parse(data);
+                        if (jsonData.status == 'success') {
+                            var page = $('#userlist').DataTable().page.info().page;
+                            bindDatatable(page);
+                            Swal.fire("Updated!", jsonData.message, jsonData.status);
+                        } else {
+                            Swal.fire("Error!", jsonData.message, jsonData.status);
+                        }
+
+                    }
+                });
+            }
+
+        });
+    }
 </script>

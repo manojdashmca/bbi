@@ -5,24 +5,26 @@ namespace Modules\Admin\Controllers;
 use Modules\Admin\Controllers\AdminController;
 use App\Libraries;
 
-//use Modules\Admin\Models\AdminModel;
 
 class PersonalController extends AdminController {
 
     public function __construct() {
-        parent::__construct();
-        //$this->webModel = new WebModel();
+        parent::__construct();        
     }
 
-    public function index() {       
-               
+    public function index() {
+
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\personal\index', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
     }
 
     public function changepassword() {
+        $this->data['js'] = 'validation';
+        $this->data['css'] = 'validation';
+        $this->data['includefile'] = 'personal/changepassword.php';
         if ($this->request->getMethod() == 'post') {
+
             if (!$this->validate([
                         'oldpassword' => 'required',
                         'newpassword' => 'required',
@@ -37,17 +39,19 @@ class PersonalController extends AdminController {
                 $confirmpassword = $this->request->getPost('confirmpassword');
 
                 if ($newpassword == $confirmpassword) {
-                    $data = $this->adminModel->getTableData('user_login_key,user_email', 'users', 'id_user=' . session()->get('userid'));
-                    if ($data->user_login_key == $oldpassword) {
-                        $updatearray = array('user_login_key' => $newpassword, 'user_last_update' => date('Y-m-d H:i:s'));
-                        $this->adminModel->updateRecordInTable($updatearray, 'users', 'id_user', $this->session->get('userid'));
+                    $data = $this->blankModel->getTableData('user_login_key,user_email', 'user_detail', 'id_user=' . $this->session->get('userid'));
+                    if ($data->user_login_key == $this->encryptString($oldpassword)) {
+                        $updatearray = array('user_login_key' => $this->encryptString($newpassword));
+                        $this->blankModel->updateRecordInTable($updatearray, 'user_detail', 'id_user', $this->session->get('userid'));
                         //--------create email-------
-                        $objEmailTemplate = new EmailTemplate();
-                        $template = $objEmailTemplate->changePasswordEmail($this->session->get('username'));
-                        $createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Password change Intimation ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => $data->user_email);
-                        $this->adminModel->createRecordInTable($createarray, 'smtp_email');
+                       # $objEmailTemplate = new Libraries\EmailTemplate();
+                       # $template = $objEmailTemplate->changePasswordEmail($this->session->get('username'));
+                       # $createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Password change Intimation ', 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => $data->user_email);
+                       # $this->blankModel->createRecordInTable($createarray, 'smtp_email');
                         //---------create Email
                         $this->session->setFlashdata('message', setMessage("Password changed successfully.", 's'));
+                        header('location:'.ADMINPATH.'change-password');
+                        exit;
                     } else {
                         $this->session->setFlashdata('message', setMessage('Old Password doesnot match', 'e'));
                     }
@@ -56,8 +60,9 @@ class PersonalController extends AdminController {
                 }
             }
         }
-        header('location:/admin/profile');
-        exit;
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\personal\changepassword', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
     }
 
     public function updateProfile() {
@@ -86,28 +91,28 @@ class PersonalController extends AdminController {
                         . '|max_size[imagefile,300]',
                     ],
                 ];
-                if ($this->validate($validationRule)) {                    
+                if ($this->validate($validationRule)) {
                     $img = $this->request->getFile('imagefile');
-                    if (!$img->hasMoved()) {                        
+                    if (!$img->hasMoved()) {
                         $filename = session()->get('userid') . '_' . $img->getRandomName();
                         $img->move('uploads/images/admins/', $filename);
                         $updarray['user_profile_pic'] = $filename;
-                        $updarray['profile_pic_upload_date']=date('Y-m-d H:i:s');
+                        $updarray['profile_pic_upload_date'] = date('Y-m-d H:i:s');
                     } else {
-                        
+
                         $success = 0;
                     }
                 } else {
                     $success = 0;
                 }
             } else {
-                
+
                 $success = 0;
             }
 
-            $this->adminModel->updateRecordInTable($updarray, 'users','id_user',session()->get('userid'));
-            session()->set('username',$name);
-            
+            $this->adminModel->updateRecordInTable($updarray, 'users', 'id_user', session()->get('userid'));
+            session()->set('username', $name);
+
             //--------create email-------
             $objEmailTemplate = new EmailTemplate();
             $template = $objEmailTemplate->profileUpdationEmail($name);
@@ -115,7 +120,7 @@ class PersonalController extends AdminController {
             $this->adminModel->createRecordInTable($createarray, 'smtp_email');
             //---------create Email
             if ($success) {
-                session()->set('img',$filename);
+                session()->set('img', $filename);
                 $status = array('status' => 'success', 'message' => 'Profile updated Successfully');
             } else {
                 $status = array('status' => 'success', 'message' => 'Profile updated Successfully, but unable to upload profilepic');

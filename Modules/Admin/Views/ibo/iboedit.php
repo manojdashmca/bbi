@@ -29,7 +29,7 @@
                                     <div class="flex-shrink-0">
                                         <div class="avatar-xl me-3">
                                             <?php
-                                                $image = "/uploads/images/default.jpg";                                            
+                                            $image = "/uploads/images/default.jpg";
                                             ?>
                                             <img src="<?= $image ?>" alt="" class="img-fluid rounded-circle d-block">
                                         </div>
@@ -60,14 +60,15 @@
                             <li class="nav-item">
                                 <a class="nav-link px-3" data-bs-toggle="tab" href="#banking" role="tab">Banking Info</a>
                             </li>
-                            
-<!--                            <li class="nav-item">
-                                <a class="nav-link px-3" data-bs-toggle="tab" href="#kyc" role="tab">KYC Info</a>
-                            </li>-->
-                            <li class="nav-item">
-                                <a class="nav-link px-3" data-bs-toggle="tab" href="#password" role="tab">Login Info</a>
-                            </li>
 
+                            <!--                            <li class="nav-item">
+                                                            <a class="nav-link px-3" data-bs-toggle="tab" href="#kyc" role="tab">KYC Info</a>
+                                                        </li>-->
+                            <?php if (in_array(39, session()->get('accesscontrols'))) { ?>
+                                <li class="nav-item">
+                                    <a class="nav-link px-3" data-bs-toggle="tab" href="#password" role="tab">Login Info</a>
+                                </li>
+                            <?php } ?>
                         </ul>
                     </div>
                     <!-- end card body -->
@@ -102,7 +103,7 @@
                                                     <input type="text" class="form-control flatpickr-input" id="dob" name="dob" placeholder="dd-mm-yyyy" value="<?= makeDate($userdetail->user_dob, 'd-m-Y') ?>">
                                                 </div>                                    
                                             </div>
-                                            
+
                                             <div class="col-lg-6">
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">Education Qualification</label>
@@ -358,7 +359,7 @@
                             <a href="#" class="badge badge-soft-primary">Joining Date- <?= $userdetail->user_create_date ?></a>
                             <a href="#" class="badge badge-soft-primary">Activation Date- <?= $userdetail->user_activation_date ?></a>
                             <a href="#" class="badge badge-soft-primary">Sponsor- <?= $userdetail->sponsor ?></a>
-                            
+
                         </div>
                     </div>
                     <!-- end card body -->

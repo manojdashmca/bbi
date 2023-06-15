@@ -15,6 +15,7 @@ class IBOController extends AdminController {
     }
 
     public function index() {
+        $this->checkAccessControll(2, 'm');
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'ibo/ibolist.php,common/common.php';
@@ -25,8 +26,8 @@ class IBOController extends AdminController {
     }
 
     public function add() {
+        $this->checkAccessControll(5);
         if ($this->request->getMethod() == 'post') {
-
             if (!$this->validate([
                         'name' => 'required',
                         'dob' => 'required',
@@ -39,6 +40,7 @@ class IBOController extends AdminController {
                 $utr = $this->request->getPost('utr');
                 $utrstatus = $this->blankModel->checkUTR($utr, 'user_detail');
                 if ($utrstatus) {
+                    $this->blankModel->transStart();
                     $sponsorid = $this->request->getPost('hidval');
                     $name = $this->request->getPost('name');
                     $bloodgroup = $this->request->getPost('bloodgroup');
@@ -140,7 +142,7 @@ class IBOController extends AdminController {
                         "gst_registered" => $isgst,
                         "gst_no" => $gstno
                     );
-                    $this->blankModel->transStart();
+
                     $iduser = $this->blankModel->createRecordInTable($userdetaildata, 'user_detail');
                     $this->blankModel->createRecordInTable(array('user_id_user' => $iduser), 'ibo_user');
                     $paymentdetaila = array(
@@ -237,6 +239,7 @@ class IBOController extends AdminController {
     }
 
     public function edit($userid) {
+        $this->checkAccessControll(6);
         $this->data['js'] = 'alertify,lightbox,flatpickr,validation';
         $this->data['css'] = 'alertify,lightbox,flatpickr,validation';
         $this->data['includefile'] = 'ibo/iboedit.php,common/common.php';
@@ -283,13 +286,21 @@ class IBOController extends AdminController {
         for ($x = 0; $x < count($arraydata); $x++) {
             $values = array();
             $action = '';
-            $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'ibo-edit/' . base64_encode($data[$x]->id_user) . '"><i class="fas fa-user-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
-            if ($data[$x]->user_status == 'Active') {
-                $action .= '<a class="blue" title="Block Account" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->id_user) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-            }if ($data[$x]->user_status == 'Blocked') {
-                $action .= '<a class="blue"  title="Unblock Account" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->id_user) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            if (in_array(6, session()->get('accesscontrols'))) {
+                $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'ibo-edit/' . base64_encode($data[$x]->id_user) . '"><i class="fas fa-user-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            }if (in_array(7, session()->get('accesscontrols'))) {
+                if ($data[$x]->user_status == 'Granted') {
+                    $action .= '<a class="blue" title="Block Account" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->id_user) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }if ($data[$x]->user_status == 'Blocked') {
+                    $action .= '<a class="blue"  title="Unblock Account" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->id_user) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
             }
-            $action .= '<a class="blue" target="_blank" title="Change Sponsor" data-bs-toggle="modal" data-bs-target="#changesponsorforuser"   href="#" onclick="putMemberId(&#39;' . base64_encode($data[$x]->id_user) . '&#39;)"><i class="fas fa-sitemap"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            if (in_array(37, session()->get('accesscontrols'))) {
+                if ($data[$x]->userstatus == 'Active') {
+                    $action .= '<a class="blue"  title="Delete User" href="#" onclick="return deleteUser(&#39;' . base64_encode($data[$x]->id_user) . '&#39;);"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
+            }
+            #$action .= '<a class="blue" target="_blank" title="Change Sponsor" data-bs-toggle="modal" data-bs-target="#changesponsorforuser"   href="#" onclick="putMemberId(&#39;' . base64_encode($data[$x]->id_user) . '&#39;)"><i class="fas fa-sitemap"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
 
             $arraydata[$x]->action = $action;
             $values = array_values((array) $arraydata[$x]);
@@ -356,6 +367,29 @@ class IBOController extends AdminController {
         }
 
         echo json_encode($return);
+        exit;
+    }
+
+    public function deleteIboUser() {
+        $status = array('status' => 'error', 'message' => 'Unauthorised access');
+        if ($this->request->isAJAX()) {
+            $this->checkAccessControll(37, 'c', 0);
+            $userid = base64_decode($this->request->getPost('encuser'));
+
+            $this->adminModel->updateRecordInTable(array('ibo_user_status' => 2), 'ibo_user', 'user_id_user', $userid);
+            $this->adminModel->updateRecordInTable(array('user_status' => 2), 'user_detail', 'id_user', $userid);
+
+            $message = "User Removed Successfully";
+            //--------create email-------
+            //$objEmailTemplate = new EmailTemplate();
+            //$template = $objEmailTemplate->profileUpdationEmail($name);
+            //$createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Profile update Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $email);
+            //$this->adminModel->createRecordInTable($createarray, 'smtp_email');
+            //---------create Email
+
+            $data = array('status' => 'success', 'message' => $message);
+        }
+        echo json_encode($data);
         exit;
     }
 

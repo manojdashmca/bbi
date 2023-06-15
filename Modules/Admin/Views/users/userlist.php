@@ -61,7 +61,9 @@
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>&nbsp;
-                                        <button class="btn btn-success margintop-29" id="addnew" type="button"><i class=" fas fa-plus-circle"></i> Add New User</button>
+                                        <?php if (in_array(1, session()->get('accesscontrols'))) { ?>
+                                            <button class="btn btn-success margintop-29" id="addnew" type="button"><i class=" fas fa-plus-circle"></i> Add New User</button>
+                                        <?php } ?>
                                     </div>                                    
                                 </div>
                             </div> 
@@ -80,8 +82,9 @@
                                             <th>User Id</th>
                                             <th>Mobile</th>
                                             <th>Email</th>
-                                            <th>Status</th>
+                                            <th>System Access</th>
                                             <th>Date Of Join</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>

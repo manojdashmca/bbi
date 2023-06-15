@@ -167,8 +167,8 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
-                                <a class="dropdown-item" href="<?= ADMINPATH ?>profile"><i class="mdi mdi-face-man-profile font-size-16 align-middle me-1"></i> Profile</a>
-                                <div class="dropdown-divider"></div>
+<!--                                <a class="dropdown-item" href="<?= ADMINPATH ?>profile"><i class="mdi mdi-face-man-profile font-size-16 align-middle me-1"></i> Profile</a>
+                                <div class="dropdown-divider"></div>-->
                                 <a class="dropdown-item" href="<?= ADMINPATH ?>logout"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
                             </div>
                         </div>

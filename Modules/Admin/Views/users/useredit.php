@@ -75,11 +75,11 @@
                             <li class="nav-item">
                                 <a class="nav-link px-3" data-bs-toggle="tab" href="#banking" role="tab">Banking Info</a>
                             </li>
-                            
-                            <li class="nav-item">
-                                <a class="nav-link px-3" data-bs-toggle="tab" href="#password" role="tab">Login Info</a>
-                            </li>
-
+                            <?php if (in_array(38, session()->get('accesscontrols'))) { ?>
+                                <li class="nav-item">
+                                    <a class="nav-link px-3" data-bs-toggle="tab" href="#password" role="tab">Login Info</a>
+                                </li>
+                            <?php } ?>
                         </ul>
                     </div>
                     <!-- end card body -->
@@ -96,28 +96,29 @@
                                 <div>  
                                     <form name="personaldetail" id="personaldetail" method="post">
                                         <div class="row">
-                                            
-                                            <div class="col-lg-6">
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label">User Code</label>
-                                                    <input type="text" class="form-control" id="code" name="code" value="<?= $userdetail->user_code ?>" readonly="">
-                                                </div>
-                                            </div>
+
+
                                             <div class="col-lg-6">
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">Name</label>
                                                     <input type="text" class="form-control" id="name" name="name" value="<?= $userdetail->user_name ?>">
                                                 </div>
                                             </div>
-                                            
+                                            <div class="col-lg-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label">User Code</label>
+                                                    <input type="text" class="form-control" id="code" name="code" value="<?= $userdetail->user_code ?>" readonly="">
+                                                </div>
+                                            </div>
+
                                             <div class="col-lg-6">
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">Date Of Birth</label>
                                                     <input type="text" class="form-control flatpickr-input" id="dob" name="dob" placeholder="dd-mm-yyyy" value="<?= makeDate($userdetail->user_dob, 'd-m-Y') ?>">
                                                 </div>                                    
                                             </div>
-                                            
-                                            
+
+
                                         </div>
 
                                         <!-- end row -->
@@ -195,7 +196,7 @@
                                                     <input type="text" class="form-control" id="mobile" name="mobile" value="<?= $userdetail->user_mobile ?>">
                                                 </div>                                    
                                             </div>
-                                            
+
                                             <div class="col-lg-6">
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">Email Id</label>
@@ -273,10 +274,10 @@
                     </div>
                     <!-- end tab pane -->
 
-                    
+
                     <!-- end tab pane -->
 
-                    
+
 
                     <div class="tab-pane" id="password" role="tabpanel">
                         <div class="card">
@@ -296,7 +297,7 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">User Login Name</label>
-                                                     <input type="hidden" id="hiddenusername" name="hiddenusername" value="<?= $userdetail->user_login_name ?>">
+                                                    <input type="hidden" id="hiddenusername" name="hiddenusername" value="<?= $userdetail->user_login_name ?>">
                                                     <input type="text" class="form-control" id="loginname" name="loginnanem" value="<?= $userdetail->user_login_name ?>">
                                                 </div>
                                             </div>

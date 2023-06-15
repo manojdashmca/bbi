@@ -6,6 +6,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->match(['get', 'post'], "forgot-password", "AuthController::forgotpassword");
     $routes->get("reset-password", "AuthController::resetpassword");
     $routes->get("logout", "AuthController::logout");
+    $routes->get("un-authorised", "AuthController::unAuthorisedAccess");
     //-----Dashboard Controller-----
     $routes->get("dashboard", "DashboardController::index");
     $routes->get("/", "DashboardController::index");
@@ -17,6 +18,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("ibo-edit/(:any)", "IBOController::edit/$1");
     $routes->get("get-sponsordetail-by-id/(:any)", "IBOController::getSponsorDetailById/$1");
     $routes->get("get-member-by-id/(:any)", "IBOController::getMemberDetailById/$1");
+    $routes->post("delete-ibo-user", "UsersController::deleteIboUser");
 
     $routes->get("sr_consulting_board", "TeamsController::srConsultingBoard");
     $routes->post("sr_consulting_board_data", "TeamsController::srConsultingBoardData");
@@ -74,7 +76,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
 
     //-----Personal Controller
     $routes->get("profile", "PersonalController::index");
-    $routes->post("change-password", "PersonalController::changepassword");
+    $routes->match(['get', 'post'], "change-password", "PersonalController::changepassword");
 
     //-----Users Controller
     $routes->get("users-list", "UsersController::index");
@@ -83,6 +85,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("user-detailview/(:any)", "UsersController::detailview/$1");
     $routes->match(['get', 'post'], "user-controlls/(:any)", "UsersController::controlls/$1");
     $routes->post("users-data", "UsersController::userdata");
+    $routes->post("delete-admin-user", "UsersController::deleteAdminUser");
 
     $routes->match(['get', 'post'], "add-new-user", "UsersController::addNewUser");
     //-----Configuration Controller

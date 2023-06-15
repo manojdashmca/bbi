@@ -52,9 +52,9 @@
                                         <label class="form-label" for="validationCustom04">Module</label>
                                         <select name="moduleid" id="moduleid" class="form-control form-select">
                                             <option value="">Select Module</option>
-                                            <?php for ($x=0;$x<count($module);$x++){?>
-                                            <option value="<?=$module[$x]->lm_id?>"><?=$module[$x]->lm_name.' ('.$module[$x]->lm_code.')'?></option>
-                                            <?php }?>
+                                            <?php for ($x = 0; $x < count($module); $x++) { ?>
+                                                <option value="<?= $module[$x]->lm_id ?>"><?= $module[$x]->lm_name . ' (' . $module[$x]->lm_code . ')' ?></option>
+                                            <?php } ?>
                                         </select>
 
                                     </div>
@@ -69,7 +69,9 @@
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
-                                        <button class="btn btn-success margintop-29" id="addnew" type="button"><i class=" fas fa-plus-circle"></i> Add Member</button>
+                                        <?php if (in_array(5, session()->get('accesscontrols'))) { ?>
+                                            <button class="btn btn-success margintop-29" id="addnew" type="button"><i class=" fas fa-plus-circle"></i> Add Member</button>
+                                        <?php } ?>
                                     </div>                                        
                                 </div>
                             </div> 
@@ -93,7 +95,8 @@
                                             <th>Segment</th>
                                             <th>Category</th>
                                             <th>DOJ</th>
-                                            <th>Status</th>
+                                            <th>System Access</th>
+                                            <th>Member Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>

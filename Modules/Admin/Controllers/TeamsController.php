@@ -13,6 +13,7 @@ class TeamsController extends AdminController {
     }
 
     public function srConsultingBoard() {
+        $this->checkAccessControll(7);
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'teams/commonfunction.php,teams/srconsultingboardlist.php';
@@ -28,7 +29,7 @@ class TeamsController extends AdminController {
             $limit = trim($this->request->getPost('length'));
             $offset = trim($this->request->getPost('start'));
             $draw = trim($this->request->getPost('draw'));
-            $name = trim($this->request->getPost('name'));            
+            $name = trim($this->request->getPost('name'));
             $username = trim($this->request->getPost('username'));
             $order = $this->request->getPost('order');
             $ordercolumn = $order[0]['column'];
@@ -53,9 +54,10 @@ class TeamsController extends AdminController {
             $values = array();
             $action = '';
             //$action .= '<a class="blue" title="View Detail" href="#" onclick=""><i class="fas fa-search"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-
-            if ($data[$x]->status == 1) {
-                $action .= '<a class="blue"  title="Remove Member" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->scaab_id) . '&#39;,2);"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            if (in_array(25, session()->get('accesscontrols'))) {
+                if ($data[$x]->status == 1) {
+                    $action .= '<a class="blue"  title="Remove Member" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->scaab_id) . '&#39;,2);"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
             }
             $arraydata[$x]->status = $action;
             $values = array_values((array) $arraydata[$x]);
@@ -66,8 +68,10 @@ class TeamsController extends AdminController {
 
         return $return;
     }
+
     //-----consulting--
     public function consultingBoard() {
+        $this->checkAccessControll(7);
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'teams/commonfunction.php,teams/consultingboardlist.php';
@@ -83,7 +87,7 @@ class TeamsController extends AdminController {
             $limit = trim($this->request->getPost('length'));
             $offset = trim($this->request->getPost('start'));
             $draw = trim($this->request->getPost('draw'));
-            $name = trim($this->request->getPost('name'));            
+            $name = trim($this->request->getPost('name'));
             $username = trim($this->request->getPost('username'));
             $order = $this->request->getPost('order');
             $ordercolumn = $order[0]['column'];
@@ -108,9 +112,10 @@ class TeamsController extends AdminController {
             $values = array();
             $action = '';
             //$action .= '<a class="blue" title="View Detail" href="#" onclick=""><i class="fas fa-search"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-
-            if ($data[$x]->status == 1) {
-                $action .= '<a class="blue"  title="Remove Member" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->cbt_id) . '&#39;,2);"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            if (in_array(27, session()->get('accesscontrols'))) {
+                if ($data[$x]->status == 1) {
+                    $action .= '<a class="blue"  title="Remove Member" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->cbt_id) . '&#39;,2);"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
             }
             $arraydata[$x]->status = $action;
             $values = array_values((array) $arraydata[$x]);
@@ -121,9 +126,11 @@ class TeamsController extends AdminController {
 
         return $return;
     }
+
     //---------consulting
     //-----stateteam--
     public function stateTeam() {
+        $this->checkAccessControll(7);
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'teams/commonfunction.php,teams/stateteamlist.php';
@@ -139,14 +146,14 @@ class TeamsController extends AdminController {
             $limit = trim($this->request->getPost('length'));
             $offset = trim($this->request->getPost('start'));
             $draw = trim($this->request->getPost('draw'));
-            $name = trim($this->request->getPost('name'));            
+            $name = trim($this->request->getPost('name'));
             $username = trim($this->request->getPost('username'));
             $order = $this->request->getPost('order');
             $ordercolumn = $order[0]['column'];
             $orderdirecttion = $order[0]['dir'];
             //$this->request->getPost('status') != '' ? $status = implode(',', $this->request->getPost('status')) : $status = '';
             $daterange = generateDateFromDateRange($this->request->getPost('daterange'));
-            $data = array('name' => $name, 'username' => $username,  'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
+            $data = array('name' => $name, 'username' => $username, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
             $userlist = $this->teamsModel->selectStateTeam($data, $ordercolumn, $orderdirecttion, $offset, $limit);
             $returndata['data'] = $this->fn_formatedstateTeamddata($userlist['data'], $offset);
             $returndata['draw'] = $draw;
@@ -164,9 +171,10 @@ class TeamsController extends AdminController {
             $values = array();
             $action = '';
             //$action .= '<a class="blue" title="View Detail" href="#" onclick=""><i class="fas fa-search"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-
-            if ($data[$x]->status == 1) {
-                $action .= '<a class="blue"  title="Remove Member" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->st_id) . '&#39;,2);"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            if (in_array(29, session()->get('accesscontrols'))) {
+                if ($data[$x]->status == 1) {
+                    $action .= '<a class="blue"  title="Remove Member" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->st_id) . '&#39;,2);"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
             }
             $arraydata[$x]->status = $action;
             $values = array_values((array) $arraydata[$x]);
@@ -177,9 +185,11 @@ class TeamsController extends AdminController {
 
         return $return;
     }
+
     //---------stateteam
     //-----nationalteam--
     public function nationalTeam() {
+        $this->checkAccessControll(7);
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'teams/commonfunction.php,teams/nationalteamlist.php';
@@ -195,7 +205,7 @@ class TeamsController extends AdminController {
             $limit = trim($this->request->getPost('length'));
             $offset = trim($this->request->getPost('start'));
             $draw = trim($this->request->getPost('draw'));
-            $name = trim($this->request->getPost('name'));            
+            $name = trim($this->request->getPost('name'));
             $username = trim($this->request->getPost('username'));
             $order = $this->request->getPost('order');
             $ordercolumn = $order[0]['column'];
@@ -220,9 +230,10 @@ class TeamsController extends AdminController {
             $values = array();
             $action = '';
             //$action .= '<a class="blue" title="View Detail" href="#" onclick=""><i class="fas fa-search"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-
-            if ($data[$x]->status == 1) {
-                $action .= '<a class="blue"  title="Remove Member" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->nt_id) . '&#39;,2);"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            if (in_array(31, session()->get('accesscontrols'))) {
+                if ($data[$x]->status == 1) {
+                    $action .= '<a class="blue"  title="Remove Member" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->nt_id) . '&#39;,2);"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
             }
             $arraydata[$x]->status = $action;
             $values = array_values((array) $arraydata[$x]);
@@ -233,9 +244,11 @@ class TeamsController extends AdminController {
 
         return $return;
     }
+
     //---------nationalteam
     //-----zone--
     public function zoneTeam() {
+        $this->checkAccessControll(7);
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'teams/commonfunction.php,teams/zoneteamlist.php';
@@ -251,14 +264,14 @@ class TeamsController extends AdminController {
             $limit = trim($this->request->getPost('length'));
             $offset = trim($this->request->getPost('start'));
             $draw = trim($this->request->getPost('draw'));
-            $name = trim($this->request->getPost('name'));            
+            $name = trim($this->request->getPost('name'));
             $username = trim($this->request->getPost('username'));
             $order = $this->request->getPost('order');
             $ordercolumn = $order[0]['column'];
             $orderdirecttion = $order[0]['dir'];
             //$this->request->getPost('status') != '' ? $status = implode(',', $this->request->getPost('status')) : $status = '';
             $daterange = generateDateFromDateRange($this->request->getPost('daterange'));
-            $data = array('name' => $name, 'username' => $username,  'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
+            $data = array('name' => $name, 'username' => $username, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
             $userlist = $this->teamsModel->selectZoneTeam($data, $ordercolumn, $orderdirecttion, $offset, $limit);
             $returndata['data'] = $this->fn_formatedzoneTeamddata($userlist['data'], $offset);
             $returndata['draw'] = $draw;
@@ -276,9 +289,10 @@ class TeamsController extends AdminController {
             $values = array();
             $action = '';
             //$action .= '<a class="blue" title="View Detail" href="#" onclick=""><i class="fas fa-search"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-
-            if ($data[$x]->status == 1) {
-                $action .= '<a class="blue"  title="Remove Member" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->zt_id) . '&#39;,2);"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            if (in_array(33, session()->get('accesscontrols'))) {
+                if ($data[$x]->status == 1) {
+                    $action .= '<a class="blue"  title="Remove Member" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->zt_id) . '&#39;,2);"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
             }
             $arraydata[$x]->status = $action;
             $values = array_values((array) $arraydata[$x]);
@@ -289,6 +303,7 @@ class TeamsController extends AdminController {
 
         return $return;
     }
+
     //---------zone
 
     public function updateTeamsStatus() {

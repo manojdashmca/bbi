@@ -56,9 +56,10 @@ class AuthController extends AdminController {
                                 $this->session->set('username', $result->user_name);
                                 $this->session->set('useremail', $result->user_email);
                                 $this->session->set('userid', $result->id_user);
-                                if ($result->user_type == 4) {
-                                    header("location:" . ADMINPATH . "dashboard");
-                                }
+                                $this->session->set('accessmodules', explode(",", $result->user_modules));
+                                $this->session->set('accesscontrols', explode(",", $result->user_module_controls));
+                                header("location:" . ADMINPATH . "dashboard");
+
                                 exit;
                             }
                         } else {

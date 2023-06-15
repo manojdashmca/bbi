@@ -13,6 +13,7 @@ class ModuleController extends AdminController {
     }
 
     public function index() {
+        $this->checkAccessControll(5, 'm');
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'module/modulelist.php';
@@ -22,6 +23,7 @@ class ModuleController extends AdminController {
     }
 
     public function add() {
+        $this->checkAccessControll(9);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
         $this->data['includefile'] = 'module/moduleadd.php';
@@ -54,7 +56,7 @@ class ModuleController extends AdminController {
                 }
             }
         }
-        $this->data['state']=$this->moduleModel->getState();
+        $this->data['state'] = $this->moduleModel->getState();
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\module\moduleadd', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
@@ -90,17 +92,23 @@ class ModuleController extends AdminController {
         for ($x = 0; $x < count($arraydata); $x++) {
             $values = array();
             $action = '';
-            $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'module-edit/' . base64_encode($data[$x]->lm_id) . '"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
-            $action .= "<a title='Detail View' target='_blank' href='" . ADMINPATH . "module-detailview/" . base64_encode($arraydata[$x]->lm_id) . "'><i class='fa fa-search'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-            if ($data[$x]->status == 'Active') {
-                $action .= '<a class="blue" title="Block Account" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->lm_id) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-            }if ($data[$x]->status == 'Blocked') {
-                $action .= '<a class="blue"  title="Unblock Account" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->lm_id) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            if (in_array(10, session()->get('accesscontrols'))) {
+                $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'module-edit/' . base64_encode($data[$x]->lm_id) . '"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            }#$action .= "<a title='Detail View' target='_blank' href='" . ADMINPATH . "module-detailview/" . base64_encode($arraydata[$x]->lm_id) . "'><i class='fa fa-search'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+            if (in_array(11, session()->get('accesscontrols'))) {
+                if ($data[$x]->status == 'Active') {
+                    $action .= '<a class="blue" title="Block Account" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->lm_id) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }if ($data[$x]->status == 'Blocked') {
+                    $action .= '<a class="blue"  title="Unblock Account" href="#" onclick="return updateStatus(&#39;' . base64_encode($data[$x]->lm_id) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
             }
-            $action .= '<a class="blue" title="Assign Module Director" data-bs-toggle="modal" data-bs-target="#changedirector"   href="#" onclick="putModuleId(&#39;' . base64_encode($data[$x]->lm_id) . '&#39;)"><i class="fas fa-user-shield"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
-            $action .= '<a class="blue" title="Assign Module Associate Director" data-bs-toggle="modal"  data-bs-target="#changeassociate"   href="#" onclick="putModuleId(&#39;' . base64_encode($data[$x]->lm_id) . '&#39;)"><i class="fas fa-user-tag"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
-            $action .= '<a class="blue" title="Assign Module Assistant Director" data-bs-toggle="modal"  data-bs-target="#changeassistant"   href="#" onclick="putModuleId(&#39;' . base64_encode($data[$x]->lm_id) . '&#39;)"><i class="fas fa-user-tie"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
-            $arraydata[$x]->action = $action;
+            if (in_array(12, session()->get('accesscontrols'))) {
+                $action .= '<a class="blue" title="Assign Module Director" data-bs-toggle="modal" data-bs-target="#changedirector"   href="#" onclick="putModuleId(&#39;' . base64_encode($data[$x]->lm_id) . '&#39;)"><i class="fas fa-user-shield"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            }if (in_array(13, session()->get('accesscontrols'))) {
+                $action .= '<a class="blue" title="Assign Module Associate Director" data-bs-toggle="modal"  data-bs-target="#changeassociate"   href="#" onclick="putModuleId(&#39;' . base64_encode($data[$x]->lm_id) . '&#39;)"><i class="fas fa-user-tag"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            }if (in_array(14, session()->get('accesscontrols'))) {
+                $action .= '<a class="blue" title="Assign Module Assistant Director" data-bs-toggle="modal"  data-bs-target="#changeassistant"   href="#" onclick="putModuleId(&#39;' . base64_encode($data[$x]->lm_id) . '&#39;)"><i class="fas fa-user-tie"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            }$arraydata[$x]->action = $action;
             $values = array_values((array) $arraydata[$x]);
             $values[0] = $offset + $x + 1;
             $return[] = $values;
@@ -123,6 +131,7 @@ class ModuleController extends AdminController {
     }
 
     public function edit($moduleid) {
+        $this->checkAccessControll(10);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
         $this->data['includefile'] = 'module/moduleedit.php';
@@ -159,7 +168,7 @@ class ModuleController extends AdminController {
                 }
             }
         }
-        $this->data['state']=$this->moduleModel->getState();
+        $this->data['state'] = $this->moduleModel->getState();
         $id = base64_decode($moduleid);
         $moduledetail = $this->moduleModel->getModuleDetail($id);
         $this->data['encmoduleid'] = $moduleid;
@@ -172,7 +181,7 @@ class ModuleController extends AdminController {
     public function updateModuleStatus() {
         $status = array('status' => 'error', 'message' => 'Unauthorised access');
         if ($this->request->isAJAX()) {
-
+            $this->checkAccessControll(11, 'c', 0);
             $moduleid = base64_decode($this->request->getPost('encmoduleid'));
             $status = $this->request->getPost('status');
             $updarray = array('lm_status' => $status);
@@ -194,13 +203,12 @@ class ModuleController extends AdminController {
         $status = array('status' => 'error', 'message' => 'Unauthorised access');
         $msgarray = array('d' => 'Director', 'as' => 'Asociate Director', 'ast' => 'Assistant Director');
         if ($this->request->isAJAX()) {
-
-
             $userid = $this->request->getPost('userid');
             $lmid = base64_decode($this->request->getPost('lmid'));
             $type = $this->request->getPost('type');
 
             if ($type == 'd') {
+                $this->checkAccessControll(12, 'c', 0);
                 $pos = $this->blankModel->getTableData('lm_id', 'location_module', 'director_id=' . $userid);
                 if (empty($pos)) {
                     $lmdetail = $this->moduleModel->getModuleDetail($lmid);
@@ -219,6 +227,7 @@ class ModuleController extends AdminController {
                 }
             }
             if ($type == 'as') {
+                $this->checkAccessControll(13, 'c', 0);
                 $pos = $this->blankModel->getTableData('lm_id', 'location_module', 'associate_director_id=' . $userid);
                 if (empty($pos)) {
                     $lmdetail = $this->moduleModel->getModuleDetail($lmid);
@@ -236,6 +245,7 @@ class ModuleController extends AdminController {
                     $message = "The Member is already a module director in other module";
                 }
             }if ($type == 'ast') {
+                $this->checkAccessControll(14, 'c', 0);
                 $pos = $this->blankModel->getTableData('lm_id', 'location_module', 'assistant_director_id=' . $userid);
                 if (empty($pos)) {
                     $lmdetail = $this->moduleModel->getModuleDetail($lmid);
@@ -275,6 +285,7 @@ class ModuleController extends AdminController {
     }
 
     public function segmentlist() {
+        $this->checkAccessControll(6, 'm');
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'module/segmentlist.php';
@@ -310,11 +321,14 @@ class ModuleController extends AdminController {
         for ($x = 0; $x < count($arraydata); $x++) {
             $values = array();
             $action = '';
-            $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'segment-edit/' . base64_encode($data[$x]->segment_id) . '"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
-            if ($data[$x]->status == 'Active') {
-                $action .= '<a class="blue" title="Block Segment" href="#" onclick="return updateSegmentStatus(&#39;' . base64_encode($data[$x]->segment_id) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-            }if ($data[$x]->status == 'Blocked') {
-                $action .= '<a class="blue"  title="Unblock Segment" href="#" onclick="return updateSegmentStatus(&#39;' . base64_encode($data[$x]->segment_id) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            if (in_array(16, session()->get('accesscontrols'))) {
+                $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'segment-edit/' . base64_encode($data[$x]->segment_id) . '"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            }if (in_array(17, session()->get('accesscontrols'))) {
+                if ($data[$x]->status == 'Active') {
+                    $action .= '<a class="blue" title="Block Segment" href="#" onclick="return updateSegmentStatus(&#39;' . base64_encode($data[$x]->segment_id) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }if ($data[$x]->status == 'Blocked') {
+                    $action .= '<a class="blue"  title="Unblock Segment" href="#" onclick="return updateSegmentStatus(&#39;' . base64_encode($data[$x]->segment_id) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
             }
             $arraydata[$x]->action = $action;
             $values = array_values((array) $arraydata[$x]);
@@ -326,6 +340,7 @@ class ModuleController extends AdminController {
     }
 
     public function editSegment($segmentid) {
+        $this->checkAccessControll(16);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
         $this->data['includefile'] = 'module/segmentedit.php';
@@ -361,6 +376,7 @@ class ModuleController extends AdminController {
     }
 
     public function addSegment() {
+        $this->checkAccessControll(15);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
         $this->data['includefile'] = 'module/segmentadd.php';
@@ -373,7 +389,6 @@ class ModuleController extends AdminController {
 
                 $this->session->setFlashdata('message', setMessage('Missing Required Field', 'e'));
             } else {
-
                 $name = trim($this->request->getPost('name'));
                 $checkname = $this->blankModel->getTableData('segment_id', 'master_segment', 'LOWER(segment_name)="' . strtolower($name) . '"');
                 if (empty($checkname)) {
@@ -392,6 +407,7 @@ class ModuleController extends AdminController {
     }
 
     public function categorylist() {
+        $this->checkAccessControll(6, 'm');
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'module/categorylist.php';
@@ -401,6 +417,7 @@ class ModuleController extends AdminController {
     }
 
     public function addCategory() {
+        $this->checkAccessControll(18);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
         $this->data['includefile'] = 'module/categoryadd.php';
@@ -434,6 +451,7 @@ class ModuleController extends AdminController {
     }
 
     public function editCategory($categoryid) {
+        $this->checkAccessControll(19);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
         $this->data['includefile'] = 'module/categoryedit.php';
@@ -497,11 +515,14 @@ class ModuleController extends AdminController {
         for ($x = 0; $x < count($arraydata); $x++) {
             $values = array();
             $action = '';
-            $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'category-edit/' . base64_encode($data[$x]->category_id) . '"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
-            if ($data[$x]->status == 'Active') {
-                $action .= '<a class="blue" title="Block Segment" href="#" onclick="return updateCategoryStatus(&#39;' . base64_encode($data[$x]->category_id) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-            }if ($data[$x]->status == 'Blocked') {
-                $action .= '<a class="blue"  title="Unblock Segment" href="#" onclick="return updateCategoryStatus(&#39;' . base64_encode($data[$x]->category_id) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            if (in_array(19, session()->get('accesscontrols'))) {
+                $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'category-edit/' . base64_encode($data[$x]->category_id) . '"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            }if (in_array(20, session()->get('accesscontrols'))) {
+                if ($data[$x]->status == 'Active') {
+                    $action .= '<a class="blue" title="Block Segment" href="#" onclick="return updateCategoryStatus(&#39;' . base64_encode($data[$x]->category_id) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }if ($data[$x]->status == 'Blocked') {
+                    $action .= '<a class="blue"  title="Unblock Segment" href="#" onclick="return updateCategoryStatus(&#39;' . base64_encode($data[$x]->category_id) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
             }
             $arraydata[$x]->action = $action;
             $values = array_values((array) $arraydata[$x]);
@@ -513,6 +534,7 @@ class ModuleController extends AdminController {
     }
 
     public function subcategorylist() {
+        $this->checkAccessControll(6);
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'module/subcategorylist.php';
@@ -522,6 +544,7 @@ class ModuleController extends AdminController {
     }
 
     public function addSubcategory() {
+        $this->checkAccessControll(21);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
         $this->data['includefile'] = 'module/subcategoryadd.php';
@@ -557,6 +580,7 @@ class ModuleController extends AdminController {
     }
 
     public function editsubcategory($subcategoryid) {
+        $this->checkAccessControll(22);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
         $this->data['includefile'] = 'module/subcategoryedit.php';
@@ -626,11 +650,15 @@ class ModuleController extends AdminController {
         for ($x = 0; $x < count($arraydata); $x++) {
             $values = array();
             $action = '';
-            $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'subcategory-edit/' . base64_encode($data[$x]->sub_category_id) . '"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
-            if ($data[$x]->status == 'Active') {
-                $action .= '<a class="blue" title="Block Segment" href="#" onclick="return updateSubcategoryStatus(&#39;' . base64_encode($data[$x]->sub_category_id) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-            }if ($data[$x]->status == 'Blocked') {
-                $action .= '<a class="blue"  title="Unblock Segment" href="#" onclick="return updateSubcategoryStatus(&#39;' . base64_encode($data[$x]->sub_category_id) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            if (in_array(22, session()->get('accesscontrols'))) {
+                $action .= '<a class="blue" target="_blank" title="Edit Detail"   href="' . ADMINPATH . 'subcategory-edit/' . base64_encode($data[$x]->sub_category_id) . '"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+            }
+            if (in_array(23, session()->get('accesscontrols'))) {
+                if ($data[$x]->status == 'Active') {
+                    $action .= '<a class="blue" title="Block Segment" href="#" onclick="return updateSubcategoryStatus(&#39;' . base64_encode($data[$x]->sub_category_id) . '&#39;,2);"><i class="fas fa-lock"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }if ($data[$x]->status == 'Blocked') {
+                    $action .= '<a class="blue"  title="Unblock Segment" href="#" onclick="return updateSubcategoryStatus(&#39;' . base64_encode($data[$x]->sub_category_id) . '&#39;,1);"><i class="fas fa-lock-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
             }
             $arraydata[$x]->action = $action;
             $values = array_values((array) $arraydata[$x]);
@@ -650,6 +678,7 @@ class ModuleController extends AdminController {
             $type = $this->request->getPost('type');
             switch ($type) {
                 case 1 :
+                    $this->checkAccessControll(17, 'c', 0);
                     $updarray = array('segment_status' => $status);
                     $this->blankModel->updateRecordInTable($updarray, 'master_segment', 'segment_id', $tableid);
                     if ($status == 1) {
@@ -659,6 +688,7 @@ class ModuleController extends AdminController {
                     }
                     break;
                 case 2 :
+                    $this->checkAccessControll(20, 'c', 0);
                     $updarray = array('category_status' => $status);
                     $this->blankModel->updateRecordInTable($updarray, 'master_category', 'category_id', $tableid);
                     if ($status == 1) {
@@ -668,6 +698,7 @@ class ModuleController extends AdminController {
                     }
                     break;
                 case 3 :
+                    $this->checkAccessControll(23, 'c', 0);
                     $updarray = array('sub_category_status' => $status);
                     $this->blankModel->updateRecordInTable($updarray, 'master_sub_category', 'sub_category_id', $tableid);
                     if ($status == 1) {
