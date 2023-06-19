@@ -76,6 +76,8 @@ $sessioncontroll = session()->get('accesscontrols');
                     <?php if (in_array(9, $sessioncontroll)) { ?>
                     <li><a href="<?= ADMINPATH ?>module-add" data-key="t-moduleadd">Add New Module</a></li>  
                     <?php } ?>
+                    <li><a href="<?= ADMINPATH ?>module-subcategory-status" data-key="t-modulesubcat">Module Subcategory Status</a></li> 
+                    
                 </ul>
             </li>
         <?php } ?>

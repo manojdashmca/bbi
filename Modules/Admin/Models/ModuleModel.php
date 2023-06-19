@@ -179,4 +179,31 @@ class ModuleModel extends Model {
         return $result->getResult();
     }
 
+    public function selectBlockedSubCategory($data, $ordercolumn = 1, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
+        try {
+            $return = array();
+            $columnarray = array('sub_category_id', 'sub_category_name', 'category_name', 'segment_name', 'sub_category_status');
+            $sql = "select SQL_CALC_FOUND_ROWS sub_category_id,sub_category_name,category_name,segment_name,
+                if(sub_category_status='1','Active','Blocked') status,
+                if((select count(ibd_id) from ibo_business_detail join user_detail ud on user_id_user=id_user where business_subcategory=sub_category_id and ud.module_id_module='".$data['module']."')='0','<span style=color:green;>Available</span>','<span style=color:red;>Used</span>') used  
+                FROM master_sub_category msc 
+                join master_category mc on msc.category_id_category=category_id  
+                join master_segment ms on msc.segment_id_segment=segment_id 
+                where 1=1 ";
+            !empty($data['cname']) ? $sql .= " AND msc.category_id_category = '" . $data['cname'] . "'" : $sql .= '';
+            !empty($data['sname']) ? $sql .= " AND msc.segment_id_segment = '" . $data['sname'] . "'" : $sql .= '';
+
+            $sql .= " ORDER BY $columnarray[$ordercolumn] $orderdirecttion limit $offset,$limit";
+            //echo $sql;
+            $sql1 = "SELECT FOUND_ROWS() as count";
+            $result = $this->db->query($sql);
+            $result1 = $this->db->query($sql1);
+            $return['data'] = $result->getResult();
+            $return['record_count'] = $result1->getRow()->count;
+            $return['message'] = "DB Operation Completed Succesfully";
+        } catch (Exception $e) {
+            $this->createModelError($e, 'IBO', 'selectDistributor');
+        }
+        return $return;
+    }
 }

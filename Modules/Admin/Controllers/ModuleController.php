@@ -4,6 +4,7 @@ namespace Modules\Admin\Controllers;
 
 use Modules\Admin\Controllers\AdminController;
 use Modules\Admin\Models\ModuleModel;
+use Modules\Admin\Models\IboModel;
 
 class ModuleController extends AdminController {
 
@@ -534,7 +535,7 @@ class ModuleController extends AdminController {
     }
 
     public function subcategorylist() {
-        $this->checkAccessControll(6,'m');
+        $this->checkAccessControll(6, 'm');
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'module/subcategorylist.php';
@@ -714,4 +715,40 @@ class ModuleController extends AdminController {
         exit;
     }
 
+    public function moduleSubcategoryStatus() {
+        $this->data['title'] = "Registration";
+        $this->iboModel = new IboModel();
+        $this->data['js'] = 'datatable';
+        $this->data['css'] = 'datatable';
+        $this->data['includefile'] = 'module/moduleBlockedSubcategory.php';
+        $this->data['module'] = $this->iboModel->getModuleDropDown();
+        $this->data['segment'] = $this->iboModel->getBusinesssegment();
+        $this->data['category'] = $this->iboModel->getBusinessCategory();
+        return view('\Modules\Admin\Views\templates\header', $this->data)
+                . view('\Modules\Admin\Views\module\moduleBlockedSubcategory', $this->data)
+                . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function moduleSubcategoryData() {
+        $returndata = array();
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $limit = trim($this->request->getPost('length'));
+            $offset = trim($this->request->getPost('start'));
+            $draw = trim($this->request->getPost('draw'));
+            $cname = trim($this->request->getPost('cname'));
+            $sname = trim($this->request->getPost('sname'));
+            $module = trim($this->request->getPost('module'));
+            $order = $this->request->getPost('order');
+            $ordercolumn = $order[0]['column'];
+            $orderdirecttion = $order[0]['dir'];
+            $data = array('module' => $module, 'cname' => $cname, 'sname' => $sname);
+            $userlist = $this->moduleModel->selectBlockedSubCategory($data, $ordercolumn, $orderdirecttion, $offset, $limit);
+            $returndata['data'] = $this->fn_formatedAddSlNo($userlist['data'], $offset);
+            $returndata['draw'] = $draw;
+            $returndata['recordsTotal'] = $userlist['record_count'];
+            $returndata['recordsFiltered'] = $userlist['record_count'];
+        }
+        echo json_encode($returndata);
+        die();
+    }
 }

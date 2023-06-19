@@ -63,7 +63,8 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->post("subcategory-data", "ModuleController::subcategoryData");
     $routes->match(['get', 'post'], "subcategory-edit/(:any)", "ModuleController::editSubcategory/$1");
     $routes->match(['get', 'post'], "subcategory-add", "ModuleController::addSubcategory");
-
+    $routes->get("module-subcategory-status", "ModuleController::moduleSubcategoryStatus");
+    $routes->post("module-subcategory-data", "ModuleController::moduleSubcategoryData");
     //------Payout Controller   
     $routes->get("payout-dates", "PayoutController::payoutDates");
     $routes->post("payout-dates-data", "PayoutController::payourDatesData");
