@@ -25,7 +25,7 @@ class App extends BaseConfig {
      * @var string
      */
     public $baseURL = 'http://13.235.28.100/';
-    //public $baseURL = 'http://bbi.com:8090';
+    //public $baseURL = 'http://bbi.com';
 
     /**
      * --------------------------------------------------------------------------
