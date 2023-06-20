@@ -455,6 +455,9 @@ class Home extends WebController {
 
     public function myprofile() {
         $this->data['title'] = "My Profile";
+        $this->data['js'] = 'validation,flatpickr,sweetalert,alertify';
+        $this->data['css'] = 'validation,flatpickr,sweetalert,alertify';
+        $this->data['includefile'] = 'users/myProfile.php';
         $this->iboModel = new IboModel();
         $iduser = session()->get('muserid');
         $userdetaildata = $this->iboModel->getIbodetailById($iduser);
@@ -570,6 +573,7 @@ class Home extends WebController {
     }
 
     public function payments() {
+        $this->data['title'] = "My Payments";
         return view('templates/header', $this->data)
                 . view('users/payments', $this->data)
                 . view('templates/footer', $this->data);
@@ -710,4 +714,14 @@ class Home extends WebController {
         die();
     }
 
+    public function meetingSchedule() {
+        $this->data['title'] = "Meeting Schedules";
+        $this->data['js'] = 'calendar,alertify';
+        $this->data['css'] = 'calendar,alertify';
+        $this->data['includefile'] = 'users/meetingSchedule.php';
+        $this->data['dropdown'] = $this->webModel->getPayoutDropDownData();
+        return view('templates/header', $this->data)
+                . view('users/meetingSchedule', $this->data)
+                . view('templates/footer', $this->data);
+    }
 }

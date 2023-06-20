@@ -5,10 +5,10 @@
         <meta charset="utf-8" />
         <title>SSK Bharat BBI | <?=$title?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Webapplication of windna" name="description" />
-        <meta content="WinDNA" name="author" />
+        <meta content="Webapplication of SSK Bharat BBI" name="description" />
+        <meta content="SSK Bharat BBI" name="author" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="<?= CUSTOMPATH ?>panelassets/images/favicon.png">
+        <link rel="shortcut icon" type="image/x-icon" href="<?= CUSTOMPATH ?>panelassets/images/logobbi.png">
 
         <!-- plugin css -->
         <link href="<?= CUSTOMPATH ?>panelassets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
@@ -35,18 +35,18 @@
                     <div class="d-flex">
                         <!-- LOGO -->
                         <div class="navbar-brand-box">
-                            <a href="<?= ADMINPATH ?>" class="logo logo-dark">
+                            <a href="<?= CUSTOMPATH ?>user-dashboard" class="logo logo-dark">
                                 <span class="logo-sm">
-                                    <img src="/panelassets/images/logo-sm.png" alt="" height="24">
+                                    <img src="/panelassets/images/logobbi.png" alt="" height="24">
                                 </span>
                                 <span class="logo-lg">
                                     <img src="/panelassets/images/logobbi.png" alt="" height="60">
                                 </span>
                             </a>
 
-                            <a href="<?=ADMINPATH?>" class="logo logo-light">
+                            <a href="<?=CUSTOMPATH?>user-dashboard" class="logo logo-light">
                                 <span class="logo-sm">
-                                    <img src="/panelassets/images/logo-sm.png" alt="" height="24">
+                                    <img src="/panelassets/images/logobbi.png" alt="" height="24">
                                 </span>
                                 <span class="logo-lg">
                                     <img src="/panelassets/images/logobbi.png" alt="" height="60">

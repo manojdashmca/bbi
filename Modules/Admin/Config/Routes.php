@@ -100,10 +100,10 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("getBankDetailByIfsc/(:any)", "AuthController::getBankDetailByIfsc/$1");
     $routes->post("update-contact-detail", "AuthController::updateContactDetail");
     $routes->post("update-personal-detail", "AuthController::updatePersonalDetail");
-    $routes->post("update-nominee-detail", "AuthController::updateNomineeDetail");
+    #$routes->post("update-nominee-detail", "AuthController::updateNomineeDetail");
     $routes->post("update-banking-detail", "AuthController::updateBankingDetail");
     $routes->post("update-login-detail", "AuthController::updateLoginDetail");
-    $routes->post("update-kyc-detail", "AuthController::updateKycDetail");
+    $routes->post("update-profile-pic", "AuthController::updateProfilePic");
     $routes->post("update-user-status", "AuthController::updateUserStatus");
 
     $routes->post("get-category-by-segment", "AuthController::getCategoryBySegment");

@@ -5,11 +5,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">IBO Profile</h4>
+                    <h4 class="mb-sm-0 font-size-18">My Profile</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">IBO</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Member</a></li>
                             <li class="breadcrumb-item active">Profile</li>
                         </ol>
                     </div>
@@ -29,7 +29,11 @@
                                     <div class="flex-shrink-0">
                                         <div class="avatar-xl me-3">
                                             <?php
-                                            $image = "/uploads/images/default.jpg";
+                                            if (empty($userdetail->user_profile_pic)) {
+                                                $image = "/uploads/images/default.jpg";
+                                            } else {
+                                                $image = "/uploads/images/profilepic/" . $userdetail->user_profile_pic;
+                                            }
                                             ?>
                                             <img src="<?= $image ?>" alt="" class="img-fluid rounded-circle d-block">
                                         </div>
@@ -61,9 +65,9 @@
                                 <a class="nav-link px-3" data-bs-toggle="tab" href="#banking" role="tab">Banking Info</a>
                             </li>
 
-                            <!--                            <li class="nav-item">
-                                                            <a class="nav-link px-3" data-bs-toggle="tab" href="#kyc" role="tab">KYC Info</a>
-                                                        </li>-->
+                            <li class="nav-item">
+                                <a class="nav-link px-3" data-bs-toggle="tab" href="#picture" role="tab">Upload A Picture</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link px-3" data-bs-toggle="tab" href="#password" role="tab">Login Info</a>
                             </li>
@@ -151,7 +155,7 @@
 
                                         <!-- end row -->
                                         <div class="text-center mt-4">
-                                                                                 
+                                            <input type="hidden" name="pinfoencuserid" id="pinfoencuserid" value="<?= base64_encode($userdetail->id_user) ?>"/>
                                             <input type="submit" class="btn btn-success waves-effect waves-light" value="Update"/>
                                         </div>
                                     </form>
@@ -189,7 +193,7 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">Post Office</label>
-                                                    <select class="form-control" id="postoffice" name="postoffice">
+                                                    <select class="form-control form-select" id="postoffice" name="postoffice">
                                                         <option value="">Select Post Office</option>
                                                     </select>
                                                 </div>                                    
@@ -234,7 +238,7 @@
 
                                         <!-- end row -->
                                         <div class="text-center mt-4">
-                                                                                
+                                            <input type="hidden" name="cinfoencuserid" id="cinfoencuserid" value="<?= base64_encode($userdetail->id_user) ?>"/>
                                             <input type="submit" class="btn btn-success waves-effect waves-light" value="Update"/>
                                         </div>
                                     </form>
@@ -249,7 +253,7 @@
                     <div class="tab-pane" id="banking" role="tabpanel">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title mb-0">Post</h5>
+                                <h5 class="card-title mb-0">Banking Detail</h5>
                             </div>
                             <div class="card-body">
                                 <div>
@@ -287,7 +291,8 @@
                                             </div>
                                         </div>
                                         <div class="text-center mt-4">
-                                             <input type="submit" class="btn btn-success waves-effect waves-light" value="Update"/>
+                                            <input type="hidden" name="binfoencuserid" id="binfoencuserid" value="<?= base64_encode($userdetail->id_user) ?>"/>
+                                            <input type="submit" class="btn btn-success waves-effect waves-light" value="Update"/>
                                         </div>
                                     </form>
 
@@ -299,26 +304,73 @@
                         <!-- end card -->
                     </div>
                     <!-- end tab pane --> 
+                    <div class="tab-pane" id="picture" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Upload  A Picture</h5>
+                            </div>
+                            <div class="card-body">
+                                <div>  
+                                    <form name="profilepicform" id="profilepicform" method="post" enctype="multipart/form-data">
+                                        <div class="row">                                        
+                                            <div class="col-lg-6">
+                                                <div class="row">                                        
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group mb-3">
+                                                            <label class="form-label">Profile Picture</label>
+                                                            <input type="file" class="form-control" name="profilepic" id="profilepic" >
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+<?php if (!empty($userdetail->user_profile_pic)) { ?>
+                                                            <a href="/uploads/images/profilepic/<?= $userdetail->user_profile_pic ?>" class="image-popup" data-title="KYC" data-description="User Profile Picture">
+                                                                <img src="/uploads/images/profilepic/<?= $userdetail->user_profile_pic ?>"  alt="Profile Pic" height="100" width="250">
+                                                            </a>
+
+<?php } ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+                                        </div>
+                                        <div class="text-center mt-4"> 
+                                            <input type="hidden" id="usercode" name="usercode" value="<?= $userdetail->user_code ?>">
+                                            <input type="hidden" name="kinfoencuserid" id="kinfoencuserid" value="<?= base64_encode($userdetail->id_user) ?>"/>
+                                            <input type="submit" class="btn btn-success waves-effect waves-light" value="Update"/>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                            <!-- end card body -->
+                        </div>
+                        <!-- end card -->
+                    </div>
+
                     <!-- end tab pane -->
 
                     <div class="tab-pane" id="password" role="tabpanel">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title mb-0">Recover Password</h5>
+                                <h5 class="card-title mb-0">Create A Login Id</h5>
                             </div>
                             <div class="card-body">
                                 <div>         
                                     <form name="logincredential" id="logincredential" method="post">
                                         <div class="row">                                    
-                                            
+
                                             <div class="col-lg-6">
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">User Login Name</label>
+                                                    <input type="hidden" name="linfoencuserid" id="linfoencuserid" value="<?= base64_encode($userdetail->id_user) ?>"/>
                                                     <input type="hidden" id="hiddenusername" name="hiddenusername" value="<?= $userdetail->user_login_name ?>">
-                                                    <input type="text" class="form-control" id="loginname" name="loginnanem" value="<?= $userdetail->user_login_name ?>">
+                                                    <input type="text" class="form-control" id="loginname" name="loginname" value="<?= $userdetail->user_login_name ?>">
                                                 </div>
                                             </div>
-                                            
+
 
                                         </div>
                                         <div class="text-center mt-4">
@@ -353,75 +405,75 @@
                 </div>
                 <!-- end card -->
 
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">Item 2</h5>
-
-                        <!--                        <div>
-                                                    <ul class="list-unstyled mb-0">
-                                                        <li>
-                                                            <a href="#" class="py-2 d-block text-muted"><i class="mdi mdi-web text-primary me-1"></i> Website</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="py-2 d-block text-muted"><i class="mdi mdi-note-text-outline text-primary me-1"></i> Blog</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>-->
-                    </div>
-                    <!-- end card body -->
-                </div>
+                <!--                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-3">Item 2</h5>
+                
+                                                                <div>
+                                                                    <ul class="list-unstyled mb-0">
+                                                                        <li>
+                                                                            <a href="#" class="py-2 d-block text-muted"><i class="mdi mdi-web text-primary me-1"></i> Website</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="py-2 d-block text-muted"><i class="mdi mdi-note-text-outline text-primary me-1"></i> Blog</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                    </div>
+                                     end card body 
+                                </div>-->
                 <!-- end card -->
 
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">Item 3</h5>
-
-                        <!--                        <div class="list-group list-group-flush">
-                                                    <a href="#" class="list-group-item list-group-item-action">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar-sm flex-shrink-0 me-3">
-                                                                <img src="assets/images/users/avatar-1.jpg" alt="" class="img-thumbnail rounded-circle">
-                                                            </div>
-                                                            <div class="flex-grow-1">
-                                                                <div>
-                                                                    <h5 class="font-size-14 mb-1">James Nix</h5>
-                                                                    <p class="font-size-13 text-muted mb-0">Full Stack Developer</p>
+                <!--                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-3">Item 3</h5>
+                
+                                                                <div class="list-group list-group-flush">
+                                                                    <a href="#" class="list-group-item list-group-item-action">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="avatar-sm flex-shrink-0 me-3">
+                                                                                <img src="assets/images/users/avatar-1.jpg" alt="" class="img-thumbnail rounded-circle">
+                                                                            </div>
+                                                                            <div class="flex-grow-1">
+                                                                                <div>
+                                                                                    <h5 class="font-size-14 mb-1">James Nix</h5>
+                                                                                    <p class="font-size-13 text-muted mb-0">Full Stack Developer</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
+                                                                    <a href="#" class="list-group-item list-group-item-action">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="avatar-sm flex-shrink-0 me-3">
+                                                                                <img src="assets/images/users/avatar-3.jpg" alt="" class="img-thumbnail rounded-circle">
+                                                                            </div>
+                                                                            <div class="flex-grow-1">
+                                                                                <div>
+                                                                                    <h5 class="font-size-14 mb-1">Darlene Smith</h5>
+                                                                                    <p class="font-size-13 text-muted mb-0">UI/UX Designer</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
+                                                                    <a href="#" class="list-group-item list-group-item-action">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="avatar-sm flex-shrink-0 me-3">
+                                                                                <div class="avatar-title bg-soft-light text-light rounded-circle font-size-22">
+                                                                                    <i class="bx bxs-user-circle"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="flex-grow-1">
+                                                                                <div>
+                                                                                    <h5 class="font-size-14 mb-1">William Swift</h5>
+                                                                                    <p class="font-size-13 text-muted mb-0">Backend Developer</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="list-group-item list-group-item-action">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar-sm flex-shrink-0 me-3">
-                                                                <img src="assets/images/users/avatar-3.jpg" alt="" class="img-thumbnail rounded-circle">
-                                                            </div>
-                                                            <div class="flex-grow-1">
-                                                                <div>
-                                                                    <h5 class="font-size-14 mb-1">Darlene Smith</h5>
-                                                                    <p class="font-size-13 text-muted mb-0">UI/UX Designer</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="list-group-item list-group-item-action">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar-sm flex-shrink-0 me-3">
-                                                                <div class="avatar-title bg-soft-light text-light rounded-circle font-size-22">
-                                                                    <i class="bx bxs-user-circle"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="flex-grow-1">
-                                                                <div>
-                                                                    <h5 class="font-size-14 mb-1">William Swift</h5>
-                                                                    <p class="font-size-13 text-muted mb-0">Backend Developer</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>-->
-                    </div>
-                    <!-- end card body -->
-                </div>
+                                    </div>
+                                     end card body 
+                                </div>-->
                 <!-- end card -->
             </div>
             <!-- end col -->

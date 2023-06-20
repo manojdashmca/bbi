@@ -19,7 +19,9 @@ class AdminController extends BaseController {
         $openmethods = array('login', 'logout', 'forgotpassword', 'resetpassword', 'addressByPincode', 'getBankDetailByIfsc',
             'getCategoryBySegment', 'getSubCategoryByCategoryModule', 'checkpan', 'checkmobile', 'checkmobile', 'checkemail',
             'getSponsorDetailById', 'getModuleDetailById', 'deleteSystemLogs', 'createPayoutDate', 'updateSyncStatus',
-            'confirmTransaction', 'generatePayout', 'updateGrossIncome', 'sendPendingEmails', 'deleteEmailAttachment');
+            'confirmTransaction', 'generatePayout', 'updateGrossIncome', 'sendPendingEmails', 'deleteEmailAttachment',
+            'updateProfilePic','updateLoginDetail','updateBankingDetail','updateContactDetail',
+            'updatePersonalDetail');
         if (!in_array($this->method, $openmethods)) {
             if ($this->session->has('login')) {
                 if ($this->session->get('usertype') != 4) {

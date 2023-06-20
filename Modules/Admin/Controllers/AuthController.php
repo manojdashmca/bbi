@@ -223,7 +223,7 @@ class AuthController extends AdminController {
 
     public function updatePersonalDetail() {
         $status = array('status' => 'error', 'message' => 'Unauthorised access');
-        if ($this->request->isAJAX()) {            
+        if ($this->request->isAJAX()) {
             $name = $this->request->getPost('name');
             $dob = $this->request->getPost('dob');
             $glink = $this->request->getPost('glink');
@@ -234,9 +234,9 @@ class AuthController extends AdminController {
 
             $userid = base64_decode($this->request->getPost('encuser'));
 
-            $updarray = array('user_name' => $name,'user_dob' => makeDate($dob, 'Y-m-d'),
-                'user_group_link' => $glink, 'user_education' => $eduqual, 
-                'user_profession_certification' => $profcert, 'user_blood_group' => $bloodgroup, 
+            $updarray = array('user_name' => $name, 'user_dob' => makeDate($dob, 'Y-m-d'),
+                'user_group_link' => $glink, 'user_education' => $eduqual,
+                'user_profession_certification' => $profcert, 'user_blood_group' => $bloodgroup,
                 'user_group_link_org' => $nameofgroup);
 
             $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
@@ -262,7 +262,6 @@ class AuthController extends AdminController {
             $bankname = $this->request->getPost('bankname');
             $bankbranch = $this->request->getPost('bankbranch');
             $panno = $this->request->getPost('panno');
-
             $userid = base64_decode($this->request->getPost('encuser'));
 
             $updarray = array('user_bank_ac_no' => $bankacno, 'user_bank_ifsc' => $bankifsc,
@@ -287,23 +286,33 @@ class AuthController extends AdminController {
         $status = array('status' => 'error', 'message' => 'Unauthorised access');
         if ($this->request->isAJAX()) {
             $hiddenusernamed = $this->request->getPost('hiddenusername');
-            $newpassword = $this->request->getPost('newpassword');
             $loginname = $this->request->getPost('loginname');
             $userid = base64_decode($this->request->getPost('encuser'));
-            $password = '';
-            if (!empty($newpassword)) {
-                $password = $this->encryptString($newpassword);
-            }
 
+            $message = '';
+            $status = "error";
             $updarray = array('updated_date_time' => date('Y-m-d H:i:s'));
             if ($hiddenusernamed !== $loginname) {
-                $updarray['user_login_name'] = $loginname;
-            }
-            if (!empty($password)) {
-                $updarray['user_login_key'] = $password;
+                $tabledata = $this->blankModel->getTableData('user_login_name,id_user', 'user_detail', "user_login_name='$loginname'");
+                if (!empty($tabledata)) {
+                    if ($tabledata->id_user == $userid) {
+                        $message = "This Username is assigned to the current user";
+                    } else {
+                        $message = "Username Already In Use";
+                    }
+                } else {
+                    $updarray['user_login_name'] = $loginname;
+                    $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
+                    $status = "success";
+                    $message = " Updated Successfully";
+                }
+            } else {
+                $message = "No Changes In The User Name";
             }
 
-            $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
+
+
+
 
             //--------create email-------
             //$objEmailTemplate = new EmailTemplate();
@@ -312,104 +321,30 @@ class AuthController extends AdminController {
             //$this->adminModel->createRecordInTable($createarray, 'smtp_email');
             //---------create Email
 
-            $status = array('status' => 'success', 'message' => 'Login detail updateed Successfully');
+            $status = array('status' => $status, 'message' => $message);
         }
         echo json_encode($status);
         exit;
     }
 
-    public function updateNomineeDetail() {
-        $status = array('status' => 'error', 'message' => 'Unauthorised access');
-        if ($this->request->isAJAX()) {
-            $nomineename = $this->request->getPost('nomineename');
-            $nomineerelation = $this->request->getPost('nomineerelation');
-            $userid = base64_decode($this->request->getPost('encuser'));
-
-            $updarray = array('user_nominee_name' => $nomineename, 'user_nominee_relation' => $nomineerelation);
-
-            $this->adminModel->updateRecordInTable($updarray, 'user_detail', 'id_user', $userid);
-
-            //--------create email-------
-            //$objEmailTemplate = new EmailTemplate();
-            //$template = $objEmailTemplate->profileUpdationEmail($name);
-            //$createarray = array('smtp_email_content' => $template, 'smtp_email_type' => 'Profile update Intimation ', 'smtp_sender_email' => COMMUNICATION_EMAIL, 'smtp_target_emails' => $email);
-            //$this->adminModel->createRecordInTable($createarray, 'smtp_email');
-            //---------create Email
-
-            $status = array('status' => 'success', 'message' => 'Nominee detail updateed Successfully');
-        }
-        echo json_encode($status);
-        exit;
-    }
-
-    public function updateKycDetail() {
+    public function updateProfilePic() {
         $status = array('status' => 'error', 'message' => 'Unauthorised access');
         if ($this->request->isAJAX()) {
             $usercode = $this->request->getPost('usercode');
             $userdetaildata = array('updated_date_time' => date('Y-m-d H:i:s'));
-            if ($_FILES['addressproof']['error'] != 4) {
+            if ($_FILES['profilepic']['error'] != 4) {
                 $validationRule = [
                     'pimage' => [
-                        'rules' => 'mime_in[addressproof,image/jpg,image/jpeg,image/png,image/webp]'
-                        . '|max_size[addressproof,10000000]',
+                        'rules' => 'mime_in[profilepic,image/jpg,image/jpeg,image/png,image/webp]'
+                        . '|max_size[profilepic,10000000]',
                     ],
                 ];
                 if ($this->validate($validationRule)) {
-                    $img = $this->request->getFile('addressproof');
+                    $img = $this->request->getFile('profilepic');
                     if (!$img->hasMoved()) {
-                        $filename = $usercode . '_address.' . pathinfo($_FILES["addressproof"]["name"], PATHINFO_EXTENSION);
-                        $img->move('uploads/images/kyc/', $filename, true);
-                        $userdetaildata['kyc_address'] = $filename;
-                    }
-                }
-            }
-            if ($_FILES['pancopy']['error'] != 4) {
-                $validationRule = [
-                    'pimage' => [
-                        'rules' => 'mime_in[pancopy,image/jpg,image/jpeg,image/png,image/webp]'
-                        . '|max_size[pancopy,10000000]',
-                    ],
-                ];
-                if ($this->validate($validationRule)) {
-                    $img = $this->request->getFile('pancopy');
-                    if (!$img->hasMoved()) {
-                        $filename = $usercode . '_pan.' . pathinfo($_FILES["pancopy"]["name"], PATHINFO_EXTENSION);
-                        $img->move('uploads/images/kyc/', $filename, true);
-                        $userdetaildata['kyc_pan'] = $filename;
-                    }
-                }
-            }
-            if ($_FILES['userimage']['error'] != 4) {
-                $validationRule = [
-                    'pimage' => [
-                        'rules' => 'mime_in[userimage,image/jpg,image/jpeg,image/png,image/webp]'
-                        . '|max_size[userimage,10000000]',
-                    ],
-                ];
-                if ($this->validate($validationRule)) {
-                    $img = $this->request->getFile('userimage');
-                    if (!$img->hasMoved()) {
-                        $filename = $usercode . '_image.' . pathinfo($_FILES["userimage"]["name"], PATHINFO_EXTENSION);
-                        $img->move('uploads/images/kyc/', $filename, true);
-                        $userdetaildata['kyc_image'] = $filename;
-                    }
-                }
-            }
-            if (isset($_FILES['cancelcheque'])) {
-                if ($_FILES['cancelcheque']['error'] != 4) {
-                    $validationRule = [
-                        'pimage' => [
-                            'rules' => 'mime_in[cancelcheque,image/jpg,image/jpeg,image/png,image/webp]'
-                            . '|max_size[cancelcheque,10000000]',
-                        ],
-                    ];
-                    if ($this->validate($validationRule)) {
-                        $img = $this->request->getFile('cancelcheque');
-                        if (!$img->hasMoved()) {
-                            $filename = $usercode . '_cancelcheque.' . pathinfo($_FILES["cancelcheque"]["name"], PATHINFO_EXTENSION);
-                            $img->move('uploads/images/kyc/', $filename, true);
-                            $userdetaildata['kyc_cancel_cheque'] = $filename;
-                        }
+                        $filename = $usercode . '_profilepic.' . pathinfo($_FILES["profilepic"]["name"], PATHINFO_EXTENSION);
+                        $img->move('uploads/images/profilepic/', $filename, true);
+                        $userdetaildata['user_profile_pic'] = $filename;
                     }
                 }
             }
@@ -425,7 +360,7 @@ class AuthController extends AdminController {
             //$this->adminModel->createRecordInTable($createarray, 'smtp_email');
             //---------create Email
 
-            $status = array('status' => 'success', 'message' => 'KYC detail updateed Successfully');
+            $status = array('status' => 'success', 'message' => 'Profile Picture updateed Successfully');
         }
         echo json_encode($status);
         exit;
@@ -552,5 +487,4 @@ class AuthController extends AdminController {
             exit;
         }
     }
-
 }

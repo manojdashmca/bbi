@@ -35,4 +35,10 @@ if (in_array('dashboard', $ajs)) {
     <script src="<?= CUSTOMPATH ?>panelassets/libs/tooltips/stickytooltip.js"></script>
 <?php } if (in_array('ckeditor', $ajs)) { ?>
     <script src="<?= CUSTOMPATH ?>panelassets/libs/%40ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
+<?php }if (in_array('calendar', $ajs)) { ?>
+    <script src="<?= CUSTOMPATH ?>panelassets/libs/%40fullcalendar/core/main.min.js"></script>
+    <script src="<?= CUSTOMPATH ?>panelassets/libs/%40fullcalendar/bootstrap/main.min.js"></script>
+    <script src="<?= CUSTOMPATH ?>panelassets/libs/%40fullcalendar/daygrid/main.min.js"></script>
+    <script src="<?= CUSTOMPATH ?>panelassets/libs/%40fullcalendar/timegrid/main.min.js"></script>
+    <script src="<?= CUSTOMPATH ?>panelassets/libs/%40fullcalendar/interaction/main.min.js"></script>
 <?php } ?>

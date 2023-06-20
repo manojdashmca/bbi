@@ -41,9 +41,21 @@
             </a>
         </li>
         <li>
-            <a href="javascript:">
+                <a href="javascript: void(0);" class="has-arrow" aria-expanded="true">
+                    <i class="bx bx-receipt"></i>
+                    <span data-key="t-receipt">Slips</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    <li><a href="<?= CUSTOMPATH ?>thank-you-slip" data-key="t-allibo">Thank You Slip</a></li>
+                    <li><a href="<?= CUSTOMPATH ?>referral-slip" data-key="t-addibo">Referral Slip</a></li> 
+                    <li><a href="<?= CUSTOMPATH ?>one-to-one-slip" data-key="t-addibo">One To One Slip</a></li> 
+                    
+                </ul>
+            </li> 
+        <li>
+            <a href="<?= CUSTOMPATH ?>meeting-schedule">
                 <i class="far fa-calendar-alt"></i>
-                <span data-key="t-password">Meeting Schedule</span>
+                <span data-key="t-meeting">Meeting Schedule</span>
             </a>
         </li>
         <li>

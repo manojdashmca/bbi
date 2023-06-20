@@ -58,6 +58,7 @@ $routes->match(['get', 'post'], 'contact-form', 'Home::webContactForm');
 $routes->match(['get', 'post'], 'startamodule-form', 'Home::startaModuleForm');
 $routes->get('members-in-my-module', 'Home::memberInModule');
 $routes->post('members-in-my-module-data', 'Home::memberInModuleData');
+$routes->get('meeting-schedule', 'Home::meetingSchedule');
 
 //----------------------------------------
 $routes->set404Override(function () {
