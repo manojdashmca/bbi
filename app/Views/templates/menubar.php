@@ -25,19 +25,19 @@
         <li>
             <a href="<?= CUSTOMPATH ?>members-in-my-module">
                 <i class=" fas fa-users"></i>
-                <span data-key="t-password">Members In My Module</span>
+                <span data-key="t-member">Members In My Module</span>
             </a>
         </li>
         <li>
             <a href="javascript:">
                 <i class=" fas fa-chart-line"></i>
-                <span data-key="t-password">My Performance</span>
+                <span data-key="t-performance">My Performance</span>
             </a>
         </li>
         <li>
             <a href="<?= CUSTOMPATH ?>payments">
                 <i class="fas fa-money-bill-alt"></i>
-                <span data-key="t-password">Payment</span>
+                <span data-key="t-payments">Payment</span>
             </a>
         </li>
         <li>
@@ -53,15 +53,15 @@
                 </ul>
             </li> 
         <li>
-            <a href="<?= CUSTOMPATH ?>meeting-schedule">
+            <a href="#">
                 <i class="far fa-calendar-alt"></i>
                 <span data-key="t-meeting">Meeting Schedule</span>
             </a>
         </li>
         <li>
             <a href="javascript:">
-                <i class="mdi-coffee"></i>
-                <span data-key="t-password">Events</span>
+                <i class="fas fa-certificate"></i>
+                <span data-key="t-events">Events</span>
             </a>
         </li>
         <li>
