@@ -724,4 +724,113 @@ class Home extends WebController {
                 . view('users/meetingSchedule', $this->data)
                 . view('templates/footer', $this->data);
     }
+
+    public function thankYouSlip() {
+        $this->data['title'] = "Thank You Slip";
+        $this->data['js'] = 'datatable,validation,alertify';
+        $this->data['css'] = 'datatable,validation,alertify';
+        $this->data['includefile'] = 'users/thankYouSlip.php';
+        $this->data['given'] = $this->webModel->getThankYouGivenData(session()->get('muserid'));
+        $this->data['receive'] = $this->webModel->getThankYouReceiveData(session()->get('muserid'));
+        $this->data['member'] = $this->webModel->MyModuleMember(session()->get('mmoduleid'));
+        return view('templates/header', $this->data)
+                . view('users/thankyouSlip', $this->data)
+                . view('templates/footer', $this->data);
+    }
+
+    public function submitThankyou() {
+
+        $data = array('status' => 'error', 'message' => 'Unauthorised Access');
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $thankyouto = trim($this->request->getPost('thankyouto'));
+            $amount = trim($this->request->getPost('amount'));
+            $bustype = trim($this->request->getPost('bustype'));
+            $reftype = trim($this->request->getPost('reftype'));
+            $comment = $this->request->getPost('comment');
+            $createarray = array('given_user_id' => session()->get('muserid'),
+                'received_user_id' => $thankyouto,
+                'tys_amount' => $amount,
+                'tys_business_type' => $bustype,
+                'tys_referral_type' => $reftype,
+                'tys_comment' => $comment);
+            $this->blankModel->createRecordInTable($createarray, 'thank_you_slip');
+            $data = array('status' => 'success', 'message' => 'Thank You Given Successfully');
+        }
+        echo json_encode($data);
+        die();
+    }
+    public function referralSlip() {
+        $this->data['title'] = "Thank You Slip";
+        $this->data['js'] = 'datatable,validation,alertify';
+        $this->data['css'] = 'datatable,validation,alertify';
+        $this->data['includefile'] = 'users/referralSlip.php';
+        $this->data['given'] = $this->webModel->getReferralGivenData(session()->get('muserid'));
+        $this->data['receive'] = $this->webModel->getReferralReceiveData(session()->get('muserid'));
+        $this->data['member'] = $this->webModel->MyModuleMember(session()->get('mmoduleid'));
+        return view('templates/header', $this->data)
+                . view('users/referralSlip', $this->data)
+                . view('templates/footer', $this->data);
+    }
+
+    public function submitReferral() {
+
+        $data = array('status' => 'error', 'message' => 'Unauthorised Access');
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $referralto = trim($this->request->getPost('referralto'));
+            $referralname = trim($this->request->getPost('referralname'));
+            $refstatus = trim($this->request->getPost('refstatus'));
+            $reftype = trim($this->request->getPost('reftype'));
+            $comment = $this->request->getPost('comment');
+            $telephone = $this->request->getPost('telephone');
+            $email = $this->request->getPost('email');
+            $address = $this->request->getPost('address');
+            $createarray = array('given_user_id' => session()->get('muserid'),
+                'received_user_id' => $referralto,
+                'referral_name' => $referralname,
+                'ref_status_one' => $refstatus,
+                'referral_type' => $reftype,
+                'ref_comment' => $comment,
+                'ref_email' => $email,
+                'ref_telephone' => $telephone,
+                'ref_address' => $address);
+            $this->blankModel->createRecordInTable($createarray, 'referral_slip');
+            $data = array('status' => 'success', 'message' => 'Referral Given Successfully');
+        }
+        echo json_encode($data);
+        die();
+    }
+    public function onetooneSlip() {
+        $this->data['title'] = "Thank You Slip";
+        $this->data['js'] = 'datatable,validation,alertify';
+        $this->data['css'] = 'datatable,validation,alertify';
+        $this->data['includefile'] = 'users/thankYouSlip.php';
+        $this->data['given'] = $this->webModel->getThankYouGivenData(session()->get('muserid'));
+        $this->data['receive'] = $this->webModel->getThankYouReceiveData(session()->get('muserid'));
+        $this->data['member'] = $this->webModel->MyModuleMember(session()->get('mmoduleid'));
+        return view('templates/header', $this->data)
+                . view('users/thankyouSlip', $this->data)
+                . view('templates/footer', $this->data);
+    }
+
+    public function submitOntoone() {
+
+        $data = array('status' => 'error', 'message' => 'Unauthorised Access');
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $thankyouto = trim($this->request->getPost('thankyouto'));
+            $amount = trim($this->request->getPost('amount'));
+            $bustype = trim($this->request->getPost('bustype'));
+            $reftype = trim($this->request->getPost('reftype'));
+            $comment = $this->request->getPost('comment');
+            $createarray = array('given_user_id' => session()->get('muserid'),
+                'received_user_id' => $thankyouto,
+                'tys_amount' => $amount,
+                'tys_business_type' => $bustype,
+                'tys_referral_type' => $reftype,
+                'tys_comment' => $comment);
+            $this->blankModel->createRecordInTable($createarray, 'thank_you_slip');
+            $data = array('status' => 'success', 'message' => 'Thank You Given Successfully');
+        }
+        echo json_encode($data);
+        die();
+    }
 }

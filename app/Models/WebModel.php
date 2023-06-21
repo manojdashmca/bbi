@@ -29,11 +29,11 @@ class WebModel extends Model {
         $result = $this->db->query($sql);
         return $result->getResult();
     }
-    
+
     public function selectIBO($data, $ordercolumn = 7, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
         try {
             $return = array();
-            $columnarray = array('a.id_user', 'a.user_name', 'a.user_city', 'a.user_mobile','segment_name','category_name', 'a.user_create_date');
+            $columnarray = array('a.id_user', 'a.user_name', 'a.user_city', 'a.user_mobile', 'segment_name', 'category_name', 'a.user_create_date');
             $sql = "select SQL_CALC_FOUND_ROWS distinct(a.id_user),a.user_name, a.user_city,a.user_mobile ,
                 segment_name,category_name,date_format(a.user_create_date,'%d-%m-%Y %H:%i:%s') createedon,
                 CASE a.user_status WHEN '0' THEN 'In Active'
@@ -66,4 +66,71 @@ class WebModel extends Model {
         return $return;
     }
 
+    public function getThankYouGivenData($user) {
+        $sql = "select date_format(tys_date,'%d-%m-%Y') date,tys_amount,"
+                . "if(tys_business_type='1','New','Repeat') businesstype,"
+                . "if(tys_referral_type='1','Inside','Outside') referraltype,"
+                . "CASE tys_status WHEN '1' THEN 'Created'"
+                . "WHEN '2' THEN 'Completed'"
+                . "WHEN '3' THEN 'Denied' END as status,"
+                . "user_name,tys_comment "
+                . " from thank_you_slip join user_detail on received_user_id=id_user "
+                . "where given_user_id='$user' order by tys_date desc";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+
+    public function getThankYouReceiveData($user) {
+        $sql = "select date_format(tys_date,'%d-%m-%Y') date,tys_amount,"
+                . "if(tys_business_type='1','New','Repeat') businesstype,"
+                . "if(tys_referral_type='1','Inside','Outside') referraltype,"
+                . "CASE tys_status WHEN '1' THEN 'Created'"
+                . "WHEN '2' THEN 'Completed'"
+                . "WHEN '3' THEN 'Denied' END as status,"
+                . "user_name,tys_comment "
+                . " from thank_you_slip join user_detail on given_user_id=id_user "
+                . "where received_user_id='$user' order by tys_date desc";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+
+    public function MyModuleMember($moduleid) {
+        $sql = "select id_user,user_name from user_detail where module_id_module='$moduleid' order by user_name asc";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+    
+    public function getReferralGivenData($user) {
+        $sql = "select date_format(rfs_date,'%d-%m-%Y') date,referral_name,"                
+                . "if(referral_type='1','Inside','Outside') referraltype,"
+                . "CASE status WHEN '1' THEN 'Created'"
+                . "WHEN '2' THEN 'Completed'"
+                . "WHEN '3' THEN 'Denied' END as status,"
+                . "user_name,ref_comment,ref_status_one,ref_address,"
+                . "ref_telephone,ref_email,"
+                . "CASE ref_tracking_status WHEN '1' THEN 'Not Contacted Yet'"
+                . "WHEN '2' THEN 'Completed'"
+                . "WHEN '3' THEN 'Now Switable' END as trackstatus "
+                . " from referral_slip join user_detail on received_user_id=id_user "
+                . "where given_user_id='$user' order by rfs_date desc";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+
+    public function getReferralReceiveData($user) {
+        $sql = "select date_format(rfs_date,'%d-%m-%Y') date,referral_name,"                
+                . "if(referral_type='1','Inside','Outside') referraltype,"
+                . "CASE status WHEN '1' THEN 'Created'"
+                . "WHEN '2' THEN 'Completed'"
+                . "WHEN '3' THEN 'Denied' END as status,"
+                . "user_name,ref_comment,ref_status_one,ref_address,"
+                . "ref_telephone,ref_email,"
+                . "CASE ref_tracking_status WHEN '1' THEN 'Not Contacted Yet'"
+                . "WHEN '2' THEN 'Completed'"
+                . "WHEN '3' THEN 'Now Switable' END as trackstatus "
+                . " from referral_slip join user_detail on given_user_id=id_user "
+                . "where received_user_id='$user' order by rfs_date desc";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
 }

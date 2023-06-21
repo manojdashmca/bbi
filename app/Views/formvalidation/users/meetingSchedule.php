@@ -22,7 +22,7 @@
                 },
             });
             (e = [
-                {title: "All Day Event", start: new Date(e, d, 1)},
+                {title: "All Day Event", start: new Date(2023, 6, 1)},
                 {title: "Long Event", start: new Date(e, d, s - 5), end: new Date(e, d, s - 2), className: "bg-warning"},
                 {id: 999, title: "Repeating Event", start: new Date(e, d, s - 3, 16, 0), allDay: !1, className: "bg-info"},
                 {id: 999, title: "Repeating Event", start: new Date(e, d, s + 4, 16, 0), allDay: !1, className: "bg-primary"},

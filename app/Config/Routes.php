@@ -59,6 +59,14 @@ $routes->match(['get', 'post'], 'startamodule-form', 'Home::startaModuleForm');
 $routes->get('members-in-my-module', 'Home::memberInModule');
 $routes->post('members-in-my-module-data', 'Home::memberInModuleData');
 $routes->get('meeting-schedule', 'Home::meetingSchedule');
+$routes->get('thank-you-slip', 'Home::thankYouSlip');
+$routes->post('submit-thankyou', 'Home::submitThankyou');
+$routes->get('meeting-schedule', 'Home::meetingSchedule');
+$routes->get('meeting-schedule', 'Home::meetingSchedule');
+$routes->get('referral-slip', 'Home::referralSlip');
+$routes->post('submit-referral', 'Home::submitReferral');
+$routes->get('one-to-one-slip', 'Home::onetooneSlip');
+$routes->post('submit-ontoone', 'Home::submitOntoone');
 
 //----------------------------------------
 $routes->set404Override(function () {
