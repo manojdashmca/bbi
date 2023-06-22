@@ -46,7 +46,7 @@ $routes->get('user-dashboard', 'Home::dashboard');
 $routes->get('get-dashboard-data', 'Home::getDashBoardData');
 $routes->get('terms-and-conditions', 'Home::termsandcondition');
 
-$routes->get('my-sponsor', 'Home::mysponsor');
+#$routes->get('my-sponsor', 'Home::mysponsor');
 $routes->post('my-sponsorship-data', 'Home::mySponsorshipData');
 $routes->get('my-profile', 'Home::myprofile');
 $routes->get('my-payout', 'Home::mypayout');

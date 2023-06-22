@@ -319,9 +319,9 @@ class IBOController extends AdminController {
             $return['sponsor_id'] = $result->id_user;
             $return['sponsor_name'] = $result->user_name;
             $return['status'] = "success";
-            $return['message'] = "Sponsor Found";
+            $return['message'] = "Referred Member Found";
         } else {
-            $return['message'] = "IBO Not found";
+            $return['message'] = "Referred Member Not Found";
             $return['status'] = "error";
             $return['id_user'] = 0;
         }

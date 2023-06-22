@@ -10,12 +10,12 @@
                 <span data-key="t-dashboard">Dashboard</span>
             </a>
         </li>        
-        <li>
+<!--        <li>
             <a href="<?= CUSTOMPATH ?>my-sponsor">
                 <i class="dripicons-network-3"></i>
                 <span data-key="t-treeview">My Sponsor</span>
             </a>
-        </li>
+        </li>-->
         <li>
             <a href="<?= CUSTOMPATH ?>my-payout">
                 <i class="bx bx-rupee"></i>
@@ -53,7 +53,7 @@
                 </ul>
             </li> 
         <li>
-            <a href="<?= CUSTOMPATH ?>meeting-schedule">
+            <a href="#">
                 <i class="far fa-calendar-alt"></i>
                 <span data-key="t-meeting">Meeting Schedule</span>
             </a>

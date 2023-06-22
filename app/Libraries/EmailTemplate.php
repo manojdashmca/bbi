@@ -28,7 +28,7 @@ class EmailTemplate {
                         </head>
                         <body>
                             <table width="750" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:12px;" cellpadding="0" cellspacing="0">
-                                <tr style="background: url(' . base_url() . '/mailer/header_bg.jpg); height:90px; width:100%">
+                                <tr>
                                     <td  width="310" align="left" style="padding-left:10px;"><img height="46" src="' . base_url() . '/mailer/logo.png"/></td>
                                     <td width="430" align="right" style="padding-right:10px;">
                                         E Square Mall, Office No 212,<br>
@@ -68,7 +68,7 @@ class EmailTemplate {
                     <tr>
                         <td colspan="2"><br/>This email was sent from an email address that can\'t receive emails. Please don\'t reply to this email. <i>The information in this e-mail may be confidential and/or legally privileged.  It is intended solely for the use of the addressee.  Access to this e-mail by anyone else is unauthorized.  If you are not the intended recipient, any disclosure, copying, distribution or any action taken or omitted to be taken in reliance on it, is prohibited and may be unlawful</i></td>
                     </tr>
-                    <td style="background: url(' . base_url() . '/mailer/footer_bg.png) repeat-x; height:60px; width:100%"  colspan="2"  ><span style="float:left; padding-left:20px; margin-top:35px;">All right reserved, SSK Bharat BBI ' . date('Y') . '</span>
+                    <td colspan="2"  ><span style="float:left; padding-left:20px; margin-top:35px;">All right reserved, SSK Bharat BBI ' . date('Y') . '</span>
                         <span style="float:right; padding-right:20px; padding-top:15px;">
                             <p style="text-align:center">
                                     <!--Facebook icon-->

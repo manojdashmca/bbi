@@ -19,11 +19,11 @@ class CronController extends AdminController {
     }
 
     /*     * ****************************** Jobs Detail 
-     * 1-Delete Old Files Older Than 15 Days
+     * 1-Send Pending Emails available in the email table
      * Class- Cron
-     * Method-  deleteLogs
-     * curl --silent http://www.sskbbi.co.in/delete-system-log
-     * Frequency- Once Per Day(Mid Night 12:00 AM)
+     * Method-  sendPendingEmails
+     * curl --silent https://www.sskbbi.co.in/send-pending-emails
+     * Frequency- Every Minute
      */
 
     public function sendPendingEmails() {
@@ -39,6 +39,14 @@ class CronController extends AdminController {
         }
     }
 
+    /*     * ****************************** Jobs Detail 
+     * 1-delete system logs which is 7 days older available in the writable/logs writable/session and writable/debug directory
+     * Class- Cron
+     * Method-  deleteSystemLogs
+     * curl --silent https://www.sskbbi.co.in/delete-system-log
+     * Frequency- Once Per Day(Mid Night 12:00 AM)
+     */
+
     public function deleteSystemLogs() {
         try {
             $counter = 0;
@@ -53,8 +61,6 @@ class CronController extends AdminController {
                     }
                 }
             }
-
-            $counter = 0;
             $logdir = APPPATH . "../writable/session";
             $files = array_values(array_diff(scandir($logdir), array('..', '.', 'CVS')));
             foreach ($files as $fileInfo) {
@@ -67,7 +73,6 @@ class CronController extends AdminController {
                 }
             }
 
-            $counter = 0;
             $logdir = APPPATH . "../writable/debugbar";
             $files = array_values(array_diff(scandir($logdir), array('..', '.', 'CVS')));
             foreach ($files as $fileInfo) {
@@ -84,6 +89,14 @@ class CronController extends AdminController {
         }
     }
 
+    /*     * ****************************** Jobs Detail 
+     * 1-delete the email attachments available in uploads/emailattachments directory
+     * Class- Cron
+     * Method-  deleteEmailAttachment
+     * curl --silent https://www.sskbbi.co.in/delete-email-attachment
+     * Frequency- Once Per Day(Mid Night 12:00 AM)
+     */
+
     public function deleteEmailAttachment() {
         try {
             $counter = 0;
@@ -98,6 +111,92 @@ class CronController extends AdminController {
                     }
                 }
             }
+        } catch (Exception $e) {
+            
+        }
+    }
+
+    /*     * ****************************** Jobs Detail 
+     * 1-Confirm the unconfirmed transaction
+     * Class- Cron
+     * Method-  confirmTransaction
+     * curl --silent https://www.sskbbi.co.in/confirm-transaction
+     * Frequency- Every five minutes
+     */
+
+    public function confirmTransaction() {
+        try {
+            $this->createCron('Confirm Transaction', 'Cron Started');
+            $count = 0;
+            $payoutdata = $this->cronModel->getLastPayoutId();
+            $payoutid = $payoutdata->payout_date_id;
+            $trndata = $this->cronModel->getNoneConfirmedTransaction();
+            //----level distribution----
+            $srconsultingmember = $this->cronModel->getSrConsultingMember();
+            $consultingmember = $this->cronModel->getConsultingMember();
+            $nationalmember = $this->cronModel->getNationalMember();
+            $statemember = $this->cronModel->getStateMember();
+            $zonemember = $this->cronModel->getZoneMember();
+            $srcmembershare = $cmembershare = $nmembershare = $smembershare = $zmembershare = 0;
+            if (!empty($srconsultingmember)) {
+                $srcmembershare = floor(1000 / count($srconsultingmember));
+            }
+            if (!empty($consultingmember)) {
+                $cmembershare = floor(1000 / count($consultingmember));
+            }
+            if (!empty($nationalmember)) {
+                $nmembershare = floor(1000 / count($nationalmember));
+            }
+            if (!empty($statemember)) {
+                $smembershare = floor(1000 / count($statemember));
+            }
+            if (!empty($zonemember)) {
+                $zmembershare = floor(1000 / count($zonemember));
+            }
+            for ($x = 0; $x < count($trndata); $x++) {
+                $trnid = $trndata[$x]->mpd_id;
+                $moduledirector = $trndata[$x]->director_id;
+                $moduleassodirector = $trndata[$x]->associate_director_id;
+                $moduleasdirector = $trndata[$x]->assistant_director_id;
+                $sponsoruser = $trndata[$x]->sponsor_user_id;
+
+                $this->cronModel->transStart();
+                if (!empty($moduledirector)) {
+                    $this->createIncome($moduledirector, $payoutid, $trnid, 1, 3000);
+                }if (!empty($moduleassodirector)) {
+                    $this->createIncome($moduleassodirector, $payoutid, $trnid, 2, 500);
+                }if (!empty($moduleasdirector)) {
+                    $this->createIncome($moduleasdirector, $payoutid, $trnid, 3, 500);
+                }
+                $this->createIncome($sponsoruser, $payoutid, $trnid, 4, 3000);
+                for ($src = 0; $src < count($srconsultingmember); $src++) {
+                    $this->createIncome($srconsultingmember[$src]->user_id_user, $payoutid, $trnid, 5, $srcmembershare);
+                }
+                for ($c = 0; $c < count($consultingmember); $c++) {
+                    $this->createIncome($consultingmember[$c]->user_id_user, $payoutid, $trnid, 6, $cmembershare);
+                }
+                for ($n = 0; $n < count($nationalmember); $n++) {
+                    $this->createIncome($nationalmember[$n]->user_id_user, $payoutid, $trnid, 7, $nmembershare);
+                }
+                for ($st = 0; $st < count($statemember); $st++) {
+                    $this->createIncome($statemember[$st]->user_id_user, $payoutid, $trnid, 8, $smembershare);
+                }
+                for ($z = 0; $z < count($zonemember); $z++) {
+                    $this->createIncome($zonemember[$z]->user_id_user, $payoutid, $trnid, 9, $zmembershare);
+                }
+                $this->createIncome(2, $payoutid, $trnid, 10, 500);
+                $invupdatearray = array("payout_status" => 1);
+                $this->cronModel->updateRecordInTable($invupdatearray, 'ibo_joining_payment_detail', 'mpd_id', $trnid);
+
+                $this->cronModel->transComplete();
+                if ($this->blankModel->transStatus() === false) {
+                    $this->blankModel->transRollback();
+                } else {
+                    $count++;
+                    $this->blankModel->transCommit();
+                }
+            }
+            $this->createCron('Confirm Transaction', 'Cron Closed', $count . " Transactions Confirmed");
         } catch (Exception $e) {
             
         }
@@ -131,12 +230,40 @@ class CronController extends AdminController {
         }
     }
 
+    /* 11- Gererate weekly Payout
+     * Class- Cron
+     * Method-generateWeeklyPayout
+     * curl --silent http://www.sskbbi.co.in/confirm-transaction
+     * frequency- Months 1st,8th,16th,23rd(On the payoutdate at 12:05 AM)
+     */
+
+    public function generatePayout() {
+        $this->createCron('Generate Payout', 'Cron Started');
+        $payoutd = $this->cronModel->getLastPayoutId();
+        $payoutid = $payoutd->payout_date_id;
+        $payoutdata = $this->cronModel->getMemberIncomeByPayoutid($payoutid);
+        $count = 0;
+        for ($x = 0; $x < count($payoutdata); $x++) {
+            $this->createOrUpdatePayoutRecord($payoutid, $payoutdata[$x]->user_id_user, $payoutdata[$x]->income_type, $payoutdata[$x]->amount);
+            $this->cronModel->updateMemberIncomeRecord($payoutid, $payoutdata[$x]->user_id_user, $payoutdata[$x]->income_type);
+            $count++;
+        }
+
+        $this->createCron('Generate Payout', 'Cron Closed', $count . " Payout Released");
+    }
+
+    public function updateGrossIncome() {
+        $payoutd = $this->cronModel->getLastPayoutId();
+        $payoutid = $payoutd->payout_date_id;
+        $this->cronModel->updateGrossPayout($payoutid);
+    }
+
     /*
 
-      12- Gererate weekly Payout Repurchase
+      12- Gererate Monthly Payout date
      * Class- Cron
-     * Method-generateWeeklyPayoutRepurchase
-     * curl --silent http://www.sskbbi.co.in/create-payout-date/$1
+     * Method-createPayoutDate
+     * curl --silent http://www.sskbbi.co.in/create-payout-date
      * frequency- Months 1st,8th,16th,23rd(On the payoutdate at 12:10 AM)
      *
      */
@@ -159,61 +286,7 @@ class CronController extends AdminController {
         $this->createCron('Creating Daily Payout Date', 'Cron Closed');
     }
 
-    /* 11- Gererate weekly Payout
-     * Class- Cron
-     * Method-generateWeeklyPayout
-     * curl --silent http://www.sskbbi.co.in/confirm-transaction
-     * frequency- Months 1st,8th,16th,23rd(On the payoutdate at 12:05 AM)
-     */
-
-    public function confirmTransaction() {
-        try {
-            $this->createCron('Confirm Transaction', 'Cron Started');
-            $count = 0;
-            $payoutdata = $this->cronModel->getLastPayoutId();
-            $payoutid = $payoutdata->payout_date_id;
-            $trndata = $this->cronModel->getNoneConfirmedTransaction();
-
-            $srconsultingboard = $this->cronModel->getSrConsultingMember();
-            if (!empty($srconsultingboard)) {
-                $srmembershare = floor(500 / count($srconsultingboard));
-            } else {
-                $srmembershare = 0;
-            }
-            for ($x = 0; $x < count($trndata); $x++) {
-                $trnid = $trndata[$x]->mpd_id;
-                $moduledirector = $trndata[$x]->director_id;
-                $moduleasdirector = $trndata[$x]->assistant_director_id;
-                $moduleassodirector = $trndata[$x]->associate_director_id;
-                $sponsoruser = $trndata[$x]->sponsor_user_id;
-
-                $this->cronModel->transStart();
-
-                $this->createIncome($moduledirector, $payoutid, $trnid, 1, 3000);
-                $this->createIncome($moduleassodirector, $payoutid, $trnid, 2, 500);
-                $this->createIncome($moduleasdirector, $payoutid, $trnid, 3, 500);
-                $this->createIncome($sponsoruser, $payoutid, $trnid, 4, 3000);
-                for ($src = 0; $src < count($srconsultingboard); $src++) {
-                    $this->createIncome($srconsultingboard[$src]->user_id_user, $payoutid, $trnid, 5, $srmembershare);
-                }
-                $this->createIncome(2, $payoutid, $trnid, 10, 500);
-                $invupdatearray = array("payout_status" => 1);
-                $this->cronModel->updateRecordInTable($invupdatearray, 'ibo_joining_payment_detail', 'mpd_id', $trnid);
-
-                $this->cronModel->transComplete();
-                if ($this->blankModel->transStatus() === false) {
-                    $this->blankModel->transRollback();
-                } else {
-                    $count++;
-                    $this->blankModel->transCommit();
-                }
-            }
-            $this->createCron('Confirm Transaction', 'Cron Closed', $count . " Transactions Confirmed");
-        } catch (Exception $e) {
-            
-        }
-    }
-
+    //------------------internal function-------
     protected function createIncome($incomemember, $payoutid, $trnid, $inctype, $incamount) {
         $incomearray = array(
             "user_id_user" => $incomemember,
@@ -223,21 +296,6 @@ class CronController extends AdminController {
             "income_amount" => $incamount
         );
         $this->cronModel->createRecordInTable($incomearray, 'member_income');
-    }
-
-    public function generatePayout() {
-        $this->createCron('Generate Payout', 'Cron Started');
-        $payoutd = $this->cronModel->getLastPayoutId();
-        $payoutid = $payoutd->payout_date_id;
-        $payoutdata = $this->cronModel->getMemberIncomeByPayoutid($payoutid);
-        $count = 0;
-        for ($x = 0; $x < count($payoutdata); $x++) {
-            $this->createOrUpdatePayoutRecord($payoutid, $payoutdata[$x]->user_id_user, $payoutdata[$x]->income_type, $payoutdata[$x]->amount);
-            $this->cronModel->updateMemberIncomeRecord($payoutid, $payoutdata[$x]->user_id_user, $payoutdata[$x]->income_type);
-            $count++;
-        }
-
-        $this->createCron('Generate Payout', 'Cron Closed', $count . " Payout Released");
     }
 
     protected function createOrUpdatePayoutRecord($payoutid, $userid, $incometype, $amount) {
@@ -283,11 +341,4 @@ class CronController extends AdminController {
             $this->cronModel->createRecordInTable($data, 'monthly_payout');
         }
     }
-
-    public function updateGrossIncome() {
-        $payoutd = $this->cronModel->getLastPayoutId();
-        $payoutid = $payoutd->payout_date_id;
-        $this->cronModel->updateGrossPayout($payoutid);
-    }
-
 }

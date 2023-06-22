@@ -32,6 +32,30 @@ class CronModel extends Model {
         $result = $this->db->query($sql);
         return $result->getResult();
     }
+    
+    public function getConsultingMember() {
+        $sql = "select user_id_user  from team_consulting_board where status=1";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+    
+    public function getNationalMember() {
+        $sql = "select user_id_user  from team_national where status=1";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+    
+    public function getStateMember() {
+        $sql = "select user_id_user  from team_state where status=1";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+    
+    public function getZoneMember() {
+        $sql = "select user_id_user  from team_zone where status=1";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
 
     public function getLastPayoutId($type = 1) {
         $sql = "select *  from payout_date where payout_type='$type' order by payout_date_id desc limit 0,1";
@@ -54,10 +78,10 @@ class CronModel extends Model {
     public function updateGrossPayout($payoutid) {
         $sql = "UPDATE monthly_payout set gross_income=md_income+ma_income+mas_income+referrer_income+srcab_income+cab_income+nt_income+st_income+zt_income+bbi_head_income where payout_id_payout=$payoutid";
         $this->db->query($sql);
-        $sql1 = "UPDATE monthly_payout set tds_deducted=gross_income*10/100 where payout_id_payout=$payoutid";
+        $sql1 = "UPDATE monthly_payout set tds_deducted=gross_income*10/100,net_income=gross_income-(gross_income*10/100) where payout_id_payout=$payoutid";
         $this->db->query($sql1);
-        $sql2 = "UPDATE monthly_payout set net_income=gross_income-tds_deducted where payout_id_payout=$payoutid";
-        $this->db->query($sql2);
+        //$sql2 = "UPDATE monthly_payout set net_income=gross_income-tds_deducted where payout_id_payout=$payoutid";
+        //$this->db->query($sql2);
     }
 
 }

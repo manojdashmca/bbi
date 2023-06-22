@@ -15,12 +15,12 @@
                     s = e.getDate(),
                     d = e.getMonth(),
                     e = e.getFullYear();
-            new FullCalendarInteraction.Draggable(document.getElementById("external-events"), {
-                itemSelector: ".external-event",
-                eventData: function (e) {
-                    return {title: e.innerText, className: v(e).data("class")};
-                },
-            });
+//            new FullCalendarInteraction.Draggable(document.getElementById("external-events"), {
+//                itemSelector: ".external-event",
+//                eventData: function (e) {
+//                    return {title: e.innerText, className: v(e).data("class")};
+//                },
+//            });
             (e = [
                 {title: "All Day Event", start: new Date(2023, 6, 1)},
                 {title: "Long Event", start: new Date(e, d, s - 5), end: new Date(e, d, s - 2), className: "bg-warning"},
@@ -40,7 +40,8 @@
                 plugins: ["bootstrap", "interaction", "dayGrid", "timeGrid"],
                 editable: !0,
                 droppable: !0,
-                selectable: !0,
+                selectable: !0,                
+                eventStartEditable: false,
                 defaultView: "dayGridMonth",
                 themeSystem: "bootstrap",
                 header: {left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"},

@@ -114,14 +114,17 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->post("check-email", "AuthController::checkemail");
 
     //----------------------------Cron------------------    
+    $routes->get("send-pending-emails", "CronController::sendPendingEmails");
     $routes->get("delete-system-log", "CronController::deleteSystemLogs");
+    $routes->get("delete-email-attachment", "CronController::deleteEmailAttachment");
+    $routes->get("confirm-transaction", "CronController::confirmTransaction");
     $routes->get("create-payout-date", "CronController::createPayoutDate");
     $routes->get("update-sync-status/(:any)", "CronController::updateSyncStatus/$1");
-    $routes->get("confirm-transaction", "CronController::confirmTransaction");
+    
     $routes->get("generate-payout", "CronController::generatePayout");
     $routes->get("update-gross-income", "CronController::updateGrossIncome");
-    $routes->get("send-pending-emails", "CronController::sendPendingEmails");
-    $routes->get("delete-email-attachment", "CronController::deleteEmailAttachment");
+    
+    
 
 //    $routes->set404Override(function () {
 //        return view('\Modules\Admin\Views\auth\404');
