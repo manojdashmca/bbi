@@ -48,7 +48,7 @@
                 <ul class="sub-menu" aria-expanded="false">
                     <li><a href="<?= CUSTOMPATH ?>thank-you-slip" data-key="t-allibo">Thank You Slip</a></li>
                     <li><a href="<?= CUSTOMPATH ?>referral-slip" data-key="t-addibo">Referral Slip</a></li> 
-<!--                    <li><a href="<?= CUSTOMPATH ?>one-to-one-slip" data-key="t-addibo">One To One Slip</a></li> -->
+                    <li><a href="<?= CUSTOMPATH ?>one-to-one-slip" data-key="t-addibo">One To One Slip</a></li> 
                     
                 </ul>
             </li> 

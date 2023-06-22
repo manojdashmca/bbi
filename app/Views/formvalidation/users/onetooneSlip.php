@@ -1,37 +1,37 @@
 <script>
     $(document).ready(function () {
-        //flatpickr("#daterange", {mode: "range", dateFormat: "d-m-Y"});
+        flatpickr("#date", {dateFormat: "d-m-Y"});
         //new Choices("#status", {removeItemButton: !0});
         //bindDatatable();
         $('#received').DataTable();
         $('#given').DataTable();
-        $('#thankyouadd').formValidation({
+        $('#onetooneadd').formValidation({
             message: 'This value is not valid',
             icon: {
             },
             fields: {
-                thankyouto: {
+                meetwith: {
                     validators: {
                         notEmpty: {
-                            message: "Select Receiver User"
+                            message: "Select Meet with"
                         }
                     }
-                }, amount: {
+                }, location: {
                     validators: {
                         notEmpty: {
-                            message: "Referral Amount"
+                            message: "Enter Meet Location"
                         }
                     }
-                }, bustype: {
+                }, topic: {
                     validators: {
                         notEmpty: {
-                            message: "Select Business Type"
+                            message: "Enter Topic discussed"
                         }
                     }
-                }, reftype: {
+                }, date: {
                     validators: {
                         notEmpty: {
-                            message: "Select Referral Type"
+                            message: "Enter Meet date"
                         }
                     }
                 }
@@ -39,20 +39,19 @@
         }).on('success.form.fv', function (e) {
             // Prevent form submission
             e.preventDefault();
-            createThankYouCard();
+            createOneToOneCard();
         });
     });
 
-    function createThankYouCard() {
-        var thankyouto = $("#thankyouto").val();
-        var amount = $("#amount").val();
-        var bustype = $("#bustype").val();
-        var reftype = $("#reftype").val();
-        var comment = $("#comment").val();
+    function createOneToOneCard() {
+        var meetwith = $("#meetwith").val();
+        var location = $("#location").val();
+        var topic = $("#topic").val();
+        var date = $("#date").val();        
         $.ajax({
             type: "POST",
-            url: '<?= CUSTOMPATH ?>submit-thankyou',
-            data: {thankyouto: thankyouto, amount: amount, bustype: bustype,reftype:reftype,comment:comment},
+            url: '<?= CUSTOMPATH ?>submit-ontoone',
+            data: {meetwith: meetwith, location: location, topic: topic, date: date},
             success: function (data) {
                 var jsonData = JSON.parse(data);
                 if (jsonData.status == 'success') {
@@ -61,7 +60,7 @@
                 } else
                 {
                     alertify.error(jsonData.message);
-                    $("#thankyouadd").data('formValidation').resetForm();
+                    $("#onetooneadd").data('formValidation').resetForm();
                 }
             }
         });

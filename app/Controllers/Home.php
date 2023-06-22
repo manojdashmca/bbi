@@ -759,6 +759,7 @@ class Home extends WebController {
         echo json_encode($data);
         die();
     }
+
     public function referralSlip() {
         $this->data['title'] = "Thank You Slip";
         $this->data['js'] = 'datatable,validation,alertify';
@@ -799,16 +800,17 @@ class Home extends WebController {
         echo json_encode($data);
         die();
     }
+
     public function onetooneSlip() {
         $this->data['title'] = "Thank You Slip";
-        $this->data['js'] = 'datatable,validation,alertify';
-        $this->data['css'] = 'datatable,validation,alertify';
-        $this->data['includefile'] = 'users/thankYouSlip.php';
-        $this->data['given'] = $this->webModel->getThankYouGivenData(session()->get('muserid'));
-        $this->data['receive'] = $this->webModel->getThankYouReceiveData(session()->get('muserid'));
+        $this->data['js'] = 'flatpickr,datatable,validation,alertify';
+        $this->data['css'] = 'flatpickr,datatable,validation,alertify';
+        $this->data['includefile'] = 'users/onetooneSlip.php';
+        $this->data['given'] = $this->webModel->getOneToOneGivenData(session()->get('muserid'));
+        $this->data['receive'] = $this->webModel->getOneToOneReceivedData(session()->get('muserid'));
         $this->data['member'] = $this->webModel->MyModuleMember(session()->get('mmoduleid'));
         return view('templates/header', $this->data)
-                . view('users/thankyouSlip', $this->data)
+                . view('users/onetooneSlip', $this->data)
                 . view('templates/footer', $this->data);
     }
 
@@ -816,19 +818,17 @@ class Home extends WebController {
 
         $data = array('status' => 'error', 'message' => 'Unauthorised Access');
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            $thankyouto = trim($this->request->getPost('thankyouto'));
-            $amount = trim($this->request->getPost('amount'));
-            $bustype = trim($this->request->getPost('bustype'));
-            $reftype = trim($this->request->getPost('reftype'));
-            $comment = $this->request->getPost('comment');
-            $createarray = array('given_user_id' => session()->get('muserid'),
-                'received_user_id' => $thankyouto,
-                'tys_amount' => $amount,
-                'tys_business_type' => $bustype,
-                'tys_referral_type' => $reftype,
-                'tys_comment' => $comment);
-            $this->blankModel->createRecordInTable($createarray, 'thank_you_slip');
-            $data = array('status' => 'success', 'message' => 'Thank You Given Successfully');
+            $meetwith = trim($this->request->getPost('meetwith'));
+            $location = trim($this->request->getPost('location'));
+            $topic = trim($this->request->getPost('topic'));
+            $date = trim($this->request->getPost('date'));            
+            $createarray = array('initiate_by' => session()->get('muserid'),
+                'meet_with' => $meetwith,
+                'location' => $location,
+                'topic' => $topic,
+                'meet_date' => makeDate($date,'Y-m-d'));
+            $this->blankModel->createRecordInTable($createarray, 'onetoone_slip');
+            $data = array('status' => 'success', 'message' => 'One To One Created Successfully');
         }
         echo json_encode($data);
         die();

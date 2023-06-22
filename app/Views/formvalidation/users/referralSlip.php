@@ -73,7 +73,7 @@
                 var jsonData = JSON.parse(data);
                 if (jsonData.status == 'success') {
                     alertify.success(jsonData.message);
-                    location.reload();
+                    window.location.reload();
                 } else
                 {
                     alertify.error(jsonData.message);

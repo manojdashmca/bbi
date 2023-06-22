@@ -99,18 +99,23 @@ class WebModel extends Model {
         $result = $this->db->query($sql);
         return $result->getResult();
     }
-    
+
     public function getReferralGivenData($user) {
-        $sql = "select date_format(rfs_date,'%d-%m-%Y') date,referral_name,"                
+        $sql = "select date_format(rfs_date,'%d-%m-%Y') date,referral_name,"
                 . "if(referral_type='1','Inside','Outside') referraltype,"
                 . "CASE status WHEN '1' THEN 'Created'"
                 . "WHEN '2' THEN 'Completed'"
                 . "WHEN '3' THEN 'Denied' END as status,"
                 . "user_name,ref_comment,ref_status_one,ref_address,"
                 . "ref_telephone,ref_email,"
-                . "CASE ref_tracking_status WHEN '1' THEN 'Not Contacted Yet'"
-                . "WHEN '2' THEN 'Completed'"
-                . "WHEN '3' THEN 'Now Switable' END as trackstatus "
+                . "CASE ref_tracking_status "
+                . "WHEN '1' THEN 'Not Contacted Yet'"
+                . "WHEN '2' THEN 'Contacted'"
+                . "WHEN '3' THEN 'Got The business'"
+                . "WHEN '4' THEN 'Did Not Get The Business'"
+                . "WHEN '5' THEN 'No Response'"
+                . "WHEN '6' THEN 'Not A Good Fit'"
+                . "WHEN '7' THEN 'Confidential' END as trackstatus "
                 . " from referral_slip join user_detail on received_user_id=id_user "
                 . "where given_user_id='$user' order by rfs_date desc";
         $result = $this->db->query($sql);
@@ -118,18 +123,49 @@ class WebModel extends Model {
     }
 
     public function getReferralReceiveData($user) {
-        $sql = "select date_format(rfs_date,'%d-%m-%Y') date,referral_name,"                
+        $sql = "select date_format(rfs_date,'%d-%m-%Y') date,referral_name,"
                 . "if(referral_type='1','Inside','Outside') referraltype,"
                 . "CASE status WHEN '1' THEN 'Created'"
                 . "WHEN '2' THEN 'Completed'"
                 . "WHEN '3' THEN 'Denied' END as status,"
                 . "user_name,ref_comment,ref_status_one,ref_address,"
                 . "ref_telephone,ref_email,"
-                . "CASE ref_tracking_status WHEN '1' THEN 'Not Contacted Yet'"
-                . "WHEN '2' THEN 'Completed'"
-                . "WHEN '3' THEN 'Now Switable' END as trackstatus "
+                . "CASE ref_tracking_status "
+                . "WHEN '1' THEN 'Not Contacted Yet'"
+                . "WHEN '2' THEN 'Contacted'"
+                . "WHEN '3' THEN 'Got The business'"
+                . "WHEN '4' THEN 'Did Not Get The Business'"
+                . "WHEN '5' THEN 'No Response'"
+                . "WHEN '6' THEN 'Not A Good Fit'"
+                . "WHEN '7' THEN 'Confidential' END as trackstatus "
                 . " from referral_slip join user_detail on given_user_id=id_user "
                 . "where received_user_id='$user' order by rfs_date desc";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+    
+     public function getOneToOneGivenData($user) {
+        $sql = "select date_format(meet_date,'%d-%m-%Y') date,"                
+                . "CASE oto_status WHEN '1' THEN 'Created'"
+                . "WHEN '2' THEN 'Completed'"
+                . "WHEN '3' THEN 'Cancelled' END as status,"
+                . "b.user_name as meetwith,c.user_name as initiateby,location,topic "
+                . " from onetoone_slip join user_detail as b on meet_with=b.id_user "
+                . "JOIN user_detail as c on initiate_by=c.id_user "
+                . "where initiate_by='$user' order by meet_date desc";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
+
+    public function getOneToOneReceivedData($user) {
+        $sql = "select date_format(meet_date,'%d-%m-%Y') date,"                
+                . "CASE oto_status WHEN '1' THEN 'Created'"
+                . "WHEN '2' THEN 'Completed'"
+                . "WHEN '3' THEN 'Cancelled' END as status,"
+                . "b.user_name as meetwith,c.user_name as initiateby,location,topic "
+                . " from onetoone_slip join user_detail as b on meet_with=b.id_user "
+                . "JOIN user_detail as c on initiate_by=c.id_user "
+                . "where meet_with='$user' order by meet_date desc";
         $result = $this->db->query($sql);
         return $result->getResult();
     }
