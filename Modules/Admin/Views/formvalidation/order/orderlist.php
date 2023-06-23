@@ -7,33 +7,7 @@
         $('#searchsubmit').click(function () {
             bindDatatable();
         });
-       
 
-        $('#shipping').formValidation({
-            message: 'This value is not valid',
-            icon: {
-            },
-            fields: {
-                shippingcompany: {
-                    validators: {
-                        notEmpty: {
-                            message: "Select Shipping Company"
-                        }
-                    }
-                }, awbno: {
-                    validators: {
-                        notEmpty: {
-                            message: "Enter AWB No"
-                        }
-                    }
-                }
-            }
-
-        }).on('success.form.fv', function (e) {
-            // Prevent form submission
-            e.preventDefault();
-            updateShipping();
-        });
     });
 
 
@@ -42,7 +16,9 @@
             var page = parseInt(page) * 10;
         }
         var name = $("#name").val();
-        var mobile = $("#mobile").val();
+        var mobile = '';
+        var moduleid = $("#moduleid").val();
+        var status = $("#pstatus").val();
         var daterange = $("#daterange").val();
         var username = $("#username").val();
         //var rderno = $("#rderno").val();
@@ -65,15 +41,13 @@
                     d.mobile = mobile;
                     d.daterange = daterange;
                     d.username = username;
-                    //d.rderno = rderno;
+                    d.moduleid = moduleid;
+                    d.status = status;
                 }
             }
         });
     }
-    function putTrnId(orderid, orderno) {
-        $("#trnid").val(orderid);
-        $("#orderno").val(orderno);
-    }
+
     function updateTrnStatus(id, status) {
         if (status == 2) {
             var message = "Do you want to approve this payment";
@@ -112,5 +86,5 @@
         });
     }
 
-    
+
 </script>

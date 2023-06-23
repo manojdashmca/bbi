@@ -10,12 +10,12 @@
                 <span data-key="t-dashboard">Dashboard</span>
             </a>
         </li>        
-<!--        <li>
+        <li>
             <a href="<?= CUSTOMPATH ?>my-sponsor">
                 <i class="dripicons-network-3"></i>
-                <span data-key="t-treeview">My Sponsor</span>
+                <span data-key="t-treeview">Referral Member View</span>
             </a>
-        </li>-->
+        </li>
         <li>
             <a href="<?= CUSTOMPATH ?>my-payout">
                 <i class="bx bx-rupee"></i>

@@ -331,12 +331,6 @@ class IboModel extends Model {
                 . "where user_code='$code' or user_login_name='$code'";
         $result = $this->db->query($sql);
         return $result->getRow();
-    }
-
-    public function getModuleDropDown() {
-        $sql = "Select lm_id,lm_code, lm_name from location_module where lm_status=1";
-        $result = $this->db->query($sql);
-        return $result->getResult();
-    }
+    }   
 
 }

@@ -12,8 +12,9 @@ class TeamsController extends AdminController {
         $this->teamsModel = new TeamsModel();
     }
 
-    public function srConsultingBoard() {
+    public function srConsultingBoard() {        
         $this->checkAccessControll(7);
+        $this->data['title']="Sr Consulting Board";
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'teams/commonfunction.php,teams/srconsultingboardlist.php';
@@ -72,6 +73,7 @@ class TeamsController extends AdminController {
     //-----consulting--
     public function consultingBoard() {
         $this->checkAccessControll(7);
+        $this->data['title']="Consulting Board";
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'teams/commonfunction.php,teams/consultingboardlist.php';
@@ -131,6 +133,7 @@ class TeamsController extends AdminController {
     //-----stateteam--
     public function stateTeam() {
         $this->checkAccessControll(7);
+        $this->data['title']="State Team";
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'teams/commonfunction.php,teams/stateteamlist.php';
@@ -190,6 +193,7 @@ class TeamsController extends AdminController {
     //-----nationalteam--
     public function nationalTeam() {
         $this->checkAccessControll(7);
+        $this->data['title']="National Team";
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'teams/commonfunction.php,teams/nationalteamlist.php';
@@ -249,6 +253,7 @@ class TeamsController extends AdminController {
     //-----zone--
     public function zoneTeam() {
         $this->checkAccessControll(7);
+        $this->data['title']="Zone Team";
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'teams/commonfunction.php,teams/zoneteamlist.php';

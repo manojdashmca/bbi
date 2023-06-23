@@ -76,7 +76,8 @@
             var page = parseInt(page) * 10;
         }
         var name = $("#name").val();
-        var mobile = $("#mobile").val();
+        //var mobile = $("#mobile").val();
+        var mobile = '';
         var daterange = $("#daterange").val();
         var username = $("#username").val();
         var moduleid = $("#moduleid").val();

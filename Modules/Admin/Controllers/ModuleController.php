@@ -14,6 +14,7 @@ class ModuleController extends AdminController {
     }
 
     public function index() {
+        $this->data['title']="Module List";
         $this->checkAccessControll(5, 'm');
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
@@ -24,6 +25,7 @@ class ModuleController extends AdminController {
     }
 
     public function add() {
+        $this->data['title']="Add A module";
         $this->checkAccessControll(9);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
@@ -132,6 +134,7 @@ class ModuleController extends AdminController {
     }
 
     public function edit($moduleid) {
+        $this->data['title']="Edit Module";
         $this->checkAccessControll(10);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
@@ -286,6 +289,7 @@ class ModuleController extends AdminController {
     }
 
     public function segmentlist() {
+        $this->data['title']="Segment List";
         $this->checkAccessControll(6, 'm');
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
@@ -341,6 +345,7 @@ class ModuleController extends AdminController {
     }
 
     public function editSegment($segmentid) {
+        $this->data['title']="Edit Segment";
         $this->checkAccessControll(16);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
@@ -377,6 +382,7 @@ class ModuleController extends AdminController {
     }
 
     public function addSegment() {
+        $this->data['title']="Add A Segment";
         $this->checkAccessControll(15);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
@@ -408,6 +414,7 @@ class ModuleController extends AdminController {
     }
 
     public function categorylist() {
+        $this->data['title']="Category List";
         $this->checkAccessControll(6, 'm');
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
@@ -418,6 +425,7 @@ class ModuleController extends AdminController {
     }
 
     public function addCategory() {
+        $this->data['title']="Add A Category";
         $this->checkAccessControll(18);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
@@ -452,6 +460,7 @@ class ModuleController extends AdminController {
     }
 
     public function editCategory($categoryid) {
+        $this->data['title']="Edit Category";
         $this->checkAccessControll(19);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
@@ -535,6 +544,7 @@ class ModuleController extends AdminController {
     }
 
     public function subcategorylist() {
+        $this->data['title']="Sub Category List";
         $this->checkAccessControll(6, 'm');
         $this->data['js'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,choices,flatpickr,datatable,sweetalert,alertify';
@@ -545,6 +555,7 @@ class ModuleController extends AdminController {
     }
 
     public function addSubcategory() {
+        $this->data['title']="Add A Subcategory";
         $this->checkAccessControll(21);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
@@ -581,6 +592,7 @@ class ModuleController extends AdminController {
     }
 
     public function editsubcategory($subcategoryid) {
+        $this->data['title']="Edit Subcategory";
         $this->checkAccessControll(22);
         $this->data['js'] = 'validation';
         $this->data['css'] = 'validation';
@@ -716,12 +728,12 @@ class ModuleController extends AdminController {
     }
 
     public function moduleSubcategoryStatus() {
-        $this->data['title'] = "Registration";
+        $this->data['title'] = "Blocked Subcategory";
         $this->iboModel = new IboModel();
         $this->data['js'] = 'datatable';
         $this->data['css'] = 'datatable';
         $this->data['includefile'] = 'module/moduleBlockedSubcategory.php';
-        $this->data['module'] = $this->iboModel->getModuleDropDown();
+        $this->data['module'] = $this->blankModel->getModuleDropDown();
         $this->data['segment'] = $this->iboModel->getBusinesssegment();
         $this->data['category'] = $this->iboModel->getBusinessCategory();
         return view('\Modules\Admin\Views\templates\header', $this->data)

@@ -3,11 +3,10 @@
     <head>
 
         <meta charset="utf-8" />
-        <title>Dashboard | BBI</title>
+        <title>SSK Bharat BBI | <?=$title?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Webapplication of SSK Bharat BBI" name="description" />
-        <meta content="SSK Bharat BBI" name="author" />
-        <!-- App favicon -->
+        <meta content="SSK Bharat BBI" name="author" />        
         <link rel="shortcut icon" type="image/x-icon" href="<?= CUSTOMPATH ?>panelassets/images/logobbi.png">
 
         <!-- plugin css -->

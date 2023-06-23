@@ -19,7 +19,7 @@ class IBOController extends AdminController {
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'ibo/ibolist.php,common/common.php';
-        $this->data['module'] = $this->iboModel->getModuleDropDown();
+        $this->data['module'] = $this->blankModel->getModuleDropDown();
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\ibo\ibolist', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);

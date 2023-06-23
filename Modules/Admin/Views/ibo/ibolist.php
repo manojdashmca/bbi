@@ -32,13 +32,13 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
+<!--                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="validationCustom02">Mobile</label>
                                         <input type="text" class="form-control" id="mobile" placeholder="Mobile"/>
 
                                     </div>
-                                </div>
+                                </div>-->
 
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
@@ -66,7 +66,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
+                                <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
                                         <?php if (in_array(5, session()->get('accesscontrols'))) { ?>

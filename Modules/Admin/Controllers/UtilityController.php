@@ -10,18 +10,10 @@ class UtilityController extends AdminController {
     public function __construct() {
         parent::__construct();
         $this->utilityModel = new UtilityModel();
-    }
-
-    public function uploadpicture() {
-        $this->data['js'] = 'flatpickr,datatable';
-        $this->data['css'] = 'flatpickr,datatable';
-        $this->data['includefile'] = 'utility/webcontact.php';
-        return view('\Modules\Admin\Views\templates\header', $this->data)
-                . view('\Modules\Admin\Views\utility\webcontact', $this->data)
-                . view('\Modules\Admin\Views\templates\footer', $this->data);
-    }
+    }  
 
     public function galleryList() {
+        $this->data['title']="Album List";
         $this->data['js'] = 'validation,flatpickr,datatable,sweetalert';
         $this->data['css'] = 'validation,flatpickr,datatable,sweetalert';
         $this->data['includefile'] = 'utility/galleryList.php';
@@ -81,6 +73,7 @@ class UtilityController extends AdminController {
     }
 
     public function webcontact() {
+        $this->data['title']="Web Contact";
         $this->data['js'] = 'flatpickr,datatable';
         $this->data['css'] = 'flatpickr,datatable';
         $this->data['includefile'] = 'utility/webcontact.php';
@@ -128,6 +121,7 @@ class UtilityController extends AdminController {
     }
 
     public function startamodule() {
+        $this->data['title']="Start A Module Data";
         $this->data['js'] = 'flatpickr,datatable';
         $this->data['css'] = 'flatpickr,datatable';
         $this->data['includefile'] = 'utility/startamodule.php';
@@ -175,6 +169,7 @@ class UtilityController extends AdminController {
     }
 
     public function uploadtogallery($albumid = '') {
+        $this->data['title']="Upload Image To Album";
         $this->data['js'] = 'dropzone,validate';
         $this->data['css'] = 'dropzone,validate';
         $album = $this->blankModel->getTableData('album_name', 'album', 'album_id=' . base64_decode($albumid));
@@ -240,6 +235,7 @@ class UtilityController extends AdminController {
     }
 
     public function viewAlbum($albumid = '') {
+        $this->data['title']="View Album";
         $this->data['js'] = 'lightbox,sweetalert';
         $this->data['css'] = 'lightbox,sweetalert';
         $this->data['includefile'] = 'utility/viewAlbum.php';

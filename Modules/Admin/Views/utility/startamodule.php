@@ -72,8 +72,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
+                    <div class="card-body">                        
                             <div class="table-responsive">
                                 <table id="startamodule" class="table table-bordered dt-responsive w-100">
                                     <thead>
@@ -90,8 +89,7 @@
                                     <tbody>
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
+                            </div>                        
                     </div>
                 </div>
             </div> <!-- end col -->

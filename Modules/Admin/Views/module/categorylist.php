@@ -9,7 +9,7 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Module</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Segment</a></li>
                             <li class="breadcrumb-item active">Category List</li>
                         </ol>
                     </div>
@@ -39,7 +39,7 @@
 
                                     </div>
                                 </div>                                
-                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
+                                <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
                                         <?php if (in_array(18, session()->get('accesscontrols'))) { ?>
@@ -52,25 +52,23 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body">                        
                         <div class="table-responsive">
-                            <div class="table-responsive">
-                                <table id="example" class="table table-bordered dt-responsive w-100">
-                                    <thead>
-                                        <tr>
-                                            <th>Sl No</th>                                            
-                                            <th>Category Name</th> 
-                                            <th>Segment Name</th> 
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <table id="example" class="table table-bordered dt-responsive w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Sl No</th>                                            
+                                        <th>Category Name</th> 
+                                        <th>Segment Name</th> 
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
+                    </div>                    
                 </div>
             </div> <!-- end col -->
         </div> <!-- end row -->

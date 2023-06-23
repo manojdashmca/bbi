@@ -14,6 +14,7 @@ class UsersController extends AdminController {
 
     public function index() {
         $this->checkAccessControll(1, 'm');
+        $this->data['title'] = "Admin User List";
         $this->data['js'] = 'choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'choices,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'users/userlist.php,common/common.php';
@@ -23,6 +24,7 @@ class UsersController extends AdminController {
     }
 
     public function add() {
+        $this->data['title'] = "Add Admin User";
         $this->data['js'] = 'flatpickr,validation';
         $this->data['css'] = 'flatpickr,validation';
         $this->data['includefile'] = '/users/useradd.php,common/common.php';
@@ -112,6 +114,7 @@ class UsersController extends AdminController {
 
     public function edit($userid) {
         $this->checkAccessControll(2);
+        $this->data['title'] = "Edit Admin User";
         $this->data['js'] = 'alertify,lightbox,flatpickr,validation';
         $this->data['css'] = 'alertify,lightbox,flatpickr,validation';
         $this->data['includefile'] = 'users/useredit.php,common/common.php';
@@ -126,6 +129,7 @@ class UsersController extends AdminController {
     }
 
     public function controlls($userid) {
+        $this->data['title'] = "Admin User Control Management";
         $this->checkAccessControll(3);
         if ($this->request->getMethod() == 'post') {
             $encuser = $this->request->getPost('encuser');
@@ -214,7 +218,7 @@ class UsersController extends AdminController {
             $userid = base64_decode($this->request->getPost('encuser'));
                     
             $this->adminModel->updateRecordInTable(array('admin_user_status' => 2), 'admin_user', 'user_id_user', $userid);
-            $this->adminModel->updateRecordInTable(array('user_status' => 2), 'user_detail', 'id_user', $userid);
+            $this->adminModel->updateRecordInTable(array('user_status' => 3), 'user_detail', 'id_user', $userid);
             
             $message = "User Removed Successfully";
             //--------create email-------

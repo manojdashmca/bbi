@@ -15,10 +15,12 @@ class OrderController extends AdminController {
     }
 
     public function index() {
+        $this->data['title']="Payments List";
         $this->checkAccessControll(4,'m');
         $this->data['js'] = 'validation,lightbox,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,lightbox,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'order/orderlist.php';
+        $this->data['module'] = $this->blankModel->getModuleDropDown();
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\order\orderlist', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
@@ -40,15 +42,15 @@ class OrderController extends AdminController {
             $offset = trim($this->request->getPost('start'));
             $draw = trim($this->request->getPost('draw'));
             $name = trim($this->request->getPost('name'));
-            //$rderno = trim($this->request->getPost('rderno'));
+            $moduleid = trim($this->request->getPost('moduleid'));
+            $status = trim($this->request->getPost('status'));
             $mobile = trim($this->request->getPost('mobile'));
             $username = trim($this->request->getPost('username'));
             $order = $this->request->getPost('order');
             $ordercolumn = $order[0]['column'];
             $orderdirecttion = $order[0]['dir'];
-            //$this->request->getPost('status') != '' ? $status = implode(',', $this->request->getPost('status')) : $status = '';
             $daterange = generateDateFromDateRange($this->request->getPost('daterange'));
-            $data = array('name' => $name, 'mobile' => $mobile, 'username' => $username, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
+            $data = array('moduleid'=>$moduleid,'status'=>$status,'name' => $name, 'mobile' => $mobile, 'username' => $username, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
             $userlist = $this->orderModel->selectIBOOrder($data, $ordercolumn, $orderdirecttion, $offset, $limit);
             $returndata['data'] = $this->fn_formatedorderdata($userlist['data'], $offset);
             $returndata['draw'] = $draw;

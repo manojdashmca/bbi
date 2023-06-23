@@ -73,25 +73,23 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body">                        
                         <div class="table-responsive">
-                            <div class="table-responsive">
-                                <table id="example" class="table table-bordered dt-responsive w-100">
-                                    <thead>
-                                        <tr>
-                                            <th>Sl No</th>     
-                                            <th>Sub Category Name</th> 
-                                            <th>Category Name</th> 
-                                            <th>Segment Name</th> 
-                                            <th>Access Status</th>
-                                            <th>Used Status</th>                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                            <table id="example" class="table table-bordered dt-responsive w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Sl No</th>     
+                                        <th>Sub Category Name</th> 
+                                        <th>Category Name</th> 
+                                        <th>Segment Name</th> 
+                                        <th>Access Status</th>
+                                        <th>Used Status</th>                                            
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>                        
                     </div>
                 </div>
             </div> <!-- end col -->

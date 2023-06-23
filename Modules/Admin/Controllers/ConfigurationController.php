@@ -13,6 +13,7 @@ class ConfigurationController extends AdminController {
     }
 
     public function index() {
+        $this->data['title']="System Configuration";
         $this->data['js'] = 'choice';
         $this->data['css'] = 'choice';
         $this->data['includefile'] = 'configuration/index.php';

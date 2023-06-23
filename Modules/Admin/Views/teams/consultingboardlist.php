@@ -47,7 +47,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
+                                <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
                                         <?php if (in_array(26, session()->get('accesscontrols'))) { ?>
@@ -60,26 +60,24 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body">                        
                         <div class="table-responsive">
-                            <div class="table-responsive">
-                                <table id="example" class="table table-bordered dt-responsive w-100">
-                                    <thead>
-                                        <tr>
-                                            <th>Sl No</th>                                            
-                                            <th>Name</th> 
-                                            <th>Code</th>
-                                            <th>User Name</th>
-                                            <th>DOJ</th>  
-                                            <th>Join Type</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                            <table id="example" class="table table-bordered dt-responsive w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Sl No</th>                                            
+                                        <th>Name</th> 
+                                        <th>Code</th>
+                                        <th>User Name</th>
+                                        <th>DOJ</th>  
+                                        <th>Join Type</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>                        
                     </div>
                 </div>
             </div> <!-- end col -->

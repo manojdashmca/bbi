@@ -29,5 +29,11 @@ class BlankModel extends Model {
         $return = $result->getRow()->count;
         return $return;
     }
+    
+    public function getModuleDropDown() {
+        $sql = "Select lm_id,lm_code, lm_name from location_module where lm_status=1";
+        $result = $this->db->query($sql);
+        return $result->getResult();
+    }
 
 }

@@ -66,8 +66,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
+                    <div class="card-body">                        
                             <div class="table-responsive">
                                 <table id="webcontact" class="table table-bordered dt-responsive w-100">
                                     <thead>
@@ -81,14 +80,10 @@
                                             <th>Date</th>                                            
                                         </tr>
                                     </thead>
-
-
                                     <tbody>
-
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
+                            </div>                        
                     </div>
                 </div>
             </div> <!-- end col -->

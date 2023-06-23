@@ -32,21 +32,45 @@
 
                                     </div>
                                 </div>
+                                <!--                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label" for="validationCustom02">Mobile</label>
+                                                                        <input type="text" class="form-control" id="mobile" placeholder="Mobile"/>
+                                
+                                                                    </div>
+                                                                </div>-->
+
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
-                                        <label class="form-label" for="validationCustom02">Mobile</label>
-                                        <input type="text" class="form-control" id="mobile" placeholder="Mobile"/>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
-                                    <div class="mb-3">
-                                        <label class="form-label" for="validationCustom03">User Name</label>
+                                        <label class="form-label" for="validationCustom03">User Name/Code</label>
                                         <input type="text" class="form-control" id="username" placeholder=" User name"/>
 
                                     </div>
-                                </div>                                
+                                </div>  
+                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="validationCustom04">Module</label>
+                                        <select name="moduleid" id="moduleid" class="form-control form-select">
+                                            <option value="">Select Module</option>
+                                            <?php for ($x = 0; $x < count($module); $x++) { ?>
+                                                <option value="<?= $module[$x]->lm_id ?>"><?= $module[$x]->lm_name . ' (' . $module[$x]->lm_code . ')' ?></option>
+                                            <?php } ?>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="validationCustom04">Payment Status</label>
+                                        <select name="pstatus" id="pstatus" class="form-control form-select">
+                                            <option value="">Select Status</option>
+                                            <option value="1">Created</option>
+                                            <option value="2">Approved</option>
+                                            <option value="3">Rejected</option>
+                                        </select>
+
+                                    </div>
+                                </div>
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="validationCustom05">Date Range</label>
@@ -64,36 +88,34 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body">                        
                         <div class="table-responsive">
-                            <div class="table-responsive">
-                                <table id="example" class="table table-bordered dt-responsive  w-100">
-                                    <thead>
-                                        <tr>
-                                            <th>Sl No</th>                                            
-                                            <th>Member Name</th>
-                                            <th>Payment Date</th>
-                                            <th>Joining Fee</th>
-                                            <th>Topup Fee</th>
-                                            <th>GST</th>
-                                            <th>Payment Amount</th>
-                                            <th>Payment Type</th>
-                                            <th>Payment Detail</th>
-                                            <th>Uploaded Image</th>
-                                            <th>Payment Status</th>
-                                            <th>Booked Services</th>
-                                            <th>Payout Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
+                            <table id="example" class="table table-bordered dt-responsive  w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Sl No</th>                                            
+                                        <th>Member Name</th>
+                                        <th>Payment Date</th>
+                                        <th>Joining Fee</th>
+                                        <th>Topup Fee</th>
+                                        <th>GST</th>
+                                        <th>Payment Amount</th>
+                                        <th>Payment Type</th>
+                                        <th>Payment Detail</th>
+                                        <th>Uploaded Image</th>
+                                        <th>Payment Status</th>
+                                        <th>Booked Services</th>
+                                        <th>Payout Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
 
 
-                                    <tbody>
+                                <tbody>
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                </tbody>
+                            </table>
+                        </div>                        
                     </div>
                 </div>
             </div> <!-- end col -->

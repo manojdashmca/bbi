@@ -56,8 +56,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
+                    <div class="card-body">                        
                             <div class="table-responsive">
                                 <table id="sponsorshipview" class="table table-bordered dt-responsive  nowrap w-100">
                                     <thead>
@@ -71,14 +70,10 @@
                                             <th>Level</th>
                                         </tr>
                                     </thead>
-
-
                                     <tbody>
-
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
+                            </div>                        
                     </div>
                 </div>
             </div> <!-- end col -->

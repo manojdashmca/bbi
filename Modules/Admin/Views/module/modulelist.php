@@ -47,7 +47,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
+                                <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
                                         <?php if (in_array(9, session()->get('accesscontrols'))) { ?>
@@ -60,30 +60,28 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body">                        
                         <div class="table-responsive">
-                            <div class="table-responsive">
-                                <table id="example" class="table table-bordered dt-responsive w-100">
-                                    <thead>
-                                        <tr>
-                                            <th>Sl No</th>
-                                            <th>Code</th>
-                                            <th>Module Name</th>                                            
-                                            <th>City</th>
-                                            <th>State</th>
-                                            <th>Nation</th>
-                                            <th>Director</th>
-                                            <th>Ast. Director</th>
-                                            <th>Ass. Director</th>                                            
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                            <table id="example" class="table table-bordered dt-responsive w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Sl No</th>
+                                        <th>Code</th>
+                                        <th>Module Name</th>                                            
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th>Nation</th>
+                                        <th>Director</th>
+                                        <th>Ast. Director</th>
+                                        <th>Ass. Director</th>                                            
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>                        
                     </div>
                 </div>
             </div> <!-- end col -->

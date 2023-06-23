@@ -58,7 +58,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
+                                <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>&nbsp;
                                         <?php if (in_array(1, session()->get('accesscontrols'))) { ?>
@@ -71,8 +71,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
+                    <div class="card-body">                        
                             <div class="table-responsive">
                                 <table id="userlist" class="table table-bordered dt-responsive  nowrap w-100">
                                     <thead>
@@ -88,13 +87,9 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-
-
                                     <tbody>
-
                                     </tbody>
-                                </table>
-                            </div>
+                                </table>                            
                         </div>
                     </div>
                 </div>

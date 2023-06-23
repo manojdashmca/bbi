@@ -13,6 +13,7 @@ class PayoutController extends AdminController {
     }
 
     public function payoutDates() {
+        $this->data['title']="Payout Dates";
         $this->data['js'] = 'flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'payout/payoutdates.php';
@@ -22,6 +23,7 @@ class PayoutController extends AdminController {
     }
 
     public function memberPayout() {
+        $this->data['title']="Member Payout";
         $this->data['js'] = 'flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'payout/memberpayout.php';
