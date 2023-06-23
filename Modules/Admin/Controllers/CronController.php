@@ -288,20 +288,36 @@ class CronController extends AdminController {
 
     //------------------internal function-------
     protected function createIncome($incomemember, $payoutid, $trnid, $inctype, $incamount) {
-        $incomearray = array(
-            "user_id_user" => $incomemember,
-            "payout_id_payout" => $payoutid,
-            "payment_id_payment" => $trnid,
-            "income_type" => $inctype,
-            "income_amount" => $incamount
-        );
-        $this->cronModel->createRecordInTable($incomearray, 'member_income');
+        if (!empty($incomemember)) {
+            $incomearray = array(
+                "user_id_user" => $incomemember,
+                "payout_id_payout" => $payoutid,
+                "payment_id_payment" => $trnid,
+                "income_type" => $inctype,
+                "income_amount" => $incamount
+            );
+            $this->cronModel->createRecordInTable($incomearray, 'member_income');
+        }
     }
 
     protected function createOrUpdatePayoutRecord($payoutid, $userid, $incometype, $amount) {
         $payoutrecord = $this->cronModel->getTableData('*', 'monthly_payout', 'user_id_user=' . $userid . ' and payout_id_payout=' . $payoutid);
         $data = array();
-        switch ($incometype) {
+        $fieldarray = array('', 'md_income', 'ma_income', 'mas_income', 'referrer_income', 'srcab_income', 'cab_income', 'nt_income', 'st_income', 'zt_income', 'bbi_head_income');
+        $data[$fieldarray[$incometype]] = $amount;
+
+        if (!empty($payoutrecord)) {
+            $this->cronModel->updateRecordInTable($data, 'monthly_payout', 'mp_id', $payoutrecord->mp_id);
+        } else {
+            $data['user_id_user'] = $userid;
+            $data['payout_id_payout'] = $payoutid;
+            $this->cronModel->createRecordInTable($data, 'monthly_payout');
+        }
+    }
+}
+
+/*
+ * switch ($incometype) {
             case 1:
                 $data['md_income'] = $amount;
                 break;
@@ -333,12 +349,4 @@ class CronController extends AdminController {
                 $data['bbi_head_income'] = $amount;
                 break;
         }
-        if (!empty($payoutrecord)) {
-            $this->cronModel->updateRecordInTable($data, 'monthly_payout', 'mp_id', $payoutrecord->mp_id);
-        } else {
-            $data['user_id_user'] = $userid;
-            $data['payout_id_payout'] = $payoutid;
-            $this->cronModel->createRecordInTable($data, 'monthly_payout');
-        }
-    }
-}
+ */

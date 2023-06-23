@@ -35,4 +35,6 @@ if (in_array('dashboard', $ajs)) {
     <script src="<?= CUSTOMPATH ?>panelassets/libs/tooltips/stickytooltip.js"></script>
 <?php } if (in_array('ckeditor', $ajs)) { ?>
     <script src="<?= CUSTOMPATH ?>panelassets/libs/%40ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
+<?php } if (in_array('dropzone', $ajs)) { ?>
+    <script src="<?= CUSTOMPATH ?>panelassets/libs/dropzone/min/dropzone.min.js"></script>
 <?php } ?>

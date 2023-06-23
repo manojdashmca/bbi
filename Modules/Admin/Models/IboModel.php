@@ -26,7 +26,7 @@ class IboModel extends Model {
                 LEFT JOIN master_segment on business_segment=segment_id 
                 LEFT JOIN master_category on business_category=category_id 
                 LEFT JOIN location_module on a.module_id_module=lm_id 
-                where a.user_type =1 ";
+                where a.user_type =1 and a.user_status in(1,2) ";
 
             !empty($data['name']) ? $sql .= " AND a.user_name like '%" . $data['name'] . "%'" : $sql .= '';
             !empty($data['moduleid']) ? $sql .= " AND a.module_id_module = '" . $data['moduleid'] . "'" : $sql .= '';
@@ -61,7 +61,7 @@ class IboModel extends Model {
                 . "CONCAT_WS(' / ',b.user_code,b.user_login_name,b.user_name) as sponsor "
                 . "from user_detail a join ibo_user on a.id_user=user_id_user "
                 . "LEFT JOIN user_detail as b on a.sponsor_user_id=b.id_user "
-                . "where a.id_user='$id'";
+                . "where a.id_user='$id' and a.user_status in (1,2) ";
         $result = $this->db->query($sql);
         return $result->getRow();
     }
@@ -71,7 +71,7 @@ class IboModel extends Model {
             $sql = "SELECT id_user, user_name
                     FROM user_detail                      
                     JOIN ibo_user on id_user =user_id_user 
-                    WHERE (user_code= '$id' or user_login_name = '$id') and user_type=1 ";
+                    WHERE (user_code= '$id' or user_login_name = '$id') and user_type=1 and user_status in (1,2) ";
             $result = $this->db->query($sql);
             $return = $result->getRow();
         } catch (Exception $e) {

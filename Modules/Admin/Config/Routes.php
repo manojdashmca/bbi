@@ -18,7 +18,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("ibo-edit/(:any)", "IBOController::edit/$1");
     $routes->get("get-sponsordetail-by-id/(:any)", "IBOController::getSponsorDetailById/$1");
     $routes->get("get-member-by-id/(:any)", "IBOController::getMemberDetailById/$1");
-    $routes->post("delete-ibo-user", "UsersController::deleteIboUser");
+    $routes->post("delete-ibo-user", "IBOController::deleteIboUser");
 
     $routes->get("sr_consulting_board", "TeamsController::srConsultingBoard");
     $routes->post("sr_consulting_board_data", "TeamsController::srConsultingBoardData");
@@ -91,10 +91,6 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->match(['get', 'post'], "add-new-user", "UsersController::addNewUser");
     //-----Configuration Controller
     $routes->match(['get', 'post'], "configuration", "ConfigurationController::index");
-    $routes->get("webcontact", "UtilityController::webcontact");
-    $routes->match(['get', 'post'], "webcontact-data", "UtilityController::webcontactData");
-    $routes->get("startamodule", "UtilityController::startamodule");
-    $routes->match(['get', 'post'], "startamodule-data", "UtilityController::startamoduleData");
 
     $routes->get("addressByPincode/(:any)", "AuthController::addressByPincode/$1");
     $routes->get("getBankDetailByIfsc/(:any)", "AuthController::getBankDetailByIfsc/$1");
@@ -112,7 +108,22 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->post("check-pan", "AuthController::checkpan");
     $routes->post("check-mobile", "AuthController::checkmobile");
     $routes->post("check-email", "AuthController::checkemail");
+    $routes->post("upload-picture", "AuthController::uploadpicture");
 
+    //---utility controllers-
+    $routes->get("webcontact", "UtilityController::webcontact");
+    $routes->match(['get', 'post'], "webcontact-data", "UtilityController::webcontactData");
+    $routes->get("startamodule", "UtilityController::startamodule");
+    $routes->match(['get', 'post'], "startamodule-data", "UtilityController::startamoduleData");
+    $routes->get("uploadto-gallery/(:any)", "UtilityController::uploadtogallery/$1");
+    $routes->get("gallery-list", "UtilityController::galleryList");
+    $routes->post("gallery-data", "UtilityController::galleryData");
+    $routes->post("update-album-status", "UtilityController::updateAlbumStatus");
+    $routes->get("album-image-show/(:any)", "UtilityController::viewAlbum/$1");
+    $routes->post("update-image-status", "UtilityController::updateImageStatus");
+    
+    
+    
     //----------------------------Cron------------------    
     $routes->get("send-pending-emails", "CronController::sendPendingEmails");
     $routes->get("delete-system-log", "CronController::deleteSystemLogs");
@@ -120,11 +131,9 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("confirm-transaction", "CronController::confirmTransaction");
     $routes->get("create-payout-date", "CronController::createPayoutDate");
     $routes->get("update-sync-status/(:any)", "CronController::updateSyncStatus/$1");
-    
+
     $routes->get("generate-payout", "CronController::generatePayout");
     $routes->get("update-gross-income", "CronController::updateGrossIncome");
-    
-    
 
 //    $routes->set404Override(function () {
 //        return view('\Modules\Admin\Views\auth\404');

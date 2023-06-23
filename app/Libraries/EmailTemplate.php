@@ -31,12 +31,12 @@ class EmailTemplate {
                                 <tr>
                                     <td  width="310" align="left" style="padding-left:10px;"><img height="46" src="' . base_url() . '/mailer/logo.png"/></td>
                                     <td width="430" align="right" style="padding-right:10px;">
-                                        E Square Mall, Office No 212,<br>
+                                        E Square Corporate Park, Office No 212,<br>
                                         2nd Floor, State Bank building,<br/>
                                         Subhash Road, Vile Parle East<br/>
-                                        Mumbai, Maharastra, India-400077<br/>
-                                        +91 816 949 1109,+91 937 239 0109 <br/>
-					Email- support@sskbbi.in<br/>
+                                        Mumbai, Maharastra, India-400057<br/>
+                                        +91 816 942 1637 <br/>
+					Email- info@sskbbi.in<br/>
                                         Website- www.sskbbi.in
                                     </td>
                                 </tr>
@@ -203,5 +203,4 @@ class EmailTemplate {
         $template = $this->createTemplate($contentdata);
         return $template;
     }
-
 }

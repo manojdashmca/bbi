@@ -79,8 +79,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
+                    <div class="card-body">                        
                             <div class="table-responsive">
                                 <table id="userlist" class="table table-bordered dt-responsive w-100">
                                     <thead>
@@ -107,7 +106,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div> <!-- end col -->

@@ -39,8 +39,7 @@ class PayoutController extends AdminController {
             $draw = trim($this->request->getPost('draw'));
             $name = trim($this->request->getPost('name'));
             $payout = trim($this->request->getPost('payout'));
-            $mobile = trim($this->request->getPost('mobile'));
-            $username = trim($this->request->getPost('username'));
+            $mobile = trim($this->request->getPost('mobile'));            
             $order = $this->request->getPost('order');
             $ordercolumn = $order[0]['column'];
             $orderdirecttion = $order[0]['dir'];

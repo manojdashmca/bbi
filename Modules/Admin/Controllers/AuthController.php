@@ -487,4 +487,41 @@ class AuthController extends AdminController {
             exit;
         }
     }
+
+    public function uploadpicture() {
+        if ($this->request->getMethod() == 'post') {
+            if (!$this->validate([
+                        'albumid' => "required"
+                    ])) {
+                
+            } else {
+                $albumid = base64_decode($this->request->getPost('albumid'));
+                $filename = '';
+                if ($_FILES['file']['error'] != 4) {
+                    $validationRule = [
+                        'pimage' => [
+                            'rules' => 'mime_in[file,image/jpg,image/jpeg,image/png,image/webp]'
+                            . '|max_size[file,2097152]',
+                        ],
+                    ];
+                    if ($this->validate($validationRule)) {
+                        $img = $this->request->getFile('file');
+                        if (!$img->hasMoved()) {
+                            $filename = $albumid . time() . '_picture.' . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
+                            $img->move('uploads/images/gallery/', $filename, true);
+                        }
+                    }
+                }
+                if (!empty($filename)) {
+                    $createarray = array('album_id_album' => $albumid, 'photo_path' => $filename);
+                    $this->blankModel->createRecordInTable($createarray, 'album_has_photo');
+                    echo "Upload Successfully";
+                    exit;
+                } else {
+                    echo "Unable to upload file";
+                    exit;
+                }
+            }
+        }
+    }
 }

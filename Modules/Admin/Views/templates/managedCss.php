@@ -22,7 +22,8 @@ if (in_array('dashboard', $acss)) {
     <link href="<?= CUSTOMPATH ?>panelassets/libs/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" type="text/css" />
 <?php } if (in_array('wizard', $acss)) { ?>
     <link rel="stylesheet" href="<?= CUSTOMPATH ?>panelassets/libs/twitter-bootstrap-wizard/prettify.css">
-<?php }
+<?php
+}
 if (in_array('validation', $acss)) {
     ?>
     <link rel="stylesheet" href="<?= CUSTOMPATH ?>panelassets/libs/formvalidation/formValidation.min.css">
@@ -30,4 +31,7 @@ if (in_array('validation', $acss)) {
     <link rel="stylesheet" href="<?= CUSTOMPATH ?>panelassets/libs/glightbox/css/glightbox.min.css">
 <?php } if (in_array('tooltips', $acss)) { ?>   
     <link rel="stylesheet" href="<?= CUSTOMPATH ?>panelassets/libs/tooltips/stickytooltip.css">
+<?php }if (in_array('dropzone', $acss)) { ?>
+    <!-- dropzone css -->
+    <link href="<?= CUSTOMPATH ?>panelassets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
 <?php } ?>

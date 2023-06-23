@@ -377,7 +377,7 @@ class IBOController extends AdminController {
             $userid = base64_decode($this->request->getPost('encuser'));
 
             $this->adminModel->updateRecordInTable(array('ibo_user_status' => 2), 'ibo_user', 'user_id_user', $userid);
-            $this->adminModel->updateRecordInTable(array('user_status' => 2), 'user_detail', 'id_user', $userid);
+            $this->adminModel->updateRecordInTable(array('user_status' => 3), 'user_detail', 'id_user', $userid);
 
             $message = "User Removed Successfully";
             //--------create email-------

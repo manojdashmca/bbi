@@ -187,6 +187,7 @@ $sessioncontroll = session()->get('accesscontrols');
                 <ul class="sub-menu" aria-expanded="false">
                     <li><a href="<?= ADMINPATH ?>webcontact" data-key="t-grivancereport">Web Contact</a></li>
                     <li><a href="<?= ADMINPATH ?>startamodule" data-key="t-newslist">Start A Module</a></li>
+                    <li><a href="<?= ADMINPATH ?>gallery-list" data-key="t-gallery">Gallery List</a></li>
                 </ul>
             </li>
         <?php } ?>

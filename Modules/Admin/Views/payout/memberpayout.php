@@ -59,7 +59,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
+                                <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
                                         <button class="btn btn-success margintop-29" id="download" type="button"><i class=" fas fa-plus-circle"></i> Download Payout</button>

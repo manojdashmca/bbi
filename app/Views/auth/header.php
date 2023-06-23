@@ -10,8 +10,7 @@
         <link type="text/css" rel="stylesheet" href="<?= CUSTOMPATH ?>loginassets/fonts/font-awesome/css/font-awesome.min.css">
         <link type="text/css" rel="stylesheet" href="<?= CUSTOMPATH ?>loginassets/fonts/flaticon/font/flaticon.css">
 
-        <!-- Favicon icon -->
-        <link rel="shortcut icon" href="<?= CUSTOMPATH ?>panelassets/images/favicon.png" type="image/x-icon" >
+        <link rel="shortcut icon" type="image/x-icon" href="<?= CUSTOMPATH ?>panelassets/images/logobbi.png">
 
         <!-- Google fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
