@@ -6,18 +6,33 @@
         $('#searchsubmit').click(function () {
             bindDatatable();
         });
-        
-        
-    });
+        $('#addalbum').formValidation({
+            message: 'This value is not valid',
+            icon: {
+            },
+            fields: {
+                albumname: {
+                    validators: {
+                        notEmpty: {
+                            message: "Album Name Required"
+                        }
+                    }
+                }
+            }
 
-   
+        }).on('success.form.fv', function (e) {
+            // Prevent form submission
+            e.preventDefault();
+            addAlbum();
+        });
+
+    });
     function bindDatatable(page = 0) {
         if (page != 0) {
             var page = parseInt(page) * 10;
         }
-        var name = $("#name").val();        
-        var daterange = $("#daterange").val();       
-        
+        var name = $("#name").val();
+        var daterange = $("#daterange").val();
         $('#albumlist').DataTable().destroy();
         $('#albumlist').DataTable({
             responsive: true,
@@ -33,13 +48,13 @@
                 method: "POST",
                 url: '<?= ADMINPATH ?>gallery-data',
                 data: function (d) {
-                    d.name = name;                    
-                    d.daterange = daterange; 
+                    d.name = name;
+                    d.daterange = daterange;
                 }
             }
         });
     }
-    
+
     function updateStatus(id, status) {
         if (status == 1) {
             var message = "Do you want to activate this album!";
@@ -80,5 +95,33 @@
 
         });
     }
-    
+
+    function addAlbum() {
+        var albumname = $('#albumname').val();
+
+        $.ajax({
+            type: "post",
+            url: '<?= ADMINPATH ?>add-album',
+            data: {albumname: albumname},
+            success: function (data)
+            {
+                $('#preloader').hide();
+                var obj = JSON.parse(data);
+                if (obj.status == 'success') {
+                    Swal.fire('', obj.message, obj.status);
+                    $('#addalbummodal').modal('toggle');
+                    $("#addalbum").data('formValidation').resetForm();
+                    var page = $('#albumlist').DataTable().page.info().page;
+                    bindDatatable(page);
+                } else {
+                    Swal.fire('', obj.message, obj.status);
+                }
+
+
+            }
+        }
+        );
+
+    }
+
 </script>

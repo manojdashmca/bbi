@@ -121,6 +121,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->post("update-album-status", "UtilityController::updateAlbumStatus");
     $routes->get("album-image-show/(:any)", "UtilityController::viewAlbum/$1");
     $routes->post("update-image-status", "UtilityController::updateImageStatus");
+    $routes->post("add-album", "UtilityController::addaAlbum");
     
     
     

@@ -42,7 +42,7 @@
                                 <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
-                                        <button class="btn btn-success margintop-29" id="addnew" type="button"><i class=" fas fa-plus-circle"></i> Add Album</button>
+                                        <button class="btn btn-success margintop-29" data-bs-toggle="modal" type="button" data-bs-target="#addalbummodal"><i class=" fas fa-plus-circle"></i> Add Album</button>
                                     </div>                                        
                                 </div>
                             </div> 
@@ -80,3 +80,37 @@
     </div> <!-- container-fluid -->
 </div>
 <!-- End Page-content -->
+<div class="modal fade bs-example-modal-center" id="addalbummodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add a new gallery</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form name='addalbum' id='addalbum' method='post'>                 
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-9 col-md-9">
+                                    <div class="form-group mb-3">
+                                        <label for="recipient-name" class="col-form-label">Album Name</label>
+                                        <input type="text" class="form-control" id="albumname" name='albumname'>
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>                        
+                    </div>                  
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Album</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -22,8 +22,8 @@ class UtilityController extends AdminController {
     }
 
     public function galleryList() {
-        $this->data['js'] = 'flatpickr,datatable,sweetalert';
-        $this->data['css'] = 'flatpickr,datatable,sweetalert';
+        $this->data['js'] = 'validation,flatpickr,datatable,sweetalert';
+        $this->data['css'] = 'validation,flatpickr,datatable,sweetalert';
         $this->data['includefile'] = 'utility/galleryList.php';
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\utility\galleryList', $this->data)
@@ -250,5 +250,20 @@ class UtilityController extends AdminController {
         return view('\Modules\Admin\Views\templates\header', $this->data)
                 . view('\Modules\Admin\Views\utility\viewAlbum', $this->data)
                 . view('\Modules\Admin\Views\templates\footer', $this->data);
+    }
+
+    public function addaAlbum() {
+        $status = array('status' => 'error', 'message' => 'Unauthorised access');
+        if ($this->request->isAJAX()) {
+            $albumname = $this->request->getPost('albumname');
+            $createarray = array('album_name' => $albumname, 'album_status' => 2);
+
+            $this->adminModel->createRecordInTable($createarray, 'album');
+            $status = "success";
+            $message = "Album added successfully";
+            $data = array('status' => $status, 'message' => $message);
+        }
+        echo json_encode($data);
+        exit;
     }
 }
