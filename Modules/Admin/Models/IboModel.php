@@ -15,7 +15,7 @@ class IboModel extends Model {
     public function selectIBO($data, $ordercolumn = 7, $orderdirecttion = 'desc', $offset = 0, $limit = 30) {
         try {
             $return = array();
-            $columnarray = array('a.id_user', 'a.user_name', 'a.user_code','lm_name', 'a.user_city', 'a.user_mobile', 'a.sponsor_user_id', 'a.user_create_date','a.user_status','ibo_user_status');
+            $columnarray = array('a.id_user', 'a.user_name', 'a.user_code','lm_name', 'a.user_city', 'a.user_mobile', 'a.sponsor_user_id','segment_name','category_name', 'a.user_create_date','a.user_status','ibo_user_status');
             $sql = "select SQL_CALC_FOUND_ROWS distinct(a.id_user),a.user_name,CONCAT_WS(' / ',a.user_code,a.user_login_name) user_coden,lm_name,a.user_city,a.user_mobile ,CONCAT_WS(' / ',b.user_code,b.user_login_name,b.user_name) as sponsor,
                 segment_name,category_name,date_format(a.user_create_date,'%d-%m-%Y %H:%i:%s') createedon,
                 if(a.user_status='1','Granted','Blocked') user_status,
@@ -165,7 +165,7 @@ class IboModel extends Model {
                 FROM ibo_sponsor_position as a
                 JOIN user_detail as b on a.child=b.id_user  
                 JOIN user_detail as c on a.sponsor=c.id_user 
-                where 1 =1 ";
+                where b.user_status in(1,2) ";
             !empty($data['code']) ? $sql .= " AND c.user_code = '" . $data['code'] . "'" : $sql .= '';
             !empty($data['parentid']) ? $sql .= " AND a.sponsor = '" . $data['parentid'] . "'" : $sql .= '';
             !empty($data['level']) ? $sql .= " AND level = '" . $data['level'] . "'" : $sql .= '';

@@ -1,7 +1,6 @@
 <script>
     $(document).ready(function () {
-        flatpickr("#daterange", {mode: "range", dateFormat: "d-m-Y"});
-        //new Choices("#status", {removeItemButton: !0});
+        flatpickr("#daterange", {mode: "range", dateFormat: "d-m-Y"});        
         bindDatatable();
         $('#searchsubmit').click(function () {
             bindDatatable();
@@ -9,7 +8,15 @@
         $('#addnew').click(function () {
             window.location.href = "<?= ADMINPATH ?>ibo-add";
         });
-
+        $('#download').click(function () {
+            var name = $("#name").val();
+            var mobile = '';        
+            var moduleid = $("#moduleid").val();
+            var status = $("#ustatus").val();
+            var username=$("#username").val();
+            var daterange = $("#daterange").val();            
+            window.open("<?=ADMINPATH?>download-member-data?username="+username+"&name="+name+"&mobile="+mobile+"&status="+status+"&daterange="+daterange+"&moduleid="+moduleid, "_blank");
+        });
         $('#changesponsor').formValidation({
             message: 'This value is not valid',
             icon: {

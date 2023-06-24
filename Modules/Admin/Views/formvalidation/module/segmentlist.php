@@ -8,14 +8,16 @@
         $('#addnew').click(function () {
             window.location.href = "<?= ADMINPATH ?>segment-add";
         });
+        $('#download').click(function () {
+            var name = $("#name").val();            
+            window.open("<?= ADMINPATH ?>download-segment-data?name=" + name, "_blank");
+        });
         
     });
   
 
     function bindDatatable() {
-        var name = $("#name").val();
-        var code = $("#code").val();
-        var daterange = $("#daterange").val();
+        var name = $("#name").val();       
         $('#example').DataTable().destroy();
         $('#example').DataTable({
             responsive: true,
@@ -30,9 +32,7 @@
                 method: "POST",
                 url: '<?= ADMINPATH ?>segment-data',
                 data: function (d) {
-                    d.name = name;
-                    d.code = code;
-                    d.daterange = daterange;
+                    d.name = name;                    
                 }
             }
         });

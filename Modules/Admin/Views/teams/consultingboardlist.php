@@ -51,8 +51,9 @@
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
                                         <?php if (in_array(26, session()->get('accesscontrols'))) { ?>
-                                            <button class="btn btn-success margintop-29" data-bs-toggle="modal" type="button" data-bs-target="#adduser"><i class=" fas fa-plus-circle"></i> Add New Member To The Team</button>
+                                            <button class="btn btn-success margintop-29" data-bs-toggle="modal" type="button" data-bs-target="#adduser"><i class=" fas fa-plus-circle"></i> Add Team Member</button>
                                         <?php } ?>
+                                        <button class="btn btn-info margintop-29" id="download" type="button"><i class="fas fa-cloud-download-alt"></i></button>
                                     </div>                                        
                                 </div>
                             </div> 

@@ -58,7 +58,7 @@
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
-                                        
+                                        <button class="btn btn-info margintop-29" id="download" type="button"><i class="fas fa-cloud-download-alt"></i></button>
                                     </div>                                        
                                 </div>
                             </div> 

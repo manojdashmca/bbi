@@ -41,6 +41,8 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->post("payment-data", "OrderController::orderdata");
     $routes->post("update-payment-status", "OrderController::updateOrderStatus");
     $routes->get("monthly-tax", "OrderController::monthlytaxstatement");
+    $routes->get("test-pdf", "OrderController::invoiceHtml");
+
     //------Module Controller   
     $routes->get("module-list", "ModuleController::index");
     $routes->match(['get', 'post'], "module-add", "ModuleController::add");
@@ -72,8 +74,23 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->post("payout-member-data", "PayoutController::payourMemberData");
 
     //------Reports Controller   
-    $routes->get("business-report", "ReportsController::business");
-    $routes->get("company-performance", "ReportsController::performance");
+    $routes->get("download-user-data", "ReportsController::downloadAdminUserReport");
+    $routes->get("download-member-data", "ReportsController::downloadIboUserReport");
+    $routes->get("download-referrer-data", "ReportsController::downloadReferralUserReport");
+    $routes->get("download-order-data", "ReportsController::downloadOrderReport");
+    $routes->get("download-module-data", "ReportsController::downloadModuleReport");
+    $routes->get("download-segment-data", "ReportsController::downloadSegmentReport");
+    $routes->get("download-category-data", "ReportsController::downloadCategoryReport");
+    $routes->get("download-subcategory-data", "ReportsController::downloadSubcategoryReport");
+    $routes->get("download-user-subcategory-data", "ReportsController::downloadSubCategoryUsedReport");
+    $routes->get("download-src-board-data", "ReportsController::downloadSrConsultingBoardTeamReport");
+    $routes->get("download-consulting-board-data", "ReportsController::downloadConsultingBoardTeamReport");
+    $routes->get("download-national-team-data", "ReportsController::downloadNationalTeamReport");
+    $routes->get("download-state-team-data", "ReportsController::downloadStateTeamReport");
+    $routes->get("download-zone-team-data", "ReportsController::downloadZoneTeamReport");
+    $routes->get("download-payout-data", "ReportsController::downloadMemberPayoutReport");
+    $routes->get("download-webcontact-data", "ReportsController::downloadWebContactReport");
+    $routes->get("download-startamodule-data", "ReportsController::downloadStartAModuleReport");
 
     //-----Personal Controller
     $routes->get("profile", "PersonalController::index");
@@ -122,9 +139,7 @@ $routes->group("backoffice", ["namespace" => "\Modules\Admin\Controllers"], func
     $routes->get("album-image-show/(:any)", "UtilityController::viewAlbum/$1");
     $routes->post("update-image-status", "UtilityController::updateImageStatus");
     $routes->post("add-album", "UtilityController::addaAlbum");
-    
-    
-    
+
     //----------------------------Cron------------------    
     $routes->get("send-pending-emails", "CronController::sendPendingEmails");
     $routes->get("delete-system-log", "CronController::deleteSystemLogs");

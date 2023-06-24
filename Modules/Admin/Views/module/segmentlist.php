@@ -38,6 +38,7 @@
                                         <?php if (in_array(15, session()->get('accesscontrols'))) { ?>
                                             <button class="btn btn-success margintop-29" id="addnew" type="button"><i class=" fas fa-plus-circle"></i> Add New Segment</button>
                                         <?php } ?>
+                                        <button class="btn btn-info margintop-29" id="download" type="button"><i class="fas fa-cloud-download-alt"></i></button>
                                     </div>                                        
                                 </div>
                             </div> 
@@ -46,20 +47,20 @@
                 </div>
                 <div class="card">
                     <div class="card-body">                        
-                            <div class="table-responsive">
-                                <table id="example" class="table table-bordered dt-responsive w-100">
-                                    <thead>
-                                        <tr>
-                                            <th>Sl No</th>                                            
-                                            <th>Segment Name</th>                      
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>                        
+                        <div class="table-responsive">
+                            <table id="example" class="table table-bordered dt-responsive w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Sl No</th>                                            
+                                        <th>Segment Name</th>                      
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>                        
                     </div>
                 </div>
             </div> <!-- end col -->

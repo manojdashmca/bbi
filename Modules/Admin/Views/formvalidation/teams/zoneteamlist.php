@@ -1,4 +1,12 @@
 <script>
+     $(document).ready(function () {
+        $('#download').click(function () {
+            var name = $("#name").val();
+            var username = $("#username").val();
+            var daterange = $("#daterange").val();
+            window.open("<?= ADMINPATH ?>download-zone-team-data?name=" + name + "&username=" + username + "&daterange=" + daterange, "_blank");
+        });
+    });
     function bindDatatable() {
         var name = $("#name").val();
         var username = $("#username").val();

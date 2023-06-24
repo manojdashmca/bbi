@@ -7,6 +7,15 @@
         $('#searchsubmit').click(function () {
             bindDatatable();
         });
+        $('#download').click(function () {
+            var name = $("#name").val();
+            var mobile = '';
+            var moduleid = $("#moduleid").val();
+            var status = $("#pstatus").val();
+            var daterange = $("#daterange").val();
+            var username = $("#username").val();
+            window.open("<?=ADMINPATH?>download-order-data?name="+name+"&mobile="+mobile+"&moduleid="+moduleid+"&status="+status+"&daterange="+daterange+"&username="+username, "_blank");
+        });
 
     });
 

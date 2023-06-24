@@ -6,7 +6,14 @@
         $('#searchsubmit').click(function () {
             bindDatatable();
         });
-        
+        $('#download').click(function () {
+            var name = $("#name").val();
+            var mobile = $("#mobile").val();
+            var email = $("#email").val();   
+            var area = $("#area").val();
+            var daterange = $("#daterange").val();            
+            window.open("<?=ADMINPATH?>download-startamodule-data?area="+area+"&name="+name+"&mobile="+mobile+"&email="+email+"&daterange="+daterange, "_blank");
+        });
         
     });
 

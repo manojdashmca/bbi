@@ -6,6 +6,13 @@
         $('#searchsubmit').click(function () {
             bindDatatable();
         });
+        $('#download').click(function () {
+            var name = $("#name").val();
+            var mobile = $("#mobile").val();            
+            var daterange = $("#daterange").val();
+            var payout = $("#payoutdate").val();  
+            window.open("<?=ADMINPATH?>download-payout-data?name="+name+"&mobile="+mobile+"&payout="+payout+"&daterange="+daterange, "_blank");
+        });
     });
 
 

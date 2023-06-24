@@ -45,6 +45,7 @@
                                         <?php if (in_array(18, session()->get('accesscontrols'))) { ?>
                                             <button class="btn btn-success margintop-29" id="addnew" type="button"><i class=" fas fa-plus-circle"></i> Add New Category</button>
                                         <?php } ?>
+                                        <button class="btn btn-info margintop-29" id="download" type="button"><i class="fas fa-cloud-download-alt"></i></button>
                                     </div>                                        
                                 </div>
                             </div> 

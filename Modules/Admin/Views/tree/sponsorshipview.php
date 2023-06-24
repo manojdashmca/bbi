@@ -5,12 +5,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Sponsorship View</h4>
+                    <h4 class="mb-sm-0 font-size-18">Referral View</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Genealogy</a></li>
-                            <li class="breadcrumb-item active">Sponsorship View</li>
+                            <li class="breadcrumb-item active">Referral View</li>
                         </ol>
                     </div>
 
@@ -49,6 +49,7 @@
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">                                        
                                         <button class="btn btn-primary margintop-29" id="searchsubmit" type="button">Search</button>
+                                        <button class="btn btn-info margintop-29" id="download" type="button"><i class="fas fa-cloud-download-alt"></i></button>
                                     </div>                                        
                                 </div>
                             </div> 

@@ -1,6 +1,6 @@
 <script>
     $(document).ready(function () {
-       
+
         bindDatatable();
         $('#searchsubmit').click(function () {
             bindDatatable();
@@ -8,13 +8,18 @@
         $('#addnew').click(function () {
             window.location.href = "<?= ADMINPATH ?>category-add";
         });
-        
+        $('#download').click(function () {
+            var categoryname = $("#categoryname").val();
+            var segmentname = $("#segmentname").val();
+            window.open("<?= ADMINPATH ?>download-category-data?categoryname=" + categoryname + "&segmentname=" + segmentname, "_blank");
+        });
+
     });
-  
+
 
     function bindDatatable() {
         var categoryname = $("#categoryname").val();
-        var segmentname = $("#segmentname").val();        
+        var segmentname = $("#segmentname").val();
         $('#example').DataTable().destroy();
         $('#example').DataTable({
             responsive: true,
@@ -30,7 +35,7 @@
                 url: '<?= ADMINPATH ?>category-data',
                 data: function (d) {
                     d.cname = categoryname;
-                    d.sname = segmentname;                    
+                    d.sname = segmentname;
                 }
             }
         });
@@ -56,7 +61,7 @@
                 $.ajax({
                     type: "POST",
                     url: '<?= ADMINPATH ?>update-segcatsubcat-status',
-                    data: {enctableid: id, status: status,type:2},
+                    data: {enctableid: id, status: status, type: 2},
                     success: function (data) {
                         var jsonData = JSON.parse(data);
                         if (jsonData.status == 'success') {

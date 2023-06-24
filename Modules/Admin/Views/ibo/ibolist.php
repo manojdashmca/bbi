@@ -32,13 +32,13 @@
 
                                     </div>
                                 </div>
-<!--                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
-                                    <div class="mb-3">
-                                        <label class="form-label" for="validationCustom02">Mobile</label>
-                                        <input type="text" class="form-control" id="mobile" placeholder="Mobile"/>
-
-                                    </div>
-                                </div>-->
+                                <!--                                <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label" for="validationCustom02">Mobile</label>
+                                                                        <input type="text" class="form-control" id="mobile" placeholder="Mobile"/>
+                                
+                                                                    </div>
+                                                                </div>-->
 
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
@@ -72,6 +72,7 @@
                                         <?php if (in_array(5, session()->get('accesscontrols'))) { ?>
                                             <button class="btn btn-success margintop-29" id="addnew" type="button"><i class=" fas fa-plus-circle"></i> Add Member</button>
                                         <?php } ?>
+                                        <button class="btn btn-info margintop-29" id="download" type="button"><i class="fas fa-cloud-download-alt"></i></button>
                                     </div>                                        
                                 </div>
                             </div> 
@@ -80,33 +81,33 @@
                 </div>
                 <div class="card">
                     <div class="card-body">                        
-                            <div class="table-responsive">
-                                <table id="userlist" class="table table-bordered dt-responsive w-100">
-                                    <thead>
-                                        <tr>
-                                            <th>Sl No</th>
-                                            <th>Name</th>
-                                            <th>User Name</th>
-                                            <th>Module Name</th>
-                                            <th>City</th>
-                                            <th>Mobile</th>
-                                            <th>Sponsor Code & Name</th>
-                                            <th>Segment</th>
-                                            <th>Category</th>
-                                            <th>DOJ</th>
-                                            <th>System Access</th>
-                                            <th>Member Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
+                        <div class="table-responsive">
+                            <table id="userlist" class="table table-bordered dt-responsive w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Sl No</th>
+                                        <th>Name</th>
+                                        <th>User Name</th>
+                                        <th>Module Name</th>
+                                        <th>City</th>
+                                        <th>Mobile</th>
+                                        <th>Referrer Code & Name</th>
+                                        <th>Segment</th>
+                                        <th>Category</th>
+                                        <th>DOJ</th>
+                                        <th>System Access</th>
+                                        <th>Member Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
 
 
-                                    <tbody>
+                                <tbody>
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div> <!-- end col -->

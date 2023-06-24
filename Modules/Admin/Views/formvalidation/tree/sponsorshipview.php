@@ -4,6 +4,12 @@
         $('#searchsubmit').click(function () {
             bindDatatable();
         });
+        $('#download').click(function () {
+            var code = $("#username").val();
+            var level = $("#level").val();            
+                       
+            window.open("<?=ADMINPATH?>download-referrer-data?code="+code+"&level="+level, "_blank");
+        });
         
     });
 

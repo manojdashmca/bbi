@@ -42,10 +42,9 @@
                                 <div class="col-md-2 col-lg-2 col-sm-6 col-xs-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="validationCustom04">Status</label>
-                                        <select class="form-control" name="choices-multiple-remove-button"
-                                                id="status" placeholder="This is a placeholder" multiple>
-                                            <option value="1">Active</option>
-                                            <option value="99">In-Active</option>
+                                        <select class="form-control form-select" id="ustatus">
+                                            <option value="0">All</option>  
+                                            <option value="1">Granted</option>                                            
                                             <option value="2">Blocked</option>                                            
                                         </select>
 
@@ -64,6 +63,7 @@
                                         <?php if (in_array(1, session()->get('accesscontrols'))) { ?>
                                             <button class="btn btn-success margintop-29" id="addnew" type="button"><i class=" fas fa-plus-circle"></i> Add New User</button>
                                         <?php } ?>
+                                        <button class="btn btn-info margintop-29" id="download" type="button"><i class="fas fa-cloud-download-alt"></i></button>
                                     </div>                                    
                                 </div>
                             </div> 
@@ -72,24 +72,24 @@
                 </div>
                 <div class="card">
                     <div class="card-body">                        
-                            <div class="table-responsive">
-                                <table id="userlist" class="table table-bordered dt-responsive  nowrap w-100">
-                                    <thead>
-                                        <tr>        
-                                            <th>Sl No</th>
-                                            <th>Name</th>
-                                            <th>User Id</th>
-                                            <th>Mobile</th>
-                                            <th>Email</th>
-                                            <th>System Access</th>
-                                            <th>Date Of Join</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>                            
+                        <div class="table-responsive">
+                            <table id="userlist" class="table table-bordered dt-responsive  nowrap w-100">
+                                <thead>
+                                    <tr>        
+                                        <th>Sl No</th>
+                                        <th>Name</th>
+                                        <th>User Id</th>
+                                        <th>Mobile</th>
+                                        <th>Email</th>
+                                        <th>System Access</th>
+                                        <th>Date Of Join</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>                            
                         </div>
                     </div>
                 </div>

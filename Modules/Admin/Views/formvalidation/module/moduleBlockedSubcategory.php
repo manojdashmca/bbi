@@ -4,6 +4,12 @@
         $('#searchsubmit').click(function () {
             bindDatatable();
         });
+        $('#download').click(function () {
+            var module = $("#moduleid").val();
+            var cname = $("#businesscategory").val();
+            var sname = $("#businesssegment").val();
+            window.open("<?= ADMINPATH ?>download-user-subcategory-data?module=" + module + "&cname=" + cname + "&sname=" + sname, "_blank");
+        });
     });
 
 

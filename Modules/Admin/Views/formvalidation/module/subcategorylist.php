@@ -1,11 +1,17 @@
 <script>
-    $(document).ready(function () {        
+    $(document).ready(function () {
         bindDatatable();
         $('#searchsubmit').click(function () {
             bindDatatable();
         });
         $('#addnew').click(function () {
             window.location.href = "<?= ADMINPATH ?>subcategory-add";
+        });
+        $('#download').click(function () {
+            var categoryname = $("#categoryname").val();
+            var segmentname = $("#segmentname").val();
+            var subcategoryname = $("#subcategoryname").val();
+            window.open("<?= ADMINPATH ?>download-subcategory-data?categoryname=" + categoryname + "&segmentname=" + segmentname + "&subcategoryname=" + subcategoryname, "_blank");
         });
 
     });

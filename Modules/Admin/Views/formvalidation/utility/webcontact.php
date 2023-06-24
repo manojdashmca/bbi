@@ -6,7 +6,13 @@
         $('#searchsubmit').click(function () {
             bindDatatable();
         });
-        
+        $('#download').click(function () {
+            var name = $("#name").val();
+            var mobile = $("#mobile").val();
+            var email = $("#email").val();            
+            var daterange = $("#daterange").val();            
+            window.open("<?=ADMINPATH?>download-webcontact-data?name="+name+"&mobile="+mobile+"&email="+email+"&daterange="+daterange, "_blank");
+        });
         
     });
 

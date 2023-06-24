@@ -46,11 +46,11 @@ class PayoutModel extends Model {
             $sql = "select SQL_CALC_FOUND_ROWS mp_id,CONCAT_WS(' / ',user_name,user_code,user_login_name) user_coden,"
                     . "concat(date_format(payout_start_date,'%d-%m-%Y'),' TO ',date_format(payout_close_date,'%d-%m-%Y')) payout, "
                     . "gross_income,tds_deducted,net_income,"
-                    . "if(release_status=1,'Released','Pending') releasestatus,date_format(release_date,'%d-%m-%Y')releasedate ,release_detail "
+                    . "if(release_status=1,'Released','Pending') releasestatus,date_format(release_date,'%d-%m-%Y') releasedate ,release_detail "
                     . "FROM monthly_payout join payout_date on payout_id_payout=payout_date_id "
                     . "join user_detail on user_id_user=id_user "
                     . "WHERE 1=1 ";
-            !empty($data['name']) ? $sql .= " AND user_name = '" . $data['name'] . "'" : $sql .= '';
+            !empty($data['name']) ? $sql .= " AND user_name like '%" . $data['name'] . "%'" : $sql .= '';
             !empty($data['payout']) ? $sql .= " AND payout_id_payout = '" . $data['payout'] . "'" : $sql .= '';
             !empty($data['fromdate']) ? $sql .= " AND  date_format(payout_start_date,'%Y-%m-%d') >= '" . date('Y-m-d', strtotime($data['fromdate'])) . "'" : $sql .= '';
             !empty($data['todate']) ? $sql .= " AND  date_format(payout_start_date,'%Y-%m-%d') <= '" . date('Y-m-d', strtotime($data['todate'])) . "'" : $sql .= '';

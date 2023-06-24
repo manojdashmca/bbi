@@ -8,6 +8,12 @@
         $('#addnew').click(function () {
             window.location.href = "<?= ADMINPATH ?>module-add";
         });
+        $('#download').click(function () {
+            var name = $("#name").val();
+            var code = $("#code").val();
+            var daterange = $("#daterange").val();
+            window.open("<?= ADMINPATH ?>download-module-data?name=" + name + "&code=" + code + "&daterange=" + daterange, "_blank");
+        });
         $('#changedirectorid').formValidation({
             message: 'This value is not valid',
             icon: {
@@ -152,7 +158,7 @@
         );
 
     }
-    
+
     function CheckMember(type) {
         $('#hiddenmemberid').val('');
         $('#ashiddenmemberid').val('');

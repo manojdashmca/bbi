@@ -4,7 +4,6 @@ namespace Modules\Admin\Controllers;
 
 use Modules\Admin\Controllers\AdminController;
 use Modules\Admin\Models\OrderModel;
-use Modules\Admin\Models\ProductModel;
 use App\Libraries\EmailTemplate;
 
 class OrderController extends AdminController {
@@ -15,8 +14,8 @@ class OrderController extends AdminController {
     }
 
     public function index() {
-        $this->data['title']="Payments List";
-        $this->checkAccessControll(4,'m');
+        $this->data['title'] = "Payments List";
+        $this->checkAccessControll(4, 'm');
         $this->data['js'] = 'validation,lightbox,flatpickr,datatable,sweetalert,alertify';
         $this->data['css'] = 'validation,lightbox,flatpickr,datatable,sweetalert,alertify';
         $this->data['includefile'] = 'order/orderlist.php';
@@ -50,7 +49,7 @@ class OrderController extends AdminController {
             $ordercolumn = $order[0]['column'];
             $orderdirecttion = $order[0]['dir'];
             $daterange = generateDateFromDateRange($this->request->getPost('daterange'));
-            $data = array('moduleid'=>$moduleid,'status'=>$status,'name' => $name, 'mobile' => $mobile, 'username' => $username, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
+            $data = array('moduleid' => $moduleid, 'status' => $status, 'name' => $name, 'mobile' => $mobile, 'username' => $username, 'fromdate' => $daterange['fromdate'], 'todate' => $daterange['todate']);
             $userlist = $this->orderModel->selectIBOOrder($data, $ordercolumn, $orderdirecttion, $offset, $limit);
             $returndata['data'] = $this->fn_formatedorderdata($userlist['data'], $offset);
             $returndata['draw'] = $draw;
@@ -133,4 +132,11 @@ class OrderController extends AdminController {
         exit;
     }
 
+    public  function invoiceHtml() {
+        $mpdf = new \Mpdf\Mpdf();
+        $html = "hello world";
+        $mpdf->WriteHTML($html);
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $mpdf->Output('arjun.pdf', 'I');
+    }
 }
