@@ -30,7 +30,7 @@ class CronController extends AdminController {
         $queuedemail = $this->cronModel->getQueuedEmail(5);
         foreach ($queuedemail as $email) {
             $emaildata = array('template' => $email->smtp_email_content, 'to' => $email->smtp_target_emails, 'subject' => $email->smtp_email_type);
-            (!empty($email->smtp_attachment)) ? $emaildata['attachment'][] = __DIR__ . '/../../public/uploads/emailattachments/' . $email->smtp_attachment : '';
+            (!empty($email->smtp_attachment)) ? $emaildata['attachment'][] = __DIR__ . '/../../../public/uploads/emailattachments/' . $email->smtp_attachment : '';
             $status = sendEmail($emaildata);
             if ($status) {
                 $updarray = array('smtp_send_status' => 1, 'smtp_deliver_date_time' => date('Y-m-d H:i:s'));

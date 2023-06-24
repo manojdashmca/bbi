@@ -100,7 +100,9 @@ class OrderController extends AdminController {
                 $this->blankModel->transStart();
                 $iboupdarray = array();
                 $updarray = array('payment_approved_by' => session()->get('userid'), 'payment_status' => $status, 'payment_approve_comment' => 'Manual Approve by admin', 'payment_approve_reject_date' => date('Y-m-d H:i:s'));
+                $invoicefile = '';
                 if ($status == 2) {
+                    $invoicefile = $this->invoiceHtml($paymentid);
                     $iboupdarray['approval_status'] = 1;
                     $message = "Payment Approved Successfully";
                     $this->adminModel->updateRecordInTable(array('user_status' => 1), 'user_detail', 'id_user', $orderdetail->user_id_user);
@@ -113,6 +115,9 @@ class OrderController extends AdminController {
                 $paymentstatus = array(2 => "Payment Approved @ SSK Bharat BBI", 3 => "Paymenr Rejected @ SSK Bharat BBI");
                 $emailTemplate = $objEmailTemplate->paymentStatusEmail($orderdetail->user_name, $status);
                 $emailarray = array('smtp_email_content' => $emailTemplate, 'smtp_email_type' => $paymentstatus[$status], 'smtp_sender_email' => NOREPLAY_EMAIL, 'smtp_target_emails' => $orderdetail->user_email);
+                if (!empty($invoicefile)) {
+                    $emailarray['smtp_attachment'] = $invoicefile;
+                }
                 $this->adminModel->createRecordInTable($emailarray, 'smtp_email');
                 $this->adminModel->updateRecordInTable($iboupdarray, 'ibo_business_detail', 'paymentdetail_id', $paymentid);
                 $this->adminModel->updateRecordInTable($updarray, 'ibo_joining_payment_detail', 'mpd_id', $paymentid);
@@ -132,11 +137,188 @@ class OrderController extends AdminController {
         exit;
     }
 
-    public  function invoiceHtml() {
+    protected function invoiceHtml($paymentid) {
+        $invoice = $this->orderModel->getPaymentDetailById($paymentid);
+        $html = "";
+        $html .= '<div align="center">
+<table style="margin: auto; font-family: \'Open Sans\', sans-serif; font-weight:400; font-size:13px; margin:0px; padding:0px; color:#231F20;" width="800" border="0" cellspacing="0" cellpadding="0" align="center" >
+<tr>
+                <td colspan="20" style="text-align: center; padding: 10px; font-size: 20px; font-weight: 600; border-bottom: 1px solid #000;">TAX INVOICE	</td>
+            </tr>';
+        $html .= '
+            <tr>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="3" rowspan="3">
+                    <b>SSK BHARAT BUSINESS BUILDING INITIATIVE PVT. LTD. </b><br/>
+                    HEH-380 E 1 1 PATEL CHAWL, PATEL CHAWL, JAIHIND NGR SERVICE ROAD,<br/>
+                    MUMBAI CITY, EX HIGHWAY MUMBAI<br/>
+                    GSTIN/UIN: 27ABJCS6587P1Z6<br/>
+                    State Name :  Maharashtra, Code : 27
+                </td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="5">Invoice No.<br/>
+                    <b>' . $invoice->mpd_id . '/SSKBBI/' . dateToFiscal($invoice->payment_date) . '</b>
+                </td>
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="5">Dated<br/>
+                    <b>' . date('d-M-y', strtotime($invoice->payment_date)) . '</b>
+                </td>
+            </tr>
+            <tr >
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="5">Delivery Note <br/><b>Virtual Product</b></td>
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="5">Mode/Terms of Payment<br/><b>' . $invoice->payment_method . '</b></td>
+            </tr>
+            <tr >
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="5">Reference No. & Date. <br/><b>' . date('d-M-y', strtotime($invoice->payment_date)) . '</b></td>
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="5">Other References<br/><b>-NA-</b></td>
+
+            </tr>
+            <tr >
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="3" rowspan="3">Consignee (Ship to)<br/>
+                    <b>' . $invoice->business_name . '</b><br/>' . $invoice->business_address . '
+                    <br/>';
+        if (!empty($invoice->gst_registered)) {
+            $html .= 'GSTIN/UIN  : ' . $invoice->gst_no . '<br/>
+                    State Name : ';
+        } else {
+            $html .= 'GSTIN/UIN  : -NA-<br/>
+                    State Name : ';
+        }
+
+        $html .= '                    
+                </td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="5">Buyer\'s Order No<br/>
+                    <b>' . $invoice->user_code . '</b>
+                </td>
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="5">Dated<br/>
+                    <b>' . date('d-M-y', strtotime($invoice->payment_date)) . '</b>
+                </td>
+            </tr>            
+            <tr>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="5">Dispatch Doc No. <br/><b>-NA-</b></td>
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="5">Delivery Note Date<br/><b>Instant / ' . date('d-M-y', strtotime($invoice->payment_date)) . '</b></td>
+            </tr>
+            <tr>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="5">Dispatched through <br/><b>-NA-</b></td>
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="5">Destination<br/><b>-NA-</b></td>
+
+            </tr>
+            <tr >
+                
+            </tr>
+            <tr>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top; border-right:none" colspan="3">Buyer (Bill to)<br/>
+                    <b>' . $invoice->business_name . '</b><br/>' . $invoice->business_address . '<br/>';
+        if (!empty($invoice->gst_registered)) {
+            $html .= 'GSTIN/UIN  : ' . $invoice->gst_no . '<br/>
+                    State Name : ';
+        } else {
+            $html .= 'GSTIN/UIN  : -NA-<br/>
+                    State Name : ';
+        }
+        $html .= '
+                </td>
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="10" >
+                    Terms of Delivery<br/>
+                </td>
+            </tr>
+            <tr >
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" width="5%">SI<br/>No.</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2">Particulars</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2">HSN/SAC</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2">Quantity</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="3">Rate</td>                
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="3" align="right">Amount</td>
+            </tr>
+            <tr >
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;">1</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2"><b>Membership Fees</b>
+                    <br/>';
+        if (!empty($invoice->topup_fee)) {
+            $html .= '<b style="float:right">Account Top-Up Fee <br/>';
+        }
+        $html .= '        <b style="float:right">CGST 9% <br/>
+                        SGST 9%</b>
+
+                </td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2"></td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" ><b>1</b>';
+        if (!empty($invoice->topup_fee)) {
+            $html .= '<br/><b>' . $invoice->topup_fee / 5000 . '</b>';
+        }
+        $html .= '        </td>
+                <td style="text-align:right;padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="3">' . number_format((float) $invoice->joining_fee, 2, '.', '');
+        if (!empty($invoice->topup_fee)) {
+            $html .= '<br/>' . number_format((float) 5000, 2, '.', '');
+        }
+        $html .= '    </td>
+                
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="3" align="right"><b>' . number_format((float) $invoice->joining_fee, 2, '.', '') . '<br/>';
+        if (!empty($invoice->topup_fee)) {
+            $html .= '<b>' . number_format((float) $invoice->topup_fee, 2, '.', '') . '</b><br/>';
+        }
+        $html .= number_format((float) $invoice->gst / 2, 2, '.', '') . '<br/>' . number_format((float) $invoice->gst / 2, 2, '.', '') . '</b></td>
+            </tr>
+            <tr >
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;"></td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="right">Total</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2"></td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2"></td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="3"></td>                
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="3" align="right"><b style="font-size:15px">₹ ' . number_format((float) $invoice->payment_amount, 2, '.', '') . '</b></td>
+            </tr> 
+            <tr>
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="13">
+                    Amount Chargeable (in words)<span style="float:right;font-style: italic;"> E. &amp;O.E</span><br/>
+                    <b>INR ' . ucwords(no_to_words($invoice->payment_amount)) . ' Only</b></td>
+            </tr>
+            <tr >
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" rowspan="2" width="30%">HSN/SAC</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" rowspan="1" rowspan="2" align="center" width="15%">Taxable<br/>Value</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="4" align="center" width="20%">Central Tax</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="4" align="center" width="20%">State Tax</td>
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" rowspan="2" align="center">Total<br/>Tax Amount</td>
+            </tr>  
+
+            <tr>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center">Rate</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center">Amount</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center">Rate</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center">Amount</td>
+            </tr>
+            <tr >
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2"></td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" align="center" >' . number_format((float) ($invoice->joining_fee + $invoice->topup_fee), 2, '.', '') . '</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center">18%</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center">' . number_format((float) $invoice->gst / 2, 2, '.', '') . '</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center">18%</td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center">' . number_format((float) $invoice->gst / 2, 2, '.', '') . '</td>
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center" >' . number_format((float) $invoice->gst, 2, '.', '') . '</td>
+            </tr>
+            <tr>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2"></td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" align="center" ><b>' . number_format((float) ($invoice->joining_fee + $invoice->topup_fee), 2, '.', '') . '</b></td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center"></td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center"></td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center"></td>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center"></td>
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="2" align="center" ></td>
+            </tr>
+            <tr >
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="13">Tax Amount (in words)  : <b>INR ' . ucwords(no_to_words($invoice->gst)) . ' Only</b></td>
+            </tr>
+
+            <tr>
+                <td style="padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="3"></td>
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="10">for <b>SSK BHARAT BUSINESS BUILDING INITIATIVE PVT. LTD. </b>
+                    <br/><br/><br/><span style="float:right">Authorised Signatory  </span></td>
+            </tr>
+            <tr >
+                <td style="border-right: 1px solid #000; padding:5px 8px; border-bottom: 1px solid #000; border-left: 1px solid #000; vertical-align: top;" colspan="13" align="center" style="padding:10px 0">Computer generated invoice therefore not require signature</td>
+            </tr>
+</table></div>';
+
         $mpdf = new \Mpdf\Mpdf();
-        $html = "hello world";
         $mpdf->WriteHTML($html);
         $this->response->setHeader('Content-Type', 'application/pdf');
-        $mpdf->Output('arjun.pdf', 'I');
+        $mpdf->Output('./uploads/emailattachments/' . $invoice->user_code . '.pdf', 'F');
+        return $invoice->user_code . '.pdf';
     }
 }

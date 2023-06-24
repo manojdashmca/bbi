@@ -158,6 +158,7 @@ class EmailTemplate {
         $contentdata = "Dear " . $username . ",";
         if ($status == 2) {
             $contentdata .= "<p>Your Payment has been approved. Now you can login to your SSK Bharat BBI account. </p>";
+            $contentdata .= "Your Membership fee payment invoice is now available.Please find the PDF document attached at the bottom of this email.";
             $contentdata .= "<p>Note-To ensure your account security, please change the password after your first login.</p>";
         } else {
             $contentdata .= "<p>Your Payment has been rejected by admin. For more detail please conctact support team on the mentioned communication detail. </p>";

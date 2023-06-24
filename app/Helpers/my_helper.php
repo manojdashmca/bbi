@@ -158,11 +158,11 @@ function no_to_words($no) {
             $value1 = $value * 100;
         }
         if (array_key_exists("$highno", $words)) {
-            return $words["$highno"] . " " . $novalue . " " . $this->no_to_words($remainno);
+            return $words["$highno"] . " " . $novalue . " " . no_to_words($remainno);
         } else {
             $unit = $highno % 10;
             $ten = (int) ($highno / 10) * 10;
-            return $words["$ten"] . " " . $words["$unit"] . " " . $novalue . " " . $this->no_to_words($remainno);
+            return $words["$ten"] . " " . $words["$unit"] . " " . $novalue . " " . no_to_words($remainno);
         }
     }
 }
@@ -353,7 +353,7 @@ function setMessage($text, $type = 'i') {
     return $msg;
 }
 
-function sendEmail($data) {
+function sendEmail($data) {    
     require_once ROOTPATH . '/vendor/phpmailer/phpmailer/src/SMTP.php';
     require_once ROOTPATH . '/vendor/phpmailer/phpmailer/src/PHPMailer.php';
     $template = $data['template'];
@@ -366,7 +366,7 @@ function sendEmail($data) {
 
     $status = false;
 
-    $mail = new PHPMailer();
+    $mail = new PHPMailer\PHPMailer\PHPMailer();
     $mail->IsSMTP();                               // Set mailer to use SMTP
     $mail->Host = 'email-smtp.ap-northeast-1.amazonaws.com';              // Specify main and backup server
     $mail->Port = 587;              // Set the SMTP port
@@ -388,8 +388,8 @@ function sendEmail($data) {
             $mail->AddAttachment($attachment);
         }
     }
-    //$mail->MailerDebug = true;
-    //$mail->SMTPDebug = 4;
+    $mail->MailerDebug = true;
+    $mail->SMTPDebug = 4;
     $mail->Subject = $subject; //'Here is the subject';
     $mail->Body = $template; //'This is the HTML message body <strong>in bold!</strong>';
     $mail->AltBody = '';
@@ -405,7 +405,7 @@ function sendEmail($data) {
     } catch (Exception $e) {
         $status = false;
     }
-    
+
     return $status;
 }
 
@@ -559,4 +559,14 @@ function createOrderNo($type, $from, $id) {
         $trncode = $id;
     }
     return $orderno . $trncode;
+}
+
+function dateToFiscal($date) {
+    $year = date('y', strtotime($date));
+    $month = date('m', strtotime($date));
+    if ($month > 4) {
+        return $year . '-' . ($year + 1);
+    } else {
+        return ($year - 1) . '-' . $year;
+    }
 }
